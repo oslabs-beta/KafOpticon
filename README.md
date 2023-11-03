@@ -1,0 +1,2 @@
+# KafOpticon
+Kafka cluster visualizer
