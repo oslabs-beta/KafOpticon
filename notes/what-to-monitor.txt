@@ -1,0 +1,5 @@
+-according to confluent, monitor
+ activeControllerCount
+ OfflinePartitionsCount
+ UncleanLeaderElectionsPerSec
+at a minimum

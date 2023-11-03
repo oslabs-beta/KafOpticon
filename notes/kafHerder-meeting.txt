@@ -1,0 +1,10 @@
+-pair with experts
+-use docker for resume-driven-development
+-getting prometheus to work with a cluster without using Java can be a challenge
+-using PromQL can be a challenge
+-each partition on its own server enables max speed through parallel processing
+-automated repartitioning based on metrics not a good idea
+
+-ideas:
+ -ensure monitoring and visualization can be done securely
+ -dry run/test repartition

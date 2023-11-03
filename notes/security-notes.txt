@@ -1,0 +1,10 @@
+-encryption (SSL or TLS?) between the app and prometheus
+-authentication
+ -a company could control who is able to open the app
+ -or there could be admin users who can adjust what the app/prometheus is doing
+-configure prometheus to pull the least amount of data necessary to make the app work
+-possibly a wizard or walkthrough when setting up the app that helps the user
+to configure his cluster to be secure
+-tunnelling?
+-limit grafana queries? limit promql queries?
+-use https if accessing a cluster in the cloud
