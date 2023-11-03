@@ -3,19 +3,18 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 module.exports = [
-  {
-    mode: 'development',
-    entry: path.join(__dirname, 'src', 'electron.js'),
-    target: 'electron-main',
-    output: {
-      path: path.join(__dirname, 'dist'),
-      filename: 'electron.js',
-      clean: true
-    },
-    // plugins: [
-    //   new HtmlWebpackPlugin()
-    // ]
-  },
+  // {
+  //   mode: 'development',
+  //   entry: path.join(__dirname, 'src', 'electron.js'),
+  //   target: 'electron-main',
+  //   output: {
+  //     path: path.join(__dirname, 'dist'),
+  //     filename: 'electron.js'
+  //   },
+  //   // plugins: [
+  //   //   new HtmlWebpackPlugin()
+  //   // ]
+  // },
   {
     mode: 'development',
     entry: path.join(__dirname, 'src', 'react.jsx'),
