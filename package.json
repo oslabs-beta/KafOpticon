@@ -4,8 +4,9 @@
   "description": "kafka surveillance",
   "scripts": {
     "test": "jest --verbose",
-    "build": "webpack --config ./webpack.config.js",
-    "start": "npm run build && electron dist/electron.js"
+    "build": "webpack --config ./webpack.config.js --watch",
+    "start": "npm run build && electron dist/electron.js",
+    "cheese": "electron dist/electron.js"
   },
   "repository": {
     "type": "git",
