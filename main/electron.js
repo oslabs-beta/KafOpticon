@@ -3,18 +3,19 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 
+// electron reloader documentation recommends using a try/catch block to avoid
+// crashin the app is node environment is in production
 try {
   const electronReloader = require('electron-reloader');
   electronReloader(module, {
     ignore: [
-      __dirname
+      path.join(__dirname, '..', 'src')
     ]
   });
 } catch {
   console.log('electron reloader failed');
 };
 
-// console.log(path.join(__dirname, '..', 'dist', 'index.html'));
 
 const createWindow = () => {
   // create a browser window
