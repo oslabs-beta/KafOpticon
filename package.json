@@ -5,7 +5,7 @@
   "scripts": {
     "test": "jest --verbose",
     "build": "webpack --config ./webpack.config.js --watch",
-    "start": "electron src/electron.js"
+    "start": "npm run build & electron main/electron.js && fg"
   },
   "repository": {
     "type": "git",
