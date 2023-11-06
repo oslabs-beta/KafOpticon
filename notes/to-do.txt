@@ -7,6 +7,5 @@ Stuff to do
  -get the data using prometheus
  -store that data somewhere (in grafana?)
  -hook up grafana to back end?
- -send data/visualizations from grafana to front end from back end,
- -or enable front end to directly connect to grafana
+ -send data/visualizations from grafana to front end from back end or enable front end to directly connect to grafana
  -display grafana on front end
