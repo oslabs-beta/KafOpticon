@@ -13,7 +13,6 @@ app.get('/info', (req, res) => {
 });
 
 app.post('/info', (req, res) => {
-  console.log('entered post info controller');
   res.status(200).json({data: 'made it back'})
 });
 
