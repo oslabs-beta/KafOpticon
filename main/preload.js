@@ -1,10 +1,13 @@
 // a preload script to test our ability to preload things into the renderer process
 
 // require in contextBridge API
-const { contextBridge } = require('electron');
+const { contextBridge, ipcRenderer, net } = require('electron');
 
 contextBridge.exposeInMainWorld('sayHi', {
   hello: () => {
-    console.log('hello');
+    console.log('Hello');
+  },
+  connect: (data) => {
+    ipcRenderer.send('connect', data);
   },
 });
