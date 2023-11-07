@@ -8,14 +8,11 @@ const path = require('path');
 try {
   const electronReloader = require('electron-reloader');
   electronReloader(module, {
-    ignore: [
-      path.join(__dirname, '..', 'src')
-    ]
+    ignore: [path.join(__dirname, '..', 'src')],
   });
 } catch {
   console.log('electron reloader failed');
-};
-
+}
 
 const createWindow = () => {
   // create a browser window
@@ -23,14 +20,13 @@ const createWindow = () => {
     height: 600,
     width: 800,
     webPreferences: {
-      nodeIntegration: true
-    }
+      preload: path.join(__dirname, 'preload.js'),
+    },
   });
-
 
   // load the index.html into it
   win.loadFile(path.join(__dirname, '..', 'dist', 'index.html'));
-}
+};
 
 // when electron is finished initializing, and the 'ready' event is
 // emitted, run createWindow
