@@ -1,7 +1,10 @@
 // this is the entry point for the app
 
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, net } = require('electron');
 const path = require('path');
+
+// require in express server so that it gets booted when electron app is ready
+const expressServer = require('./expressServer');
 
 // electron reloader documentation recommends using a try/catch block to avoid
 // crashin the app is node environment is in production
@@ -9,6 +12,7 @@ try {
   const electronReloader = require('electron-reloader');
   electronReloader(module, {
     ignore: [
+      path.join(__dirname),
       path.join(__dirname, '..', 'src')
     ]
   });
@@ -34,20 +38,19 @@ const createWindow = () => {
 
 // checking connection between main process and renderer process
 const handleConnect = (event, data) => {
-  console.log('got here');
-  
   // apparently we can change the title (and probably other things too) of the html from the main process
   const webContents = event.sender;
-  console.log('handleConnect ~ webContents:', webContents);
   const win = BrowserWindow.fromWebContents(webContents);
-  console.log('handleConnect ~ win:', win);
   win.setTitle(data);
   
 }
 
-// when electron is finished initializing, and the 'ready' event is
-// emitted, run createWindow
+// when electron is finished initializing and the 'ready' event is
+// emitted, boot up express server, set up ipc apis, and run createWindow
 app.on('ready', () => {
-  ipcMain.on('connect', handleConnect)
+  expressServer.listen(3000, () => {
+    console.log('Server listening on port 3000');
+  });
+  ipcMain.on('connect', handleConnect);
   createWindow();
 });
