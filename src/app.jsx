@@ -1,10 +1,14 @@
 import React from 'react';
+import Header from '../src/components/Header.jsx'
+import MainContainer from './components/MainContainer.jsx';
+import '../src/styles/styles.css'
 
 function App () {
   return (
-    <>
-      <h1>Hello React.</h1>
-    </>
+    <section>
+      <Header />
+      <MainContainer/>
+  </section>
   );
 }
 
