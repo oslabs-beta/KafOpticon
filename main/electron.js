@@ -18,8 +18,7 @@ try {
   });
 } catch {
   console.log('electron reloader failed');
-};
-
+}
 
 const createWindow = () => {
   // create a browser window
@@ -31,10 +30,9 @@ const createWindow = () => {
     }
   });
 
-
   // load the index.html into it
   win.loadFile(path.join(__dirname, '..', 'dist', 'index.html'));
-}
+};
 
 // checking connection between main process and renderer process
 const handleConnect = (event, data) => {
