@@ -29,13 +29,14 @@ body {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
+    align-content: flex-start;
     background-color: rgb(248, 248, 186);
     margin-right: 30px;
     border-style: solid;
     border-color: black;
-    height: auto;
-    width: auto;
+    /* height: auto;
+    width: auto; */
     border-radius: 10px;
 }
 
@@ -47,17 +48,19 @@ body {
     border-style: solid;
     border-color: black;
     height: 800px;
-    width: 400px;
+    width: 450px;
     border-radius: 10px;
 }
 
 .metricBox {
     position: relative;
-    top: 80px;
-    height: 200px;
-    width: 450px;
+    top: 0;
+    height: 25%;
+    width: 200px;
+    margin: 10px;
+    text-align: center;
+    justify-content: space-between;
     background-color: rgb(132, 183, 246);
     border-style: solid;
     border-color: black;
-    margin-right: 20px;
 }
