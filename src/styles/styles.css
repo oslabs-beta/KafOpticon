@@ -6,8 +6,13 @@ body {
 }
 
 #headerLog {
-    position: relative;
+    display: flex;
+    /* position: relative; */
+    /* justify-content: center; */
+
+    align-items: center;
     top: 10px;
+    justify-content: space-between;
     background-color: rgb(248, 248, 186);
     height: 100px;
     width: 96.5%;
@@ -65,5 +70,8 @@ body {
     border-color: black;
 }
 #kafopticonbg{
-    height: 100px;
+    height: 50px;
+}
+.formContainer {
+    margin-right: 80%;
 }
