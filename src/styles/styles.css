@@ -1,18 +1,22 @@
 body {
-    background-color: rgb(132, 183, 246);
-    margin: 0;
-    height: 100%;
-    
+   background-color: rgb(245,235,147);
+   margin: 0;
+   width: 100%;
 }
 
 #headerLog {
-    position: relative;
+    display: flex;
+    /* position: relative; */
+    justify-content: space-between;
+
+    /* align-items: center; */
     top: 10px;
-    background-color: rgb(248, 248, 186);
+    background-color: rgb(60, 114, 186);
     height: 100px;
     width: 96.5%;
     margin-left: 20px;
-    border-style: solid;
+    border-style: none;
+    box-shadow: 10px 5px 5px rgb(10, 135, 213);
     border-color: black;
     border-radius: 10px;
 }
@@ -31,10 +35,11 @@ body {
     flex-wrap: wrap;
     justify-content: space-between;
     align-content: flex-start;
-    background-color: rgb(248, 248, 186);
+    background-color:rgb(60, 114, 186);
     margin-right: 30px;
-    border-style: solid;
+    border-style: none;
     border-color: black;
+    box-shadow: 10px 5px 5px rgb(1,116,190);
     /* height: auto;
     width: auto; */
     border-radius: 10px;
@@ -44,12 +49,13 @@ body {
     position:relative;
     margin-left: 20px;
     margin-right: 20px;
-    background-color: rgb(248, 248, 186);
-    border-style: solid;
+    background-color: rgb(60, 114, 186);
+    border-style: none;
     border-color: black;
     height: 800px;
     width: 450px;
     border-radius: 10px;
+    box-shadow: 10px 5px 5px rgb(1,116,190);
 }
 
 .metricBox {
@@ -60,12 +66,55 @@ body {
     margin: 10px;
     text-align: center;
     justify-content: space-between;
-    background-color: rgb(132, 183, 246);
+    background-color: rgb(80, 185, 250);
     border-style: solid;
     border-color: black;
+    border-width: 4px;
+   
 }
 #kafopticonbg{
-    max-width: 50%;
-    height: auto;
-    width: auto;
+   height: 100px;
+}
+
+.formContainer {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 15px;
+    margin-right: 30px;
+    height: 70px;
+    width: 600px;
+  
+}
+
+#submitbutton {
+    height: 40px;
+    width: 150px;
+    background-color: rgb(80, 185, 250);
+    padding: 10px;
+    border-radius: 7px;
+    font-size: 14px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: white;
+    font-weight: bold;
+    border-style: solid;
+    border-color: white;
+}
+
+#mainform{
+    position: relative;
+    height: 70px;
+    width: 450px;
+    margin-top: 10px;
+   
+}
+
+#input{
+    padding: 10px;
+    border-radius: 7px;
+    border-style: solid;
+    width: 250px;
+    border-color: white;
+    margin-right: 5px;
 }
