@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(132, 183, 246);
+    background-color: rgb(29,93,155);
     margin: 0;
     height: 100%;
     
@@ -8,7 +8,7 @@ body {
 #headerLog {
     position: relative;
     top: 10px;
-    background-color: rgb(248, 248, 186);
+    background-color:  rgb(117,194,246);
     height: 100px;
     width: 96.5%;
     margin-left: 20px;
@@ -31,7 +31,7 @@ body {
     flex-wrap: wrap;
     justify-content: space-between;
     align-content: flex-start;
-    background-color: rgb(248, 248, 186);
+    background-color: rgb(1,116,190);
     margin-right: 30px;
     border-style: solid;
     border-color: black;
@@ -44,7 +44,7 @@ body {
     position:relative;
     margin-left: 20px;
     margin-right: 20px;
-    background-color: rgb(248, 248, 186);
+    background-color: rgb(251,238,172);
     border-style: solid;
     border-color: black;
     height: 800px;
@@ -60,12 +60,13 @@ body {
     margin: 10px;
     text-align: center;
     justify-content: space-between;
-    background-color: rgb(132, 183, 246);
+    background-color: rgb(249, 249, 170);
     border-style: solid;
     border-color: black;
 }
 #kafopticonbg{
     max-width: 50%;
-    height: auto;
+    height: 100px;
     width: auto;
 }
+

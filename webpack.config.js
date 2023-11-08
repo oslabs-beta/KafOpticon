@@ -37,7 +37,7 @@ module.exports = [
             {
               loader: 'file-loader',
               options: {
-                name: '[name].[ext]', // Output file name
+                name: '[name].[hash].[ext]', // Output file name
                 outputPath: 'images', // Output directory for images
               },
             },

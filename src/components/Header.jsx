@@ -3,7 +3,7 @@ import React from 'react';
 function Header() {
     return(
         <section id='headerLog'>
-            <img id='kafopticonbg' src='../../assets/kafopticonbg.png'></img>
+            <img id='kafopticonbg' src='../assets/kafopticonbg.png'/>
             <h1 id='title'>KafOpticon</h1>
             <form action='http://localhost:3000/info' method='POST'>
                 <input placeholder='Cluster URL'></input>
