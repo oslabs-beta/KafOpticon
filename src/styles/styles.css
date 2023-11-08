@@ -70,8 +70,15 @@ body {
     border-color: black;
 }
 #kafopticonbg{
-    height: 50px;
+    height: 100px;
 }
 .formContainer {
-    margin-right: 80%;
+    margin-right: 90%;
+}
+
+#submitbutton {
+    height: 40px;
+    width: 40%;
+    background-color: cyan;
+    border-radius: 5px;
 }

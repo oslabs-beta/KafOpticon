@@ -7,7 +7,7 @@ function Header() {
             <img id='kafopticonbg' src='../assets/kafopticonbg.png'></img>
             <div className='formContainer'>
             <form>
-                <input placeholder='Cluster URL'></input>
+                <textarea placeholder='Cluster URL'></textarea>
                 <button id="submitbutton">Submit</button>
             </form>
             </div>
