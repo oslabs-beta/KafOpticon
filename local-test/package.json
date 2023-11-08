@@ -1,0 +1,23 @@
+{
+  "name": "kafka-test",
+  "version": "1.0.0",
+  "description": "testing out kafka for open source product",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "bootZoo": "zookeeper-server-start.sh ./kafka-config/zookeeper.properties",
+    "bootKaf1": "JMX_PORT=2020 kafka-server-start.sh ./kafka-config/server1.properties",
+    "bootKaf2": "kafka-server-start.sh ./kafka-config/server2.properties",
+    "bootKaf3": "kafka-server-start.sh ./kafka-config/server3.properties",
+    "consume": "kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic",
+    "produce": "node producers-and-consumers/producer.js",
+    "exportJmx": "java -jar jmx_prometheus_httpserver-0.19.0.jar 3000 ./scraping-config/kafkaJmxExampleConfig.yml",
+    "prometheus": "prometheus --config.file=./scraping-config/prometheus.yml"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "kafkajs": "^2.2.4"
+  }
+}
