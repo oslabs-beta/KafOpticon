@@ -1,0 +1,3 @@
+hostPort: localhost:2020
+rules:
+- pattern : "kafka.server<type=*"
