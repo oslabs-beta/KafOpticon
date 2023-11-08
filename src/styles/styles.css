@@ -64,3 +64,8 @@ body {
     border-style: solid;
     border-color: black;
 }
+#kafopticonbg{
+    max-width: 50%;
+    height: auto;
+    width: auto;
+}
