@@ -1,0 +1,14 @@
+global:
+  scrape_interval: 15s # set default scrape interval to 15 seconds
+
+scrape_configs:
+  # the job name is added as a label to any timeseries scraped from this config
+  - job_name: kafka
+
+    # override global default scrape interval
+    scrape_interval: 10s
+
+    static_configs:
+      # point prometheus at the place to scrape
+      - targets:
+        - "localhost:3000"
