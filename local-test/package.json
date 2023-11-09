@@ -11,7 +11,7 @@
     "bootKaf3": "kafka-server-start.sh ./kafka-config/server3.properties",
     "consume": "kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic",
     "produce": "node producers-and-consumers/producer.js",
-    "exportJmx": "java -jar jmx_prometheus_httpserver-0.19.0.jar 3000 ./scraping-config/kafkaJmxExampleConfig.yml",
+    "exportJmx": "java -jar jmx_prometheus_httpserver-0.19.0.jar 3030 ./scraping-config/kafkaJmxExampleConfig.yml",
     "prometheus": "prometheus --config.file=./scraping-config/prometheus.yml"
   },
   "author": "",
