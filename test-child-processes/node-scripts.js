@@ -42,13 +42,43 @@
 
 // console.log(process.stdin);
 
-const spawn = require('child_process').spawn;
+const { spawn, exec } = require('child_process');
+const { inherits } = require('util');
 
-const child = spawn('node', ['hello.js']);
+const rando = Math.ceil(Math.random() * 10);
+console.log('rando:', rando);
 
-child.stdout.pipe(process.stdout);
 
 
-child.on('exit', (code, signal) => {
-  console.log(`child process exited with code: ${code} and signal: ${signal}`);
-})
+// // const child = spawn('node', ['test-child-processes/hello.js']);
+// const child = spawn('node', ['test-child-processes/hello.js', rando]);
+
+// // child.stdout.pipe(process.stdout);
+// let string = '';
+
+// child.stdout.on('data', (data) => {
+//   string += data;
+// });
+
+// child.stdout.on('close', () => {
+//   console.log('string: ', string);
+// })
+
+
+// child.on('exit', (code, signal) => {
+//   console.log(`child process exited with code: ${code} and signal: ${signal}`);
+// })
+
+const child = spawn(`node test-child-processes/hello.js ${rando}`, {
+  stdio: 'inherit',
+  shell: true,
+  /* cwd option will change the working directory
+     env option can specify environment variables */
+
+});
+
+
+// (err, stdout, stderr) => {
+//   if (err) return console.log(err);
+//   console.log(stdout);
+// });
