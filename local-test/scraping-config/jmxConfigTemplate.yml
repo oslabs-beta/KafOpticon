@@ -1,3 +1,2 @@
-hostPort: localhost:2020
 rules:
 - pattern : "kafka.controller.type=KafkaController.N*"
