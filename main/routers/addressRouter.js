@@ -8,6 +8,7 @@ const router = express.Router();
 router.post('/',
   addressController.writeJmxConfig,
   addressController.connectToKafka,
+  addressController.startPrometheus,
   (req, res) => {
     res.status(200).json({message: 'made it back'});
   }

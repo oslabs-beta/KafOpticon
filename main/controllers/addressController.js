@@ -2,6 +2,7 @@
 
 const fsp = require('fs').promises;
 const path = require('path');
+const { spawn } =require('child_process');
 
 console.log(path.join(__dirname, '..', '..', 'local-test', 'scraping-config', 'jmxconfig.yml'));
 console.log(path.join('local-test', 'scraping-config'));
@@ -46,10 +47,25 @@ addressController.writeJmxConfig = async (req, res, next) => {
 addressController.connectToKafka = (req, res, next) => {
   // create child process that runs jmx exporter and connect it to the kafka cluster
 
-  
-  
-  console.log('entered connectToKafka');
+  const child = spawn('npm run exportJmx', {
+    shell: true,
+    stdio: 'inherit',
+    cwd: path.join(__dirname, '..', '..', 'local-test')
+  });
+
   next();
 };
+
+addressController.startPrometheus = (req, res, next) => {
+  // create child process that runs prometheus and connect it to jmx exporter
+
+  const child = spawn('npm run prometheus', {
+    shell: true,
+    stdio: 'inherit',
+    cwd: path.join(__dirname, '..', '..', 'local-test')
+  });
+
+  next();
+}
 
 module.exports = addressController;

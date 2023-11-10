@@ -43,7 +43,6 @@
 // console.log(process.stdin);
 
 const { spawn, exec } = require('child_process');
-const { inherits } = require('util');
 
 const rando = Math.ceil(Math.random() * 10);
 console.log('rando:', rando);

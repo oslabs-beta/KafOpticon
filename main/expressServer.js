@@ -38,8 +38,8 @@ app.use((err, req, res, next) => {
   res.status(trueError.status).send(trueError.message);
 });
 
-app.listen(PORT, () => {
-  console.log('Listening on port: ' + PORT);
-})
+// app.listen(PORT, () => {
+//   console.log('Listening on port: ' + PORT);
+// });
 
 module.exports = app;
