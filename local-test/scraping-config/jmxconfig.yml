@@ -1,4 +1,3 @@
-hostPort: localhost:9092
 hostPort: localhost:2020
 lowercaseOutputName: true
 

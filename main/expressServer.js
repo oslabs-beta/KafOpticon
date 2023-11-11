@@ -12,8 +12,10 @@ const PORT = 3010;
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
+// serve static files
 app.use(express.static('dist'));
 
+// handle form data to address route with address router
 app.use('/address', addressRouter);
 
 // handle unknown routes
@@ -39,8 +41,8 @@ app.use((err, req, res, next) => {
 });
 
 // server is started in electron.js--only use this code if testing backend without frontend
-// app.listen(PORT, () => {
-//   console.log('Listening on port: ' + PORT);
-// });
+app.listen(PORT, () => {
+  console.log('Listening on port: ' + PORT);
+});
 
 module.exports = app;
