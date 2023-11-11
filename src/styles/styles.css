@@ -61,14 +61,14 @@ body {
 .metricBox {
     position: relative;
     top: 0;
-    height: 25%;
-    width: 200px;
+    height: 250px;
+    width: 500px;
     margin: 10px;
     text-align: center;
     justify-content: space-between;
-    background-color: rgb(80, 185, 250);
+    background-color: none;
     border-style: solid;
-    border-color: black;
+    border-color: rgb(80, 185, 250);
     border-width: 4px;
    
 }
@@ -117,4 +117,9 @@ body {
     width: 250px;
     border-color: white;
     margin-right: 5px;
+}
+
+#chart {
+    position: relative;
+    margin-top: 0px;
 }
