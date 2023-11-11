@@ -12,8 +12,10 @@ const PORT = 3010;
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
+// serve static files
 app.use(express.static('dist'));
 
+// handle form data to address route with address router
 app.use('/address', addressRouter);
 
 // handle unknown routes
