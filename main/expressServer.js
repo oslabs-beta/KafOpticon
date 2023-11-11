@@ -38,6 +38,7 @@ app.use((err, req, res, next) => {
   res.status(trueError.status).send(trueError.message);
 });
 
+// server is started in electron.js--only use this code if testing backend without frontend
 // app.listen(PORT, () => {
 //   console.log('Listening on port: ' + PORT);
 // });
