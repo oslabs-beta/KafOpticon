@@ -5,7 +5,8 @@
   "scripts": {
     "test": "jest --verbose",
     "build": "webpack --config ./webpack.config.js --watch",
-    "start": "concurrently \"npm run build\" \"electron main/electron.js\" --kill-others"
+    "start": "concurrently \"npm run build\" \"electron main/electron.js\" --kill-others",
+    "server": "nodemon main/expressServer.js"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.3",
     "jest": "^29.7.0",
+    "nodemon": "^3.0.1",
     "sass-loader": "^13.3.2",
     "style-loader": "^3.3.3",
     "url-loader": "^4.1.1",

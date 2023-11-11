@@ -11,4 +11,4 @@ scrape_configs:
     static_configs:
       # point prometheus at the place to scrape
       - targets:
-        - "localhost:3000"
+        - "localhost:3030"
