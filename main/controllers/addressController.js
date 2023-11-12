@@ -2,7 +2,7 @@
 
 const fsp = require('fs').promises;
 const path = require('path');
-const { spawn } =require('child_process');
+const { spawn } = require('child_process');
 
 const addressController = {};
 
@@ -22,6 +22,7 @@ addressController.writeJmxConfig = async (req, res, next) => {
   const templateFileAddress = path.join(__dirname, '..', '..', 'local-test', 'scraping-config', 'jmxConfigTemplate.yml');
   const destination = path.join(__dirname, '..', '..', 'local-test', 'scraping-config', 'jmxconfig.yml'); 
   const { address } = req.body;
+  // console.log(address);
   // PROBABLY SHOULD SANITIZE HERE
 
   const lineToAppend = `hostPort: ${address}`;
@@ -111,7 +112,8 @@ addressController.startPrometheus = (req, res, next) => {
     cwd: path.join(__dirname, '..', '..', 'local-test')
   });
 
-  next();
-}
+  setTimeout(() => {next();}, 5000);
+};
+
 
 module.exports = addressController;

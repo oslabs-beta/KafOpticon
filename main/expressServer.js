@@ -13,6 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 // serve static files
+// may be unnecessary
 app.use(express.static('dist'));
 
 // handle form data to address route with address router
@@ -41,8 +42,8 @@ app.use((err, req, res, next) => {
 });
 
 // server is started in electron.js--only use this code if testing backend without frontend
-// app.listen(PORT, () => {
-//   console.log('Listening on port: ' + PORT);
-// });
+app.listen(PORT, () => {
+  console.log('Listening on port: ' + PORT);
+});
 
 module.exports = app;
