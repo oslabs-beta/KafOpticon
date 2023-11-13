@@ -1,7 +1,8 @@
 body {
-   background-color: rgb(245,235,147);
+   background-color: rgb(250, 250, 166);
    margin: 0;
    width: 100%;
+   background-repeat: no-repeat;
 }
 
 #headerLog {

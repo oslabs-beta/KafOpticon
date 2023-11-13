@@ -86,6 +86,8 @@ services:
       - '3000:3000'
     depends_on:
       - prometheus
+    volumes:
+      - grafana-storage:/var/lib/grafana
     environment:
       GF_SECURITY_ADMIN_USER: 'admin'
       GF_SECURITY_ADMIN_PASSWORD: 'admin'
@@ -93,9 +95,14 @@ services:
       GF_SECURITY_ALLOW_EMBEDDING: 'true'
       GF_AUTH_ANONYMOUS_ENABLED: 'true'
 
+
+    
   prometheus:
     image: prom/prometheus:latest
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - '9090:9090'
+
+volumes:
+  grafana-storage:
