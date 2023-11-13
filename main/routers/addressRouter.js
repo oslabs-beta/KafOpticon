@@ -14,8 +14,9 @@ router.post('/',
   addressController.connectToKafka,
   addressController.startPrometheus,
   grafanaController.createDashboard,
+  grafanaController.getDashboard,
   (req, res) => {
-    res.status(200).json(res.locals.grafanaResponse);
+    res.status(200).json(res.locals.dashboard);
   }
 );
 

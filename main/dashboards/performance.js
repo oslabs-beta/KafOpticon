@@ -1,6 +1,6 @@
 module.exports = {
   "folderId": 0,
-  "overwrite": false,
+  "overwrite": true,
   "dashboard": {
   "annotations": {
       "list": [
@@ -335,7 +335,6 @@ module.exports = {
   "timezone": "browser",
   "title": "Performance Metrics",
   "uid": null,
-  "version": 0,
   "weekStart": ""
   }
 }

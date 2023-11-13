@@ -38,14 +38,34 @@ grafanaController.createDashboard = async (req, res, next) => {
       body: JSON.stringify(performanceBody),
       headers: {
         "Content-Type": 'application/json'
-      }
-    });
+      }});
+    
 
     // console.log('got here');
     const text = await data.json();
     res.locals.grafanaResponse = text;
+    console.log('grafanaController.createDashboard= ~ res.locals.grafanaResponse:', res.locals.grafanaResponse);
   } catch (err) {
     next(new GrafanaError('createDashboard', 500, err));
+  }
+
+  next();
+};
+
+grafanaController.getDashboard = async (req, res, next) => {
+  // get information about the just-created dashboard so that the iframe url can be dynamically updated
+  console.log('entered getDashboard');
+  // const uid = res.locals.grafanaResponse.uid;
+  // console.log('grafanaController.getDashboard= ~ uid:', uid);
+  const url = 'http://localhost:3000/' + res.locals.grafanaResponse.url;
+  console.log('grafanaController.getDashboard= ~ url:', url);
+  
+  try {
+    const response = await fetch(url);
+    const dashboard = await response.text();
+    res.locals.dashboard = dashboard;
+  } catch (err) {
+    next(new GrafanaError('getDashboard', 500, err));
   }
 
   next();
