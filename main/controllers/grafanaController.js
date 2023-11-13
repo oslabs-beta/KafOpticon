@@ -31,6 +31,8 @@ grafanaController.startGrafana = (req, res, next) => {
 
 grafanaController.createDashboard = async (req, res, next) => {
   // create a dashboard in grafana
+
+  console.log('entered createDashboard');
   // make post request to grafana dashboard api 
   try {
     const data = await fetch('http://localhost:3000/api/dashboards/db', {
@@ -55,9 +57,9 @@ grafanaController.createDashboard = async (req, res, next) => {
 grafanaController.getDashboard = async (req, res, next) => {
   // get information about the just-created dashboard so that the iframe url can be dynamically updated
   console.log('entered getDashboard');
-  // const uid = res.locals.grafanaResponse.uid;
+  const uid = res.locals.grafanaResponse.uid;
   // console.log('grafanaController.getDashboard= ~ uid:', uid);
-  const url = 'http://localhost:3000/' + res.locals.grafanaResponse.url;
+  const url = 'http://localhost:3000/api/dashboards/uid/' + uid;
   console.log('grafanaController.getDashboard= ~ url:', url);
   
   try {

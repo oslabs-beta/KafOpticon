@@ -13,10 +13,16 @@ router.post('/',
   addressController.writeJmxConfig,
   addressController.connectToKafka,
   addressController.startPrometheus,
+  (req, res) => {
+    res.redirect('/address/grafana');
+  }
+);
+
+router.get('/grafana',
   grafanaController.createDashboard,
   grafanaController.getDashboard,
   (req, res) => {
-    res.status(200).json(res.locals.dashboard);
+    res.status(200).send(res.locals.dashboard);
   }
 );
 
