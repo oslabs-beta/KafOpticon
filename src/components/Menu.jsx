@@ -1,9 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Menu() {
     return (
         <section id='menu'>
-            <h2>Menu?</h2>
+            <Link to='/'><button>Health Metrics</button></Link>
+            <Link to='performance'><button>Performance Metrics</button></Link>
         </section>
     )
 };
