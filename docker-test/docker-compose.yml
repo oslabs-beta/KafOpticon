@@ -86,16 +86,29 @@ services:
       - '3000:3000'
     depends_on:
       - prometheus
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ../grafana/Dockerfile/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ../grafana/Dockerfile/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ../grafana/grafana.ini:/etc/grafana/grafana.ini
     environment:
       GF_SECURITY_ADMIN_USER: 'admin'
       GF_SECURITY_ADMIN_PASSWORD: 'admin'
       GF_USERS_ALLOW_SIGN_UP: 'false'
       GF_SECURITY_ALLOW_EMBEDDING: 'true'
       GF_AUTH_ANONYMOUS_ENABLED: 'true'
+   
 
+
+
+
+    
   prometheus:
     image: prom/prometheus:latest
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - '9090:9090'
+
+volumes:
+  grafana-storage:
