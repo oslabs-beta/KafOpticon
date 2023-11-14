@@ -89,7 +89,7 @@ services:
     volumes:
       - grafana-storage:/var/lib/grafana
       - ../grafana/Dockerfile/provisioning/dashboards:/etc/grafana/provisioning/dashboards
-      - ../grafana/Dockerfile/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ../grafana/Dockerfile/provisioning/datasources/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
       - ../grafana/grafana.ini:/etc/grafana/grafana.ini
     environment:
       GF_SECURITY_ADMIN_USER: 'admin'
