@@ -13,8 +13,9 @@ router.post('/',
   addressController.writeJmxConfig,
   addressController.connectToKafka,
   addressController.startPrometheus,
+  grafanaController.createDashboard,
   (req, res) => {
-    res.redirect('/address/grafana');
+    res.status(200).send();
   }
 );
 

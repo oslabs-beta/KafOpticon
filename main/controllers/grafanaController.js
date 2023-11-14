@@ -43,10 +43,8 @@ grafanaController.createDashboard = async (req, res, next) => {
       }});
     
 
-    // console.log('got here');
     const text = await data.json();
     res.locals.grafanaResponse = text;
-    console.log('grafanaController.createDashboard= ~ res.locals.grafanaResponse:', res.locals.grafanaResponse);
   } catch (err) {
     next(new GrafanaError('createDashboard', 500, err));
   }
