@@ -45,6 +45,8 @@ grafanaController.createDashboard = async (req, res, next) => {
 
     const text = await data.json();
     res.locals.grafanaResponse = text;
+    // console.log('grafanaController.createDashboard= ~ text:', text);
+    
   } catch (err) {
     next(new GrafanaError('createDashboard', 500, err));
   }
@@ -58,7 +60,7 @@ grafanaController.getDashboard = async (req, res, next) => {
   const uid = res.locals.grafanaResponse.uid;
   // console.log('grafanaController.getDashboard= ~ uid:', uid);
   const url = 'http://localhost:3000/api/dashboards/uid/' + uid;
-  console.log('grafanaController.getDashboard= ~ url:', url);
+  // console.log('grafanaController.getDashboard= ~ url:', url);
   
   try {
     const response = await fetch(url);

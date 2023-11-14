@@ -334,7 +334,7 @@ module.exports = {
   "timepicker": {},
   "timezone": "browser",
   "title": "Performance Metrics",
-  "uid": null,
+  "uid": 'b9163055-5231-456f-ad64-1294596f5b74',
   "weekStart": ""
   }
 }
