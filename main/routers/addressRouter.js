@@ -19,12 +19,4 @@ router.post('/',
   }
 );
 
-router.get('/grafana',
-  grafanaController.createDashboard,
-  grafanaController.getDashboard,
-  (req, res) => {
-    res.status(200).send(res.locals.dashboard);
-  }
-);
-
 module.exports = router;
