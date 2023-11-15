@@ -4,4 +4,4 @@ global:
 scrape_configs:
   - job_name: 'kafka'
     static_configs:
-     - targets: ['kafka-broker-1:19092']
+      - targets: ['localhost:9991']

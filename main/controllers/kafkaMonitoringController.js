@@ -7,7 +7,7 @@ const kafkaMonitoringController = {};
 
 async function createNetwork() {
   try {
-    const networkName = 'monitoring_network_test';
+    const networkName = 'monitoring_network_test4';
     const network = await docker.createNetwork({
       Name: networkName,
       Driver: 'bridge',
@@ -47,13 +47,14 @@ async function createPrometheusContainer(networkName) {
       },
       HostConfig: {
         Binds: [`${promConfigPath}:/etc/prometheus/prometheus.yml`],
+        PortBindings: {
+          '9090/tcp': [{ HostPort: '9090' }],
+        },
       },
       ExposedPorts: {
         '9090/tcp': {},
       },
-      PortBindings: {
-        '9090/tcp': [{ HostPort: '9090' }],
-      },
+
       NetworkingConfig: {
         EndpointsConfig: {
           [networkName]: {},
@@ -104,7 +105,7 @@ kafkaMonitoringController.setUpDocker = async (req, res, next) => {
   try {
     const { kafkaJmxEndpoints } = req.body;
     const networkName = await createNetwork();
-    await generatePrometheusConfig(kafkaJmxEndpoints);
+    // await generatePrometheusConfig(kafkaJmxEndpoints);
     await createPrometheusContainer(networkName);
     await createGrafanaContainer(networkName);
 
