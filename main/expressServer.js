@@ -13,6 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 // serve static files
+// may be unnecessary
 app.use(express.static('dist'));
 
 // handle form data to address route with address router
@@ -35,7 +36,7 @@ app.use((err, req, res, next) => {
     ...defaultErr,
     ...err
   };
-
+  console.log(trueError.message);
   console.log(trueError.log);
   res.status(trueError.status).send(trueError.message);
 });

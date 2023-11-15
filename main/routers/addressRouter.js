@@ -2,17 +2,24 @@
 
 const express = require('express');
 const addressController = require('../controllers/addressController');
+const grafanaController = require('../controllers/grafanaController');
 
 const router = express.Router();
 
 router.post('/',
-  addressController.checkForDocker,
-  addressController.bootUpDocker,
-  // addressController.writeJmxConfig,
-  // addressController.connectToKafka,
-  // addressController.startPrometheus,
+  // addressController.checkForDocker,
+  // addressController.bootUpDocker,
+  // grafanaController.startGrafana,
+  addressController.writeJmxConfig,
+  addressController.connectToKafka,
+  addressController.startPrometheus,
+  grafanaController.getPrometheus,
+  grafanaController.createPromSource,
+  grafanaController.getPrometheus,
+  grafanaController.generateDashJson,
+  grafanaController.createDashboard,
   (req, res) => {
-    res.status(200).json({message: 'made it back'});
+    res.status(200).send();
   }
 );
 

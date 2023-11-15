@@ -1,8 +1,11 @@
 body {
-   background-color: rgb(250, 250, 166);
-   margin: 0;
+   background-color: rgb(5, 5, 46);
+   margin: 0 auto;
    width: 100%;
    background-repeat: no-repeat;
+   background-position: center;
+   background-attachment: fixed;
+   background-size: cover;
 }
 
 #headerLog {
@@ -12,7 +15,7 @@ body {
 
     /* align-items: center; */
     top: 10px;
-    background-color: rgb(60, 114, 186);
+    background-color: rgb(60, 114, 186, .3);
     height: 100px;
     width: 96.5%;
     margin-left: 20px;
@@ -36,7 +39,7 @@ body {
     flex-wrap: wrap;
     justify-content: space-between;
     align-content: flex-start;
-    background-color:rgb(60, 114, 186);
+    background-color: rgb(60, 114, 186, .3);
     margin-right: 30px;
     border-style: none;
     border-color: black;
@@ -48,13 +51,16 @@ body {
 
 #menu{
     position:relative;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
     margin-left: 20px;
     margin-right: 20px;
-    background-color: rgb(60, 114, 186);
+    background-color: rgb(60, 114, 186, .3);
     border-style: none;
     border-color: black;
-    height: 800px;
-    width: 450px;
+    height: 500px;
+    width: 300px;
     border-radius: 10px;
     box-shadow: 10px 5px 5px rgb(1,116,190);
 }
@@ -92,7 +98,7 @@ body {
 #submitbutton {
     height: 40px;
     width: 150px;
-    background-color: rgb(80, 185, 250);
+    background-color: rgb(60, 175, 247);
     padding: 10px;
     border-radius: 7px;
     font-size: 14px;
@@ -123,4 +129,25 @@ body {
 #chart {
     position: relative;
     margin-top: 0px;
+}
+
+.menuButton{
+    height: 40px;
+    width: 200px;
+    background-color:  rgb(60, 175, 247);
+    padding: 10px;
+    border-radius: 7px;
+    font-size: 14px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: white;
+    font-weight: bold;
+    border-style: solid;
+    border-color: white;
+    margin-left: 50px;
+}
+
+
+.clock {
+    position:relative;
+    margin-left: 25px;
 }
