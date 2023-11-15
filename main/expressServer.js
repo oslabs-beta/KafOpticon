@@ -36,7 +36,7 @@ app.use((err, req, res, next) => {
     ...defaultErr,
     ...err
   };
-
+  console.log(trueError.message);
   console.log(trueError.log);
   res.status(trueError.status).send(trueError.message);
 });
