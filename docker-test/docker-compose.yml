@@ -12,6 +12,11 @@ services:
       - '3000:3000'
     depends_on:
       - prometheus
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ../grafana/Dockerfile/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ../grafana/Dockerfile/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ../grafana/grafana.ini:/etc/grafana/grafana.ini
     environment:
       GF_SECURITY_ADMIN_USER: 'admin'
       GF_SECURITY_ADMIN_PASSWORD: 'admin'
