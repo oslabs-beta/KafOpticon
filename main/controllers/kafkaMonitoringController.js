@@ -5,6 +5,20 @@ const docker = new Docker();
 
 const kafkaMonitoringController = {};
 
+async function createNetwork() {
+  try {
+    const networkName = 'monitoring_network_test';
+    const network = await docker.createNetwork({
+      Name: networkName,
+      Driver: 'bridge',
+    });
+    return networkName;
+  } catch (err) {
+    console.error('Error in creating network:', err);
+    throw err;
+  }
+}
+
 async function generatePrometheusConfig(kafkaJmxEndpoints) {
   const prometheusConfigTemplate = `
 global:
@@ -23,7 +37,7 @@ scrape_configs:
   );
 }
 
-async function createPrometheusContainer() {
+async function createPrometheusContainer(networkName) {
   try {
     const promConfigPath = path.join(__dirname, 'prometheus.yml');
     const container = await docker.createContainer({
@@ -40,6 +54,11 @@ async function createPrometheusContainer() {
       PortBindings: {
         '9090/tcp': [{ HostPort: '9090' }],
       },
+      NetworkingConfig: {
+        EndpointsConfig: {
+          [networkName]: {},
+        },
+      },
     });
     await container.start();
   } catch (err) {
@@ -48,7 +67,7 @@ async function createPrometheusContainer() {
   }
 }
 
-async function createGrafanaContainer() {
+async function createGrafanaContainer(networkName) {
   try {
     const container = await docker.createContainer({
       Image: 'grafana/grafana:latest',
@@ -69,6 +88,11 @@ async function createGrafanaContainer() {
         'GF_SECURITY_ALLOW_EMBEDDING=true',
         'GF_AUTH_ANONYMOUS_ENABLED=true',
       ],
+      NetworkingConfig: {
+        EndpointsConfig: {
+          [networkName]: {},
+        },
+      },
     });
     await container.start();
   } catch (err) {
@@ -79,9 +103,10 @@ async function createGrafanaContainer() {
 kafkaMonitoringController.setUpDocker = async (req, res, next) => {
   try {
     const { kafkaJmxEndpoints } = req.body;
+    const networkName = await createNetwork();
     await generatePrometheusConfig(kafkaJmxEndpoints);
-    await createPrometheusContainer();
-    await createGrafanaContainer();
+    await createPrometheusContainer(networkName);
+    await createGrafanaContainer(networkName);
 
     res.send('Monitoring setup initiated successfully.');
   } catch (err) {
