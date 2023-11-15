@@ -9,10 +9,14 @@ const router = express.Router();
 router.post('/',
   // addressController.checkForDocker,
   // addressController.bootUpDocker,
-  grafanaController.startGrafana,
+  // grafanaController.startGrafana,
   addressController.writeJmxConfig,
   addressController.connectToKafka,
   addressController.startPrometheus,
+  grafanaController.getPrometheus,
+  grafanaController.createPromSource,
+  grafanaController.getPrometheus,
+  grafanaController.generateDashJson,
   grafanaController.createDashboard,
   (req, res) => {
     res.status(200).send();

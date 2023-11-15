@@ -16,6 +16,60 @@ class GrafanaError {
   }
 }
 
+grafanaController.getPrometheus = async (req, res, next) => {
+  // get the uid of local user's prometheus data source
+  if (res.locals.prom) return next();
+  try {
+    const response = await fetch('http://localhost:3000/api/datasources/name/Prometheus');
+    const data = await response.json();
+    if (data.uid) {
+      res.locals.promUid = data.uid;
+      res.locals.prom = true;
+    }
+
+  } catch (err) {
+    next(new GrafanaError('getPrometheus', 500, err));
+  }
+  
+  next();
+};
+
+grafanaController.createPromSource = async (req, res, next) => {
+  // if the user does not have prometheus set up as a data source, create it
+
+  if (res.locals.prom) return next();
+
+  const body = {
+    name: 'Prometheus',
+    type: 'prometheus',
+    url: 'http://localhost:9090',
+    access: 'proxy',
+    basicAuth: false
+  };
+
+  const response = await fetch('http://localhost:3000/api/datasources', {
+    method: 'POST',
+    body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  const data = await response.json();
+  console.log('response to create request: ', data);
+
+  next();
+};
+
+grafanaController.generateDashJson = (req, res, next) => {
+  // generate the dashboard json based on gathered (or generated) prometheus uid
+
+  const array = dashboardJSON.dashboard.panels;
+  for (let i = 0; i < array.length; i += 1) {
+    array[i].datasource.uid = res.locals.promUid;
+    array[i].targets[0].datasource.uid = res.locals.promUid;
+  }
+  next();
+};
 
 grafanaController.startGrafana = (req, res, next) => {
   // create a child process that boots up grafana
