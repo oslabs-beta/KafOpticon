@@ -27,7 +27,7 @@ module.exports = {
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "ef03d81f-d73d-4d51-b52f-e5a09345738d"
+          "uid": "cheesy"
         },
         "fieldConfig": {
           "defaults": {
@@ -106,7 +106,7 @@ module.exports = {
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "ef03d81f-d73d-4d51-b52f-e5a09345738d"
+              "uid": "cheesy"
             },
             "disableTextWrap": false,
             "editorMode": "builder",
@@ -126,7 +126,7 @@ module.exports = {
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "ef03d81f-d73d-4d51-b52f-e5a09345738d"
+          "uid": "cheesy"
         },
         "fieldConfig": {
           "defaults": {
@@ -173,7 +173,7 @@ module.exports = {
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "ef03d81f-d73d-4d51-b52f-e5a09345738d"
+              "uid": "cheesy"
             },
             "disableTextWrap": false,
             "editorMode": "builder",
@@ -193,7 +193,7 @@ module.exports = {
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "ef03d81f-d73d-4d51-b52f-e5a09345738d"
+          "uid": "cheesy"
         },
         "fieldConfig": {
           "defaults": {
@@ -272,7 +272,7 @@ module.exports = {
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "ef03d81f-d73d-4d51-b52f-e5a09345738d"
+              "uid": "cheesy"
             },
             "disableTextWrap": false,
             "editorMode": "builder",
@@ -292,7 +292,7 @@ module.exports = {
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "ef03d81f-d73d-4d51-b52f-e5a09345738d"
+          "uid": "cheesy"
         },
         "fieldConfig": {
           "defaults": {
@@ -374,7 +374,7 @@ module.exports = {
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "ef03d81f-d73d-4d51-b52f-e5a09345738d"
+              "uid": "cheesy"
             },
             "disableTextWrap": false,
             "editorMode": "builder",
@@ -394,7 +394,7 @@ module.exports = {
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "ef03d81f-d73d-4d51-b52f-e5a09345738d"
+          "uid": "cheesy"
         },
         "fieldConfig": {
           "defaults": {
@@ -473,7 +473,7 @@ module.exports = {
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "ef03d81f-d73d-4d51-b52f-e5a09345738d"
+              "uid": "cheesy"
             },
             "disableTextWrap": false,
             "editorMode": "builder",
@@ -493,7 +493,7 @@ module.exports = {
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "ef03d81f-d73d-4d51-b52f-e5a09345738d"
+          "uid": "cheesy"
         },
         "fieldConfig": {
           "defaults": {
@@ -572,7 +572,7 @@ module.exports = {
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "ef03d81f-d73d-4d51-b52f-e5a09345738d"
+              "uid": "cheesy"
             },
             "disableTextWrap": false,
             "editorMode": "builder",
@@ -592,7 +592,7 @@ module.exports = {
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "ef03d81f-d73d-4d51-b52f-e5a09345738d"
+          "uid": "cheesy"
         },
         "fieldConfig": {
           "defaults": {
@@ -642,7 +642,7 @@ module.exports = {
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "ef03d81f-d73d-4d51-b52f-e5a09345738d"
+              "uid": "cheesy"
             },
             "disableTextWrap": false,
             "editorMode": "builder",
