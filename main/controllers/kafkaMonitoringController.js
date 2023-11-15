@@ -5,83 +5,49 @@ const docker = new Docker();
 
 const kafkaMonitoringController = {};
 
-async function generatePrometheusConfig(jmxExporterEndpoint) {
+async function generatePrometheusConfig(kafkaJmxEndpoints) {
   const prometheusConfigTemplate = `
 global:
-scrape_interval: 15s
+  scrape_interval: 15s
 
 scrape_configs:
-- job_name: 'jmx-exporter'
-  static_configs:
-    - targets: ['${jmxExporterEndpoint}']
+  - job_name: 'kafka'
+    static_configs:
+     - targets: ['${kafkaJmxEndpoints}']
 `;
 
   // Write the configuration to a file
   fs.writeFileSync(
     path.join(__dirname, 'prometheus.yml'),
-    prometheusConfigTemplate,
+    prometheusConfigTemplate.trim(),
   );
-}
-
-async function createJMXExporterContainer(exposedPort, internalPort) {
-  try {
-    // Absolute path to the JMX Exporter config file
-    const jmxConfigPath = path.join(__dirname, 'jmx-exporter-config.yml');
-
-    const container = await docker.createContainer({
-      Image: 'prom/jmx-exporter',
-      Cmd: ['--config.file=/etc/jmx_exporter/config.yml'],
-      ExposedPorts: {
-        [`${internalPort}/tcp`]: {},
-      },
-      PortBindings: {
-        [`${internalPort}/tcp`]: [
-          {
-            HostPort: `${exposedPort}`,
-          },
-        ],
-      },
-      HostConfig: {
-        Binds: [`${jmxConfigPath}:/etc/jmx_exporter/config.yml`],
-      },
-    });
-    await container.start();
-  } catch (err) {
-    console.log('Error in creating JMX Exporter container:', err);
-  }
 }
 
 async function createPrometheusContainer() {
   try {
+    const promConfigPath = path.join(__dirname, 'prometheus.yml');
     const container = await docker.createContainer({
       Image: 'prom/prometheus:latest',
       Volumes: {
         '/etc/prometheus/prometheus.yml': {},
       },
       HostConfig: {
-        Binds: [
-          `${path.join(
-            __dirname,
-            'prometheus.yml',
-          )}:/etc/prometheus/prometheus.yml`,
-        ],
+        Binds: [`${promConfigPath}:/etc/prometheus/prometheus.yml`],
       },
       ExposedPorts: {
         '9090/tcp': {},
       },
       PortBindings: {
-        '9090/tcp': [
-          {
-            HostPort: '9090',
-          },
-        ],
+        '9090/tcp': [{ HostPort: '9090' }],
       },
     });
     await container.start();
   } catch (err) {
-    console.log('Error in creating Prometheus container:', err);
+    console.error('Error in creating Prometheus container:', err);
+    throw err;
   }
 }
+
 async function createGrafanaContainer() {
   try {
     const container = await docker.createContainer({
@@ -112,11 +78,11 @@ async function createGrafanaContainer() {
 
 kafkaMonitoringController.setUpDocker = async (req, res, next) => {
   try {
-    const { jmxEndpoint, kafkaBroker } = req.body;
-    await generatePrometheusConfig(jmxExporterPort);
-    await createJMXExporterContainer(jmxExporterPort, 9999);
+    const { kafkaJmxEndpoints } = req.body;
+    await generatePrometheusConfig(kafkaJmxEndpoints);
     await createPrometheusContainer();
     await createGrafanaContainer();
+
     res.send('Monitoring setup initiated successfully.');
   } catch (err) {
     console.log('Setup failed:', err);

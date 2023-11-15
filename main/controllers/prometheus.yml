@@ -2,6 +2,6 @@ global:
   scrape_interval: 15s
 
 scrape_configs:
-  - job_name: 'jmx-exporter'
+  - job_name: 'kafka'
     static_configs:
-      - targets: ['<JMX_EXPORTER_ENDPOINT>']
+      - targets: ['<KAFKA_JMX_ENDPOINTS>']
