@@ -7,7 +7,7 @@ const kafkaMonitoringController = {};
 
 async function createNetwork() {
   try {
-    const networkName = 'monitoring_network_test4';
+    const networkName = 'monitoring_network_test8';
     const network = await docker.createNetwork({
       Name: networkName,
       Driver: 'bridge',
@@ -19,7 +19,13 @@ async function createNetwork() {
   }
 }
 
-async function generatePrometheusConfig(kafkaJmxEndpoints) {
+async function generatePrometheusConfig(jmxPorts) {
+  const jmxTargets = [];
+  if (jmxPorts.every(port => port.includes(':'))) {
+    jmxTargets = jmxPorts;
+  } else {
+    jmxTargets = kafkaEndpoints.map(port => `host.docker.internal:${port}`);
+  }
   const prometheusConfigTemplate = `
 global:
   scrape_interval: 15s
@@ -27,10 +33,9 @@ global:
 scrape_configs:
   - job_name: 'kafka'
     static_configs:
-     - targets: ['${kafkaJmxEndpoints}']
+     - targets: ${JSON.stringify(jmxTargets)}
 `;
 
-  // Write the configuration to a file
   fs.writeFileSync(
     path.join(__dirname, 'prometheus.yml'),
     prometheusConfigTemplate.trim(),
@@ -103,9 +108,9 @@ async function createGrafanaContainer(networkName) {
 
 kafkaMonitoringController.setUpDocker = async (req, res, next) => {
   try {
-    const { kafkaJmxEndpoints } = req.body;
+    const { jmxPorts } = req.body;
     const networkName = await createNetwork();
-    // await generatePrometheusConfig(kafkaJmxEndpoints);
+    await generatePrometheusConfig(jmxPorts);
     await createPrometheusContainer(networkName);
     await createGrafanaContainer(networkName);
 
