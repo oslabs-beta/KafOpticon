@@ -5,12 +5,13 @@ const app = express();
 const path = require('path');
 
 const addressRouter = require('./routers/addressRouter');
+const kafkaMonitoringRouter = require('./routers/kafkaMonitoringRouter');
 
 const PORT = 3010;
 
 // parse incoming data
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 
 // serve static files
 // may be unnecessary
@@ -18,6 +19,8 @@ app.use(express.static('dist'));
 
 // handle form data to address route with address router
 app.use('/address', addressRouter);
+
+app.use('/setup-kafka-monitoring', kafkaMonitoringRouter);
 
 // handle unknown routes
 app.use((req, res) => {
@@ -29,12 +32,12 @@ app.use((err, req, res, next) => {
   const defaultErr = {
     log: 'An error occurred',
     status: 500,
-    message: {err: 'Watch out for those errors'}
+    message: { err: 'Watch out for those errors' },
   };
 
   const trueError = {
     ...defaultErr,
-    ...err
+    ...err,
   };
   console.log(trueError.message);
   console.log(trueError.log);
