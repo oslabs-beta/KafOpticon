@@ -1,3 +1,5 @@
+local-test/data
+
 # Logs
 logs
 *.log
