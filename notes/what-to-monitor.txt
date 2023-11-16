@@ -3,3 +3,92 @@
  OfflinePartitionsCount
  UncleanLeaderElectionsPerSec
 at a minimum
+
+-disk throughput tends to be the main bottleneck in kafka
+-throughput measures how efficiently kafka is in using the hardware, specifically disks and CPU
+-latency measures how close kafka is to delivering real-time messaging
+
+-I want there to be a health dashboard and a speed/throughput/latency dashboard
+-I want there to be around four metrics for each preset dashboard
+
+--health dashboard
+  --under replicated partitions
+    --alert if exceeds zero for (x) seconds
+  --offline partitions count
+    --alert if exceeds zero
+  --active controller count
+    --alert if any value other than one lasts for longer than one second
+  --unclean leader elections per second
+    --alert on any non-zero, as it means data loss
+
+--performance/throughput dashboard
+  --total time ms
+  --bytes in per sec
+  --bytes out per sec
+  --(problem here is that some of the good performance/throughput metrics are on producers and consumers)
+
+--Possible Health Metrics
+   -partition health
+     -Under Replicated Partitions
+       -if this exceeds zero for some time, look into it
+     -Offline Partitions Count
+       -reports number of partitions without an active leader
+       -alert on any number other than zero, to prevent service interruptions
+   -Broker Health
+     -Active Controller Count
+       -should always be 1, alert if any other value lasts longer than one second
+     -Unclean Leader elections per sec
+       -alert on any non-zero, as it means data loss
+     -Lead election rate and time
+--Possible throughput/latency metrics
+  -total time ms
+    -total time taken to service a request
+  -purgatory size
+    -can indicate the cause of latency
+  -bytes in per sec and bytes out per sec
+    -tracks network throughput
+  -requests per sec
+    -if this remains high, consider increasing batch size
+
+
+Host level metrics
+ --Disk usage
+  --kafka will fail if it runs out of disk space to write to, so this matters
+
+Garbage collection metrics
+ --young generation garbage collection time
+   -occurs often and stops all application threads
+   -therefore, any increase in this metric is a corresponding decrease in speed/performance
+ --old generation garbage collection time
+   -does not stop application threads to the same extent
+   -if it is happening often, or is taking a few seconds to complete, the cluster may not have enough memory to function efficiently
+
+Producer metrics
+  --response rate
+    -the rate at which the producer receives the response from the broker
+  --request rate
+    -the rate at which requests are being sent
+  --request latency average
+    -how long betwee KafkaProducer.send() and the producer receiving a response
+  --outgoing byte rate
+    -measures throughput
+  --batch size
+
+Consumer metrics
+  -this is a performance metric
+   --records lag 
+      -number of messages consumer is behind producer on a given partition
+  -these are throughput metrics
+   --bytes consumed rate
+      -average number of bytes consumed per second for a specific topic or across all topics
+   --records consumed rate
+      -same idea but with records
+  --fetch rate
+    -number of fetch requests the consumer makes (per seccond)
+
+Zookeeper metrics
+  -number of alive connections
+    --whatever is connected to zookeeper: other zookeepers, brokers, consumers, producers
+    --therefore, number should remain highly though not perfectly static
+  -pending syncs
+    --this is where zookeeper performance can bottleneck, so might be worth keeping an eye on

@@ -46,8 +46,8 @@ const handleConnect = (event, data) => {
 // when electron is finished initializing and the 'ready' event is
 // emitted, boot up express server, set up ipc apis, and run createWindow
 app.on('ready', () => {
-  expressServer.listen(3001, () => {
-    console.log('Server listening on port 3001');
+  expressServer.listen(3010, () => {
+    console.log('Server listening on port 3010');
   });
   ipcMain.on('connect', handleConnect);
   createWindow();
