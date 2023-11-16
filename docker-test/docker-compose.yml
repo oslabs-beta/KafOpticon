@@ -85,7 +85,10 @@ services:
     ports:
       - '3000:3000'
     depends_on:
-      - prometheus
+      prometheus:
+        condition: service_started 
+      
+       
     volumes:
       - grafana-storage:/var/lib/grafana
       - ../grafana/Dockerfile/provisioning/dashboards:/etc/grafana/provisioning/dashboards
