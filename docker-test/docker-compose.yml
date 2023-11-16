@@ -100,6 +100,7 @@ services:
       GF_USERS_ALLOW_SIGN_UP: 'false'
       GF_SECURITY_ALLOW_EMBEDDING: 'true'
       GF_AUTH_ANONYMOUS_ENABLED: 'true'
+      GF_INSTALL_PLUGINS: grafana-clock-panel
    
 
 
