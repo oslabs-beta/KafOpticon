@@ -7,7 +7,7 @@ const kafkaMonitoringController = {};
 
 async function createNetwork() {
   try {
-    const networkName = 'monitoring_network_test8';
+    const networkName = 'monitoring_network_test9';
     const network = await docker.createNetwork({
       Name: networkName,
       Driver: 'bridge',
@@ -20,12 +20,12 @@ async function createNetwork() {
 }
 
 async function generatePrometheusConfig(jmxPorts) {
-  const jmxTargets = [];
-  if (jmxPorts.every(port => port.includes(':'))) {
-    jmxTargets = jmxPorts;
-  } else {
-    jmxTargets = kafkaEndpoints.map(port => `host.docker.internal:${port}`);
-  }
+  // const jmxTargets = [];
+  // if (jmxPorts.every(port => port.includes(':'))) {
+  //   jmxTargets = jmxPorts;
+  // } else {
+  jmxTargets = jmxPorts.map(port => `host.docker.internal:${port}`);
+  // }
   const prometheusConfigTemplate = `
 global:
   scrape_interval: 15s
@@ -77,15 +77,23 @@ async function createGrafanaContainer(networkName) {
   try {
     const container = await docker.createContainer({
       Image: 'grafana/grafana:latest',
+      Volumes: {
+        '/etc/grafana/provisioning/datasources/datasource.yml': {},
+      },
       ExposedPorts: {
         '3000/tcp': {},
       },
-      PortBindings: {
-        '3000/tcp': [
-          {
-            HostPort: '3000',
-          },
+      HostConfig: {
+        Binds: [
+          '../../grafana/Dockerfile/provisioning/datasources/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml',
         ],
+        PortBindings: {
+          '3000/tcp': [
+            {
+              HostPort: '3000',
+            },
+          ],
+        },
       },
       Env: [
         'GF_SECURITY_ADMIN_USER=admin',

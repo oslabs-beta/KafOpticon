@@ -2,54 +2,83 @@ version: '3'
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
+    container_name: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - '2181:2181'
 
-  kafka1:
+  schema-registry:
+    image: confluentinc/cp-schema-registry:latest
+    hostname: schema-registry
+    depends_on:
+      - kafka-broker-1
+      - kafka-broker-2
+      - kafka-broker-3
+    ports:
+      - '8081:8081'
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
+      SCHEMA_REGISTRY_LISTENERS: http://schema-registry:8081
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka-broker-2:9092,PLAINTEXT_INTERNAL://localhost:29092
+      SCHEMA_REGISTRY_DEBUG: 'true'
+
+  kafka-broker-1:
     image: confluentinc/cp-kafka:latest
+    hostname: kafka-broker-1
+    ports:
+      - '19092:19092'
+      - '9991:9999'
+    volumes:
+      - ../docker-test/jmx_prometheus_javaagent-0.20.0.jar:/usr/app/jmx_prometheus_javaagent.jar
+      - ../docker-test/kafka-jmx-exporter-config.yml:/usr/app/kafka-jmx-exporter-config.yml
     depends_on:
       - zookeeper
-    ports:
-      - 9095:9092
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:9092,PLAINTEXT_HOST://localhost:9095
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker-1:9092,PLAINTEXT_HOST://localhost:19092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-
-  kafka2:
+      KAFKA_JMX_HOSTNAME: kafka-broker-1
+      KAFKA_JVM_PERFORMANCE_OPTS: '-javaagent:/usr/app/jmx_prometheus_javaagent.jar=9999:/usr/app/kafka-jmx-exporter-config.yml'
+  kafka-broker-2:
     image: confluentinc/cp-kafka:latest
+    hostname: kafka-broker-2
+    ports:
+      - '29092:29092'
+      - '9992:9999'
+    volumes:
+      - ../docker-test/jmx_prometheus_javaagent-0.20.0.jar:/usr/app/jmx_prometheus_javaagent.jar
+      - ../docker-test/kafka-jmx-exporter-config.yml:/usr/app/kafka-jmx-exporter-config.yml
     depends_on:
       - zookeeper
-    ports:
-      - 9093:9092
     environment:
       KAFKA_BROKER_ID: 2
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:9092,PLAINTEXT_HOST://localhost:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker-2:9092,PLAINTEXT_HOST://localhost:29092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-
-  kafka3:
+      KAFKA_JMX_HOSTNAME: kafka-broker-2
+      KAFKA_JVM_PERFORMANCE_OPTS: '-javaagent:/usr/app/jmx_prometheus_javaagent.jar=9999:/usr/app/kafka-jmx-exporter-config.yml'
+  kafka-broker-3:
     image: confluentinc/cp-kafka:latest
+    hostname: kafka-broker-3
+    ports:
+      - '39092:39092'
+      - '9993:9999'
+    volumes:
+      - ../docker-test/jmx_prometheus_javaagent-0.20.0.jar:/usr/app/jmx_prometheus_javaagent.jar
+      - ../docker-test/kafka-jmx-exporter-config.yml:/usr/app/kafka-jmx-exporter-config.yml
     depends_on:
       - zookeeper
-    ports:
-      - 9094:9092
     environment:
       KAFKA_BROKER_ID: 3
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka3:9092,PLAINTEXT_HOST://localhost:9094
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker-3:9092,PLAINTEXT_HOST://localhost:39092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_JMX_HOSTNAME: kafka-broker-3
+      KAFKA_JVM_PERFORMANCE_OPTS: '-javaagent:/usr/app/jmx_prometheus_javaagent.jar=9999:/usr/app/kafka-jmx-exporter-config.yml'
