@@ -88,8 +88,7 @@ services:
       prometheus:
         condition: service_started
         
-      
-       
+          
     volumes:
       - grafana-storage:/var/lib/grafana
       - ../grafana/Dockerfile/provisioning/dashboards:/etc/grafana/provisioning/dashboards
