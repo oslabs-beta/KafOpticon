@@ -1,7 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-
 module.exports = [
   {
     mode: 'development',
@@ -9,7 +8,7 @@ module.exports = [
     target: 'electron-renderer',
     output: {
       path: path.join(__dirname, 'dist'),
-      filename: 'react.js'
+      filename: 'react.js',
     },
     module: {
       rules: [
@@ -19,17 +18,17 @@ module.exports = [
           use: {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env', '@babel/preset-react']
-            }
-          }
+              presets: ['@babel/preset-env', '@babel/preset-react'],
+            },
+          },
         },
         {
           test: /\.s[ac]ss$/i,
-          use: ['style-loader', 'css-loader', 'sass-loader']
+          use: ['style-loader', 'css-loader', 'sass-loader'],
         },
         {
           test: /\.css$/,
-          use: ['style-loader', 'css-loader']
+          use: ['style-loader', 'css-loader'],
         },
         {
           test: /\.(png|jpg|jpeg|gif|svg)$/,
@@ -37,20 +36,19 @@ module.exports = [
             {
               loader: 'file-loader',
               options: {
-                name: '[name].[ext]', // Output file name
-                outputPath: 'images', // Output directory for images
+                name: '[name].[ext]',
+                outputPath: 'images',
               },
             },
-      ]
-    },
-  ]
+          ],
+        },
+      ],
     },
 
     plugins: [
       new HtmlWebpackPlugin({
-        template: path.join(__dirname, 'src', 'index.html')
-      })
-    ]
-  }
+        template: path.join(__dirname, 'src', 'index.html'),
+      }),
+    ],
+  },
 ];
-
