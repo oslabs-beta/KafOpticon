@@ -1,3 +1,5 @@
+data
+
 # Logs
 logs
 *.log
@@ -131,3 +133,5 @@ dist
 
 #DS_Store
 main/.DS_Store
+# env
+.env

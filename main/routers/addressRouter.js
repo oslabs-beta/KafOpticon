@@ -7,19 +7,19 @@ const grafanaController = require('../controllers/grafanaController');
 const router = express.Router();
 
 router.post('/',
-  // addressController.checkForDocker,
-  // addressController.bootUpDocker,
+  addressController.checkForDocker,
+  addressController.bootUpDocker,
   // grafanaController.startGrafana,
-  addressController.writeJmxConfig,
-  addressController.connectToKafka,
-  addressController.startPrometheus,
-  grafanaController.getPrometheus,
-  grafanaController.createPromSource,
-  grafanaController.getPrometheus,
-  grafanaController.generateDashJson,
-  grafanaController.createDashboard,
+  // addressController.writeJmxConfig,
+  // addressController.connectToKafka,
+  // addressController.startPrometheus,
+  // grafanaController.getPrometheus,
+  // grafanaController.createPromSource,
+  // grafanaController.getPrometheus,
+  // grafanaController.generateDashJson,
+  // grafanaController.createDashboard,
   (req, res) => {
-    res.status(200).send();
+    res.redirect('back');
   }
 );
 
