@@ -5,7 +5,7 @@ Kafka cluster visualizer
 Preconditions: Prometheus and Grafana must be installed
 Grafana must be running already and must be configured to allow anonymous access with the admin role in the Main Org.
 
-Open up two terminals in the local-test directory.
+Open up two terminals in the root directory.
 Run 'npm run bootZoo' and 'npm run bootKaf1'.
 Open up a terminal in the root directory.
 Run 'npm start'.

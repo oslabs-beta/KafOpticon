@@ -10,3 +10,4 @@ datasources:
     # basicAuth: false
     isDefault: true
     editable: true
+    uid: f370827f-878f-4256-a0d4-192418827a14
