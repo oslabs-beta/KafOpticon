@@ -17,7 +17,7 @@ class ACError {
 
 addressController.writeJmxConfig = async (req, res, next) => {
   // write the jmx config file using the user inputted kafka address
-
+  console.log('entered writeJmxConfig');
 
   const templateFileAddress = path.join(__dirname, '..', '..', 'local-test', 'scraping-config', 'jmxConfigTemplate.yml');
   const destination = path.join(__dirname, '..', '..', 'local-test', 'scraping-config', 'jmxconfig.yml'); 
@@ -93,6 +93,7 @@ addressController.bootUpDocker = (req, res, next) => {
 
 addressController.connectToKafka = (req, res, next) => {
   // create child process that runs jmx exporter and connect it to the kafka cluster
+  console.log('entered conntectToKafka');
 
   const child = spawn('npm run exportJmx', {
     shell: true,
@@ -105,6 +106,7 @@ addressController.connectToKafka = (req, res, next) => {
 
 addressController.startPrometheus = (req, res, next) => {
   // create child process that runs prometheus and connect it to jmx exporter
+  console.log('entered startPrometheus');
 
   const child = spawn('npm run prometheus', {
     shell: true,

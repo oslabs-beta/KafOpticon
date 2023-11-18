@@ -2,7 +2,8 @@
 const path = require('path');
 const { spawn } = require('child_process');
 
-const dashboardJSON = require('../dashboards/dashboard');
+const dashboardJSON = require('../dashboards/bigDashboard');
+// const dashboardJSON = require('../dashboards/dashboard');
 // const performanceBody = require('../dashboards/performance');
 // const testDbJson = require('../dashboards/test');
 
@@ -17,6 +18,7 @@ class GrafanaError {
 }
 
 grafanaController.getPrometheus = async (req, res, next) => {
+  console.log('entered getPrometheus');
   // get the uid of local user's prometheus data source
   if (res.locals.prom) return next();
   try {
@@ -36,6 +38,7 @@ grafanaController.getPrometheus = async (req, res, next) => {
 
 grafanaController.createPromSource = async (req, res, next) => {
   // if the user does not have prometheus set up as a data source, create it
+  console.log('entered createPromSource');
 
   if (res.locals.prom) return next();
 
@@ -62,12 +65,18 @@ grafanaController.createPromSource = async (req, res, next) => {
 
 grafanaController.generateDashJson = (req, res, next) => {
   // generate the dashboard json based on gathered (or generated) prometheus uid
+  console.log('entered generateDashJson');
 
-  const array = dashboardJSON.dashboard.panels;
+  try { const array = dashboardJSON.dashboard.panels;
   for (let i = 0; i < array.length; i += 1) {
-    array[i].datasource.uid = res.locals.promUid;
-    array[i].targets[0].datasource.uid = res.locals.promUid;
+    if (array[i].datasource.uid !== undefined) array[i].datasource.uid = res.locals.promUid;
+    if (array[i].targets) {
+      if (array[i].targets[0].datasource.uid !== undefined) array[i].targets[0].datasource.uid = res.locals.promUid;
+    }
   }
+} catch (err){
+  return next(new GrafanaError('generateDashJson', 500, err));
+}
   next();
 };
 
