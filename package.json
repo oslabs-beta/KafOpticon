@@ -6,7 +6,15 @@
     "test": "jest --verbose",
     "build": "webpack --config ./webpack.config.js --watch",
     "start": "concurrently \"npm run build\" \"electron main/electron.js\" --kill-others",
-    "server": "nodemon main/expressServer.js"
+    "server": "nodemon main/expressServer.js",
+    "bootZoo": "zookeeper-server-start.sh ./local-test/kafka-config/zookeeper.properties",
+    "bootKaf1": "JMX_PORT=2020 kafka-server-start.sh ./local-test/kafka-config/server1.properties",
+    "bootKaf2": "kafka-server-start.sh ./local-test/kafka-config/server2.properties",
+    "bootKaf3": "kafka-server-start.sh ./local-test/kafka-config/server3.properties",
+    "consume": "kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic",
+    "produce": "node ./local-test/producers-and-consumers/producer.js",
+    "exportJmx": "java -jar local-test/jmx_prometheus_httpserver-0.19.0.jar 3030 ./local-test/scraping-config/jmxconfig.yml",
+    "prometheus": "prometheus --config.file=./local-test/scraping-config/prometheus.yml"
   },
   "repository": {
     "type": "git",
@@ -40,6 +48,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "dockerode": "^4.0.0",
     "express": "^4.18.2",
     "kafkajs": "^2.2.4",
     "react": "^18.2.0",

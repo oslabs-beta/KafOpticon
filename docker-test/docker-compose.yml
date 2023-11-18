@@ -85,9 +85,10 @@ services:
     ports:
       - '3000:3000'
     depends_on:
-      - 'prometheus'
-      
-       
+      prometheus:
+        condition: service_started
+        
+          
     volumes:
       - grafana-storage:/var/lib/grafana
       - ../grafana/Dockerfile/provisioning/dashboards:/etc/grafana/provisioning/dashboards
@@ -99,9 +100,7 @@ services:
       GF_USERS_ALLOW_SIGN_UP: 'false'
       GF_SECURITY_ALLOW_EMBEDDING: 'true'
       GF_AUTH_ANONYMOUS_ENABLED: 'true'
-      GF_INSTALL_PLUGGINS: grafana-clock-panel
-     
-
+   
 
 
 
