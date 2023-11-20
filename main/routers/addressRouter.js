@@ -3,6 +3,7 @@
 const express = require('express');
 const addressController = require('../controllers/addressController');
 const grafanaController = require('../controllers/grafanaController');
+const alertController = require('../controllers/alertsController')
 
 const router = express.Router();
 

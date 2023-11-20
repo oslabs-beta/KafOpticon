@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Menu from './Menu.jsx';
-import PerformaceContainer from './PerformanceContainer.jsx';
-
+import PerformanceContainer from './PerformanceContainer.jsx';
+import AlertsContainer from './AlertsContainer.jsx';
 import MetricsContainer from './MetricsContainer.jsx';
 
 function MainContainer() {
@@ -11,7 +11,8 @@ function MainContainer() {
       <Menu />
       <Routes>
         <Route path='/' element={<MetricsContainer />} />
-        <Route path='/performance' element={<PerformaceContainer />} />
+        <Route path='/performance' element={<PerformanceContainer />} />
+        <Route path='/alerts' element={<AlertsContainer />} />
       </Routes>
     </section>
   );

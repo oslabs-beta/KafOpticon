@@ -49,6 +49,24 @@ body {
     border-radius: 10px;
 }
 
+#alertsContainer {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* flex-grow: 1; */
+    justify-content: flex-start;
+    align-content: flex-start;
+    background-color: rgb(60, 114, 186, .3);
+    margin-right: 30px;
+    border-style: none;
+    border-color: black;
+    box-shadow: 10px 5px 5px rgb(1,116,190);
+    /* height: 100%; */
+    width: 100%;
+    border-radius: 10px;
+}
+
 #menu{
     position:relative;
     display:flex;
@@ -150,4 +168,8 @@ body {
 .clock {
     position:relative;
     margin-left: 25px;
+}
+
+#alerts {
+    background-color: orange;
 }
