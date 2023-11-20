@@ -15,35 +15,52 @@ class ACError {
 }
 
 
-addressController.writeJmxConfig = async (req, res, next) => {
+addressController.writeJmxConfig1 = (req, res, next) => {
+  // gets information off the request body and puts a transformation of it onto res.locals
+  const { address } = req.body;
+
+  res.locals.jmxConfig = `hostPort: ${address}\n`;
+
+  next();
+};
+
+addressController.writeJmxConfig2 = async (req, res, next) => {
   // write the jmx config file using the user inputted kafka address
   console.log('entered writeJmxConfig');
 
   const templateFileAddress = path.join(__dirname, '..', '..', 'local-test', 'scraping-config', 'jmxConfigTemplate.yml');
   const destination = path.join(__dirname, '..', '..', 'local-test', 'scraping-config', 'jmxconfig.yml'); 
-  const { address } = req.body;
-  // console.log(address);
-  // PROBABLY SHOULD SANITIZE HERE
+  
+  
+  // const { address } = req.body;
+  // // console.log(address);
+  // // PROBABLY SHOULD SANITIZE HERE
 
-  const lineToAppend = `hostPort: ${address}`;
+  // const lineToAppend = `hostPort: ${address}`;
 
-  // a variable to store what is in the template config file
-  let newFileString = lineToAppend + '\n';
+  // // a variable to store what is in the template config file
+  // let newFileString = lineToAppend + '\n';
+
+  // res.locals.jmxConfig = newFileString;
+
+  let newFileString = res.locals.jmxConfig;
   
   // read the information from the template file and append it to newFileString
   try {
     const contents = await fsp.readFile(templateFileAddress, 'utf8');
-    newFileString += contents;
+    res.locals.jmxConfig += contents;
   } catch (err) {
-    return next(new ACError('writeJmxConfig', 422, err));
+    return next(new ACError('writeJmxConfig2', 422, err));
   }
 
   // write the newFileString to the destination file
   try {
-    await fsp.writeFile(destination, newFileString, 'utf8');
+    await fsp.writeFile(destination, res.locals.jmxConfig, 'utf8');
   } catch (err) {
-    return next(new ACError('writeJmxConfig', 422, err));
+    return next(new ACError('writeJmxConfig2', 422, err));
   }
+
+  // res.locals.jmxConfig = newFileString;
 
   return next();
 }
