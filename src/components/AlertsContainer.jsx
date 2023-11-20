@@ -15,7 +15,7 @@ function alertsContainer(){
         </form>
         <form id='appPasswordForm' action="http://localhost:3010/alerts" method="post">
             <input id='input' placeholder='Enter app password for email alerts' name="appPassword"></input>
-            <button id="submitbutton" onClick={handleClick}>Submit</button>
+            {/* <button id="submitbutton" onClick={handleClick}>Submit</button> */}
         </form>
         </div>
 </section>

@@ -1,4 +1,12 @@
 const express = require('express');
-const Router = express()
+const alertsController = require('../controllers/alertsController');
 
-module.exports = Router
+const router = express.Router();
+
+router.post('/', alertsController.writeAlertsInfo, (req, res) => {
+    res.status(200).json({ message: 'alert info accepted!' });
+})
+
+
+
+module.exports = router;
