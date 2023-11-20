@@ -1,6 +1,6 @@
 // this is the entry point for the app
 
-const { app, BrowserWindow, ipcMain, net } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 
 // require in express server so that it gets booted when electron app is ready
@@ -11,10 +11,7 @@ const expressServer = require('./expressServer');
 try {
   const electronReloader = require('electron-reloader');
   electronReloader(module, {
-    ignore: [
-      path.join(__dirname),
-      path.join(__dirname, '..', 'src')
-    ]
+    ignore: [path.join(__dirname), path.join(__dirname, '..', 'src')],
   });
 } catch {
   console.log('electron reloader failed');
@@ -23,11 +20,11 @@ try {
 const createWindow = () => {
   // create a browser window
   const win = new BrowserWindow({
-    height: 600,
+    height: 600, // look into auto full-screen?
     width: 800,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
-    }
+      preload: path.join(__dirname, 'preload.js'),
+    },
   });
 
   // load the index.html into it
@@ -40,8 +37,7 @@ const handleConnect = (event, data) => {
   const webContents = event.sender;
   const win = BrowserWindow.fromWebContents(webContents);
   win.setTitle(data);
-  
-}
+};
 
 // when electron is finished initializing and the 'ready' event is
 // emitted, boot up express server, set up ipc apis, and run createWindow
