@@ -130,8 +130,6 @@ addressController.startPrometheus = (req, res, next) => {
     stdio: 'inherit',
     cwd: path.join(__dirname, '..', '..', 'local-test')
   });
-
-  setTimeout(() => {next();}, 2000);
 };
 
 

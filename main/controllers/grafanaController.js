@@ -18,22 +18,23 @@ class GrafanaError {
 }
 
 grafanaController.getPrometheus = async (req, res, next) => {
-  console.log('entered getPrometheus');
+  // console.log('entered getPrometheus');
   // get the uid of local user's prometheus data source
   if (res.locals.prom) return next();
   try {
     const response = await fetch('http://localhost:3000/api/datasources/name/Prometheus');
     const data = await response.json();
+    
     if (data.uid) {
       res.locals.promUid = data.uid;
       res.locals.prom = true;
     }
 
   } catch (err) {
-    next(new GrafanaError('getPrometheus', 500, err));
+    return next(new GrafanaError('getPrometheus', 500, err));
   }
   
-  next();
+  return next();
 };
 
 grafanaController.createPromSource = async (req, res, next) => {
@@ -50,17 +51,21 @@ grafanaController.createPromSource = async (req, res, next) => {
     basicAuth: false
   };
 
-  const response = await fetch('http://localhost:3000/api/datasources', {
-    method: 'POST',
-    body: JSON.stringify(body),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
-  const data = await response.json();
-  console.log('response to create request: ', data);
+  try {
+    const response = await fetch('http://localhost:3000/api/datasources', {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = await response.json();
+    console.log('response to create request: ', data);
+  } catch (err) {
+    return next(new GrafanaError('createPromSource', 500, err));
+  }
 
-  next();
+  return next();
 };
 
 grafanaController.generateDashJson = (req, res, next) => {

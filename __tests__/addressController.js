@@ -2,6 +2,7 @@ const controller = require('../main/controllers/addressController');
 
 const { writeJmxConfig1, writeJmxConfig2, checkForDocker, bootUpDocker, connectToKafka, startPrometheus } = controller;
 
+// not sure how to test middleware that does nothing other than spawn child processes
 
 // get fs module in here so that I can mock it
 const fs = require('fs');
@@ -13,14 +14,6 @@ jest.mock('fs', () => {
   }}
 });
 
-// console.log(fs);
-
-// to test JmxConfig
-  // do not test whether fs function works--test whether you are passing in correct inputs to fs functions
-  // it is not your job to test node's fs module, it is your job to test your own code
-  // mock in a request body
-  // make sure the correct newFileString is created, both before fsp readFile is called and after ?? this may only be possible if writeJmxConfi is split up
-  // make sure next is being called once and only once
 describe ('writeJmxConfig1', () => {
 
   const req = {
@@ -69,6 +62,10 @@ describe('writeJmxConfig2', () => {
   });
   
   describe('handle failed fs API calls', () => {
+
+    beforeEach(() => {
+      next.mockClear();
+    });
     test('calls global error handler if readFile errors out', async () => {
       // how to make readFile return a rejected promise?
       fs.promises.readFile = jest.fn().mockRejectedValueOnce(new Error('oh no'));
@@ -79,6 +76,8 @@ describe('writeJmxConfig2', () => {
         log: 'An error occurred in addressController.writeJmxConfig2',
         status: 422
       }));
+
+      expect(next).toHaveBeenCalledTimes(1);
     });
 
     test('calls global error handler if writeFile errors out', async () => {
@@ -90,11 +89,16 @@ describe('writeJmxConfig2', () => {
         log: 'An error occurred in addressController.writeJmxConfig2',
         status: 422
       }));
+      expect(next).toHaveBeenCalledTimes(1);
     });
 
-    test('next is called once and only once in the event of a readFile error', () => {
+    test('next is called once and only once in the event of a readFile error', async () => {
       // how to do this?
-    });
+      const next = jest.fn();
+      fs.promises.readFile = jest.fn().mockRejectedValueOnce(new Error('oh no'));
+      await writeJmxConfig2(req, res, next);
 
+      expect(next).toHaveBeenCalledTimes(1);      
+    });
   });
  });
