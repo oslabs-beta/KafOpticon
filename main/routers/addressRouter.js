@@ -7,9 +7,6 @@ const grafanaController = require('../controllers/grafanaController');
 const router = express.Router();
 
 router.post('/',
-  // addressController.checkForDocker,
-  // addressController.bootUpDocker,
-  // grafanaController.startGrafana,
   addressController.writeJmxConfig1,
   addressController.writeJmxConfig2,
   addressController.connectToKafka,

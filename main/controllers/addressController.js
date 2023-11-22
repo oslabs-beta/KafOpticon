@@ -26,7 +26,7 @@ addressController.writeJmxConfig1 = (req, res, next) => {
 
 addressController.writeJmxConfig2 = async (req, res, next) => {
   // write the jmx config file using the user inputted kafka address
-  console.log('entered writeJmxConfig');
+  // console.log('entered writeJmxConfig2');
 
   const templateFileAddress = path.join(__dirname, '..', '..', 'local-test', 'scraping-config', 'jmxConfigTemplate.yml');
   const destination = path.join(__dirname, '..', '..', 'local-test', 'scraping-config', 'jmxconfig.yml'); 

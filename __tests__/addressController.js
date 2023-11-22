@@ -27,14 +27,17 @@ describe ('writeJmxConfig1', () => {
   beforeAll(() => {
     writeJmxConfig1(req, res, next);
   });
+  describe('', () => {
 
-  test('adds jmxConfig property to res.locals that is correct', () => {
-    expect(res.locals.jmxConfig).toBe('hostPort: localhost:2020\n');
-  });
+    test('adds jmxConfig property to res.locals that is correct', () => {
+      expect(res.locals.jmxConfig).toBe('hostPort: localhost:2020\n');
+    });
 
-  test('next is called once and only once', () => {
-    expect(next).toHaveBeenCalledTimes(1);
-  });
+    test('next is called once and only once', () => {
+      expect(next).toHaveBeenCalledTimes(1);
+    });
+    
+  })
 
 });
 

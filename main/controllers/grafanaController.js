@@ -39,7 +39,7 @@ grafanaController.getPrometheus = async (req, res, next) => {
 
 grafanaController.createPromSource = async (req, res, next) => {
   // if the user does not have prometheus set up as a data source, create it
-  console.log('entered createPromSource');
+  // console.log('entered createPromSource');
 
   if (res.locals.prom) return next();
 
@@ -70,45 +70,35 @@ grafanaController.createPromSource = async (req, res, next) => {
 
 grafanaController.generateDashJson = (req, res, next) => {
   // generate the dashboard json based on gathered (or generated) prometheus uid
-  console.log('entered generateDashJson');
+  // console.log('entered generateDashJson');
 
   try { const array = dashboardJSON.dashboard.panels;
-  for (let i = 0; i < array.length; i += 1) {
-    if (array[i].datasource.uid !== undefined) array[i].datasource.uid = res.locals.promUid;
-    if (array[i].targets) {
-      if (array[i].targets[0].datasource.uid !== undefined) array[i].targets[0].datasource.uid = res.locals.promUid;
+    for (let i = 0; i < array.length; i += 1) {
+      array[i].datasource.uid = res.locals.promUid;
+      if (array[i].targets) {
+        for (let j = 0; j < array[i].targets.length; j += 1) {
+          array[i].targets[j].datasource.uid = res.locals.promUid
+        }
+      }
     }
+  } catch (err){
+    return next(new GrafanaError('generateDashJson', 500, err));
   }
-} catch (err){
-  return next(new GrafanaError('generateDashJson', 500, err));
-}
+
+  res.locals.dashboardJSON = dashboardJSON;  
   next();
-};
-
-grafanaController.startGrafana = (req, res, next) => {
-  // create a child process that boots up grafana
-  console.log('entered startGrafana');
-
-  const child = spawn('brew services start grafana', {
-    shell: true,
-    stdio: 'inherit'
-  });
-
-  child.on('close', () => {
-    next();
-  });
 };
 
 grafanaController.createDashboard = async (req, res, next) => {
   // create a dashboard in grafana
 
-  console.log('entered createDashboard');
+  // console.log('entered createDashboard');
   // make post request to grafana dashboard api 
   try {
     const data = await fetch('http://localhost:3000/api/dashboards/db', {
       method: 'POST',
       // body: JSON.stringify(performanceBody),
-      body: JSON.stringify(dashboardJSON),
+      body: JSON.stringify(res.locals.dashboardJSON),
       // body: JSON.stringify(testDbJson),
       headers: {
         "Content-Type": 'application/json'
@@ -117,13 +107,13 @@ grafanaController.createDashboard = async (req, res, next) => {
 
     const text = await data.json();
     res.locals.grafanaResponse = text;
-    console.log('grafanaController.createDashboard= ~ text:', text);
+    // console.log('grafanaController.createDashboard= ~ text:', text);
+    next();
     
   } catch (err) {
     next(new GrafanaError('createDashboard', 500, err));
   }
 
-  next();
 };
 
 module.exports = grafanaController;
