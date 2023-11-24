@@ -40,6 +40,10 @@ describe('getPrometheus', () => {
       await getPrometheus(req, res, next);
     });
 
+    test('the correct argument is passed to fetch', () => {
+      expect(fetch).toHaveBeenCalledWith('http://localhost:3000/api/datasources/name/Prometheus');
+    });
+
     test('the correct data is added to res.locals', () => {
       expect(res.locals.promUid).toBe('f3re6');
       expect(res.locals.prom).toBe(true);
@@ -80,8 +84,6 @@ describe('createPromSource', () => {
     });
   });
 
-  // we should write something in the code that handles/registers successful api calls
-  // and then test it
 
   describe('handle failed API calls', () => {
     test('calls global error handler, passing in error object', async () => {

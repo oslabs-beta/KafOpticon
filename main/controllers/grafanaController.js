@@ -52,15 +52,13 @@ grafanaController.createPromSource = async (req, res, next) => {
   };
 
   try {
-    const response = await fetch('http://localhost:3000/api/datasources', {
+    await fetch('http://localhost:3000/api/datasources', {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json'
       }
     });
-    const data = await response.json();
-    console.log('response to create request: ', data);
   } catch (err) {
     return next(new GrafanaError('createPromSource', 500, err));
   }

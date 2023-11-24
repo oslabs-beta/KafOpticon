@@ -110,7 +110,7 @@ addressController.bootUpDocker = (req, res, next) => {
 
 addressController.connectToKafka = (req, res, next) => {
   // create child process that runs jmx exporter and connect it to the kafka cluster
-  console.log('entered conntectToKafka');
+  // console.log('entered conntectToKafka');
 
   const child = spawn('npm run exportJmx', {
     shell: true,
