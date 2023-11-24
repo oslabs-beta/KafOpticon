@@ -6,6 +6,7 @@ const path = require('path');
 
 const addressRouter = require('./routers/addressRouter');
 const kafkaMonitoringRouter = require('./routers/kafkaMonitoringRouter');
+const alertsRouter = require('./routers/alertsRouter')
 
 const PORT = 3010;
 
@@ -20,6 +21,8 @@ app.use(express.static('dist'));
 
 // handle form data to address route with address router
 app.use('/address', addressRouter);
+
+app.use('/alerts', alertsRouter);
 
 app.use('/setup-kafka-monitoring', kafkaMonitoringRouter);
 
