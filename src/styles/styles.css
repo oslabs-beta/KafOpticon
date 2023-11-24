@@ -151,3 +151,76 @@ body {
     position:relative;
     margin-left: 25px;
 }
+
+#addPanel {
+    height: 40px;
+    width: 200px;
+    background-color:  rgb(60, 175, 247);
+    padding: 10px;
+    border-radius: 7px;
+    font-size: 14px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: white;
+    font-weight: bold;
+    border-style: solid;
+    border-color: white;
+    margin-left: 50px;
+}
+
+#deletePanel{
+    height: 40px;
+    width: 150px;
+    background-color: rgb(60, 175, 247);
+    padding: 10px;
+    border-radius: 7px;
+    font-size: 14px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: white;
+    font-weight: bold;
+    border-style: solid;
+    border-color: white;
+    margin-left: 10px
+}
+
+#addPanelButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 250px;
+}
+
+#dropDownMenu {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 750px;
+}
+
+#dropMenu {
+    height: 40px;
+    width: 200px;
+    background-color:  rgb(60, 175, 247);
+    padding: 10px;
+    border-radius: 7px;
+    font-size: 14px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: white;
+    font-weight: bold;
+    border-style: solid;
+    border-color: white;
+    margin-left: 50px;
+}
+
+#menuSection{
+    background-color: rgba(201, 198, 198, 0.3);
+    border-style: solid;
+    border-color: rgb(60, 175, 247);
+    width: auto;
+    
+}
+
+.menu {
+    list-style-type: none;
+    color: rgb(249, 249, 171);
+    font-size: 20px;
+}
