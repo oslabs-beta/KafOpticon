@@ -29,6 +29,7 @@ async function generatePrometheusConfig(jmxPorts) {
   // if (jmxPorts.every(port => port.includes(':'))) {
   //   jmxTargets = jmxPorts;
   // } else {
+  console.log(jmxPorts);
   jmxTargets = jmxPorts.map(port => `host.docker.internal:${port}`);
   // }
   const prometheusConfigTemplate = `
@@ -144,9 +145,9 @@ async function createGrafanaContainer(networkName) {
 
 kafkaMonitoringController.setUpDocker = async (req, res, next) => {
   try {
-    const { jmxPorts } = req.body;
+    const { address } = req.body;
     const networkName = await createNetwork();
-    await generatePrometheusConfig(jmxPorts);
+    await generatePrometheusConfig(address);
     await createPrometheusContainer(networkName);
     await createGrafanaContainer(networkName);
 
