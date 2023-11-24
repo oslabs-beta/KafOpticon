@@ -10,7 +10,6 @@ function Header() {
     return(
         <section id='headerLog'>
             <img id='kafopticonbg' src='../assets/kafopticonbg.png'></img>
-            {/* <h1 id='title'>KafOpticon</h1> */}
             <div className='formContainer'>
                 <form id='mainform' action="http://localhost:3010/address" method="post">
                     <input id='input' placeholder='Cluster URL' name="address"></input>
