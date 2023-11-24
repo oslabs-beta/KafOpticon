@@ -77,7 +77,7 @@ body {
     background-color: rgb(60, 114, 186, .3);
     border-style: none;
     border-color: black;
-    height: 500px;
+    height: 700px;
     width: 300px;
     border-radius: 10px;
     box-shadow: 10px 5px 5px rgb(1,116,190);
@@ -173,3 +173,84 @@ body {
 #alerts {
     background-color: orange;
 }
+
+#addPanel {
+    height: 40px;
+    width: 200px;
+    background-color:  rgb(60, 175, 247);
+    padding: 10px;
+    border-radius: 7px;
+    font-size: 14px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: white;
+    font-weight: bold;
+    border-style: solid;
+    border-color: white;
+    margin-left: 50px;
+}
+
+#dropMenu{
+    height: 40px;
+    width: 200px;
+    background-color:  rgb(60, 175, 247);
+    padding: 10px;
+    border-radius: 7px;
+    font-size: 14px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: white;
+    font-weight: bold;
+    border-style: solid;
+    border-color: white;
+    margin-left: 50px;
+}
+
+#deletePanel{
+    height: 40px;
+    width: 200px;
+    background-color:  rgb(60, 175, 247);
+    padding: 10px;
+    border-radius: 7px;
+    font-size: 14px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: white;
+    font-weight: bold;
+    border-style: solid;
+    border-color: white;
+    margin-left: 50px;
+}
+
+#dropDownMenu {
+    width: 800px;
+}
+
+#menuSection {
+    position: relative;
+    background: orange;
+    border-style: solid;
+    border-color: white;
+    width: 300px;
+    border-radius: 5px;
+    margin-left: 20px;
+    max-height: 70px;
+    overflow-y: auto;
+}
+
+.menu{
+    position:relative;
+    list-style: none;
+    color: white;
+    font-size: 14px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.menu li:hover{
+    color: rgb(60, 114, 186);
+    cursor: pointer
+}
+
+button:hover {
+    cursor: pointer
+}
+

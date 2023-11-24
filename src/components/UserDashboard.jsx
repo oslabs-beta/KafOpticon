@@ -21,7 +21,14 @@ function UserContainer() {
     const metricsCont = {
         1: "http://localhost:3000/d-solo/d9098b29-ef80-4e40-86bc-b28bd6e85756/test-dash?refresh=10s&orgId=1&from=now-1h&to=now&panelId=16",
         2: "http://localhost:3000/d-solo/d9098b29-ef80-4e40-86bc-b28bd6e85756/test-dash?refresh=10s&orgId=1&from=now-1h&to=now&panelId=17",
-        3: "http://localhost:3000/d-solo/d9098b29-ef80-4e40-86bc-b28bd6e85756/test-dash?refresh=10s&orgId=1&from=now-1h&to=now&panelId=18"
+        3: "http://localhost:3000/d-solo/d9098b29-ef80-4e40-86bc-b28bd6e85756/test-dash?refresh=10s&orgId=1&from=now-1h&to=now&panelId=18",
+        4: "http://localhost:3000/d-solo/d9098b29-ef80-4e40-86bc-b28bd6e85756/test-dash?refresh=10s&orgId=1&from=now-1h&to=now&panelId=19",
+        5: "http://localhost:3000/d-solo/d9098b29-ef80-4e40-86bc-b28bd6e85756/test-dash?refresh=10s&orgId=1&from=now-1h&to=now&panelId=20",
+        6: "http://localhost:3000/d-solo/d9098b29-ef80-4e40-86bc-b28bd6e85756/test-dash?refresh=10s&orgId=1&from=now-1h&to=now&panelId=21",
+        7: "http://localhost:3000/d-solo/d9098b29-ef80-4e40-86bc-b28bd6e85756/test-dash?refresh=10s&orgId=1&from=now-1h&to=now&panelId=22",
+        8: "http://localhost:3000/d-solo/d9098b29-ef80-4e40-86bc-b28bd6e85756/test-dash?refresh=10s&orgId=1&from=now-1h&to=now&panelId=23",
+        9: "http://localhost:3000/d-solo/d9098b29-ef80-4e40-86bc-b28bd6e85756/test-dash?refresh=10s&orgId=1&from=now-1h&to=now&panelId=24",
+        10: "http://localhost:3000/d-solo/d9098b29-ef80-4e40-86bc-b28bd6e85756/test-dash?refresh=10s&orgId=1&from=now-1h&to=now&panelId=25"
     }
 
     const metrichandle = (iframeIndex, metric) => { 
@@ -43,7 +50,14 @@ function UserContainer() {
                     <ul className='menu'>
                             <li onClick={() => metrichandle(iframe.length - 1, 1)}>Purgatory Size</li>
                             <li onClick={() => metrichandle(iframe.length - 1, 2)}>Collection Count</li>
-                            <li onClick={() => metrichandle(iframe.length  -1, 3)}>Zookeeper Request Latency</li>
+                            <li onClick={() => metrichandle(iframe.length - 1, 3)}>Zookeeper Request Latency</li>
+                            <li onClick={() => metrichandle(iframe.length - 1, 4)}>Collection X Seconds Count</li>
+                            <li onClick={() => metrichandle(iframe.length - 1, 5)}>Failed Producer Request</li>
+                            <li onClick={() => metrichandle(iframe.length - 1, 6)}>Consumer's Lag</li>
+                            <li onClick={() => metrichandle(iframe.length - 1, 7)}>Network Request Total</li>
+                            <li onClick={() => metrichandle(iframe.length - 1, 8)}>Network Error Total</li>
+                            <li onClick={() => metrichandle(iframe.length - 1, 9)}>Log Flush Rate and Time Count</li>
+                            <li onClick={() => metrichandle(iframe.length  -1, 10)}>In Sync Replica Count</li>
                     </ul>
                     </section>
                 
