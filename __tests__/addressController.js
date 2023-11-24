@@ -14,6 +14,7 @@ jest.mock('fs', () => {
   }}
 });
 
+
 describe ('writeJmxConfig1', () => {
 
   const req = {
@@ -128,6 +129,8 @@ describe('connectToKafka', () => {
       const response = await fetch('http://localhost:3030');
       // pass the test if the response's status is 200ok, otherwise fail the test
       expect(response.status).toBe(200);
+
+      console.log(res.locals.PID);
     });
   });
 });

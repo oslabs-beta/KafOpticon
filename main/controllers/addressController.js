@@ -118,6 +118,9 @@ addressController.connectToKafka = (req, res, next) => {
     cwd: path.join(__dirname, '..', '..', 'local-test')
   });
 
+  console.log(child.pid);
+  res.locals.PID = child.pid;
+
   next();
 };
 
