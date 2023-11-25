@@ -56,7 +56,7 @@ function UserContainer() {
                             <li onClick={() => metrichandle(iframe.length - 1, 6)}>Consumer's Lag</li>
                             <li onClick={() => metrichandle(iframe.length - 1, 7)}>Network Request Total</li>
                             <li onClick={() => metrichandle(iframe.length - 1, 8)}>Network Error Total</li>
-                            <li onClick={() => metrichandle(iframe.length - 1, 9)}>Log Flush Rate and Time Count</li>
+                            <li onClick={() => metrichandle(iframe.length - 1, 9)}>Replicas Count</li>
                             <li onClick={() => metrichandle(iframe.length  -1, 10)}>In Sync Replica Count</li>
                     </ul>
                     </section>
