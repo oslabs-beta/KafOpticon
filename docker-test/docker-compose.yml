@@ -99,8 +99,6 @@ services:
       GF_SECURITY_ALLOW_EMBEDDING: 'true'
       GF_AUTH_ANONYMOUS_ENABLED: 'true'
       GF_INSTALL_PLUGINS: grafana-clock-panel
-      # GRAFANA_EMAIL_USERNAME: promgraf23@gmail.com
-      # GRAFANA_EMAIL_PASSWORD: loho pmoj mmum ormn
   prometheus:
     image: prom/prometheus:latest
     volumes:
