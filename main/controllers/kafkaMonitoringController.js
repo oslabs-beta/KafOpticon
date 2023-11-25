@@ -1,9 +1,45 @@
 const Docker = require('dockerode');
 const fs = require('fs');
 const path = require('path');
+const { promisify } = require('util');
 const docker = new Docker();
+const pullImage = promisify(docker.pull.bind(docker));
 
 const kafkaMonitoringController = {};
+
+function followPullProgress(stream) {
+  return new Promise((resolve, reject) => {
+    docker.modem.followProgress(stream, (err, res) =>
+      err ? reject(err) : resolve(res),
+    );
+  });
+}
+async function stopAndRemoveContainer(containerName) {
+  try {
+    const container = docker.getContainer(containerName);
+    await container.stop();
+    await container.remove();
+  } catch (err) {
+    // Handle errors (e.g., container not found)
+    console.log(
+      `Error stopping/removing container ${containerName}:`,
+      err.message,
+    );
+  }
+}
+async function pullDockerImages() {
+  try {
+    const prometheusStream = await pullImage('prom/prometheus:latest');
+    await followPullProgress(prometheusStream);
+
+    const grafanaStream = await pullImage('grafana/grafana:latest');
+    await followPullProgress(grafanaStream);
+
+    console.log('Images pulled successfully');
+  } catch (err) {
+    console.error('Error pulling images:', err);
+  }
+}
 
 function generateUniqueNetworkName(baseName) {
   const timestamp = Date.now();
@@ -147,7 +183,10 @@ kafkaMonitoringController.setUpDocker = async (req, res, next) => {
   try {
     const { address } = req.body;
     const networkName = await createNetwork();
+    await pullDockerImages();
     await generatePrometheusConfig(address);
+    await stopAndRemoveContainer('prometheus');
+    await stopAndRemoveContainer('grafana');
     await createPrometheusContainer(networkName);
     await createGrafanaContainer(networkName);
 
