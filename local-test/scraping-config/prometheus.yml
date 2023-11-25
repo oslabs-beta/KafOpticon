@@ -12,6 +12,9 @@ scrape_configs:
       # point prometheus at the place to scrape
       - targets:
         - "localhost:3030"
+<<<<<<< HEAD
     basic_auth:
       username: "kafka" 
       password: "kafkapassword" 
+=======
+>>>>>>> dev
