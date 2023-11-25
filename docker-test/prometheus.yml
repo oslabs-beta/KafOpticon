@@ -7,6 +7,4 @@ scrape_configs:
     static_configs:
       - targets:
           ['kafka-broker-1:9999', 'kafka-broker-2:9999', 'kafka-broker-3:9999']
-    basic_auth:
-        username: "kafka" 
-        password: "kafkapassword" 
+   
