@@ -4,9 +4,6 @@ const { spawn } = require('child_process');
 
 const { question } = require('../../__mocks__/mockDashboards')
 const dashboardJSON = require('../dashboards/bigDashboard');
-// const dashboardJSON = require('../dashboards/dashboard');
-// const performanceBody = require('../dashboards/performance');
-// const testDbJson = require('../dashboards/test');
 
 const grafanaController = {};
 
@@ -21,6 +18,7 @@ class GrafanaError {
 grafanaController.getPrometheus = async (req, res, next) => {
   // console.log('entered getPrometheus');
   // get the uid of local user's prometheus data source
+
   if (res.locals.prom) return next();
   try {
     const response = await fetch('http://localhost:3000/api/datasources/name/Prometheus');
@@ -71,8 +69,6 @@ grafanaController.generateDashJson = (req, res, next) => {
   // generate the dashboard json based on gathered (or generated) prometheus uid
   // console.log('entered generateDashJson');
 
-  console.log(process.env);
-
   try { 
     const array = (process.env.NODE_ENV === 'test') ? question.dashboard.panels : dashboardJSON.dashboard.panels; 
     for (let i = 0; i < array.length; i += 1) {
@@ -88,7 +84,7 @@ grafanaController.generateDashJson = (req, res, next) => {
   }
 
   res.locals.dashboardJSON = (process.env.NODE_ENV === 'test') ? question : dashboardJSON;
-  next();
+  return next();
 };
 
 grafanaController.createDashboard = async (req, res, next) => {
@@ -99,9 +95,7 @@ grafanaController.createDashboard = async (req, res, next) => {
   try {
     const data = await fetch('http://localhost:3000/api/dashboards/db', {
       method: 'POST',
-      // body: JSON.stringify(performanceBody),
       body: JSON.stringify(res.locals.dashboardJSON),
-      // body: JSON.stringify(testDbJson),
       headers: {
         "Content-Type": 'application/json'
       }});
@@ -109,11 +103,10 @@ grafanaController.createDashboard = async (req, res, next) => {
 
     const text = await data.json();
     res.locals.grafanaResponse = text;
-    // console.log('grafanaController.createDashboard= ~ text:', text);
-    next();
+    return next();
     
   } catch (err) {
-    next(new GrafanaError('createDashboard', 500, err));
+    return next(new GrafanaError('createDashboard', 500, err));
   }
 
 };
