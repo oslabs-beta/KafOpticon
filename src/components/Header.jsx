@@ -51,7 +51,7 @@ function Header() {
     <section id='headerLog'>
       <img
         id='kafopticonbg'
-        src='../assets/kafopticonbg.png'
+        src='../assets/kafopticon.png'
         alt='Kafopticon Background'></img>
       <div className='formContainer'>
         <form id='mainform' onSubmit={handleSubmit}>
