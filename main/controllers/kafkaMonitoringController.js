@@ -14,6 +14,19 @@ function followPullProgress(stream) {
     );
   });
 }
+async function stopAndRemoveContainer(containerName) {
+  try {
+    const container = docker.getContainer(containerName);
+    await container.stop();
+    await container.remove();
+  } catch (err) {
+    // Handle errors (e.g., container not found)
+    console.log(
+      `Error stopping/removing container ${containerName}:`,
+      err.message,
+    );
+  }
+}
 async function pullDockerImages() {
   try {
     const prometheusStream = await pullImage('prom/prometheus:latest');
@@ -172,6 +185,8 @@ kafkaMonitoringController.setUpDocker = async (req, res, next) => {
     const networkName = await createNetwork();
     await pullDockerImages();
     await generatePrometheusConfig(address);
+    await stopAndRemoveContainer('prometheus');
+    await stopAndRemoveContainer('grafana');
     await createPrometheusContainer(networkName);
     await createGrafanaContainer(networkName);
 
