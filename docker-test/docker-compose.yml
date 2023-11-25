@@ -29,8 +29,8 @@ services:
     ports:
       - '19092:19092'
     volumes:
-      - >-
-        ./jmx_prometheus_javaagent-0.20.0.jar:/usr/app/jmx_prometheus_javaagent.jar
+      
+      - ./jmx_prometheus_javaagent-0.20.0.jar:/usr/app/jmx_prometheus_javaagent.jar
       - ./kafka-jmx-exporter-config.yml:/usr/app/kafka-jmx-exporter-config.yml
     depends_on:
       - zookeeper
@@ -41,16 +41,15 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker-1:9092,PLAINTEXT_HOST://localhost:19092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
       KAFKA_JMX_HOSTNAME: kafka-broker-1
-      KAFKA_JVM_PERFORMANCE_OPTS: >-
-        -javaagent:/usr/app/jmx_prometheus_javaagent.jar=9999:/usr/app/kafka-jmx-exporter-config.yml
+      KAFKA_JVM_PERFORMANCE_OPTS: '-javaagent:/usr/app/jmx_prometheus_javaagent.jar=9999:/usr/app/kafka-jmx-exporter-config.yml'
   kafka-broker-2:
     image: confluentinc/cp-kafka:latest
     hostname: kafka-broker-2
     ports:
       - '29092:29092'
     volumes:
-      - >-
-        ./jmx_prometheus_javaagent-0.20.0.jar:/usr/app/jmx_prometheus_javaagent.jar
+      
+      -  ./jmx_prometheus_javaagent-0.20.0.jar:/usr/app/jmx_prometheus_javaagent.jar
       - ./kafka-jmx-exporter-config.yml:/usr/app/kafka-jmx-exporter-config.yml
     depends_on:
       - zookeeper
@@ -61,16 +60,15 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker-2:9092,PLAINTEXT_HOST://localhost:29092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
       KAFKA_JMX_HOSTNAME: kafka-broker-2
-      KAFKA_JVM_PERFORMANCE_OPTS: >-
-        -javaagent:/usr/app/jmx_prometheus_javaagent.jar=9999:/usr/app/kafka-jmx-exporter-config.yml
+      KAFKA_JVM_PERFORMANCE_OPTS: '-javaagent:/usr/app/jmx_prometheus_javaagent.jar=9999:/usr/app/kafka-jmx-exporter-config.yml'
   kafka-broker-3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka-broker-3
     ports:
       - '39092:39092'
     volumes:
-      - >-
-        ./jmx_prometheus_javaagent-0.20.0.jar:/usr/app/jmx_prometheus_javaagent.jar
+      
+      -  ./jmx_prometheus_javaagent-0.20.0.jar:/usr/app/jmx_prometheus_javaagent.jar
       - ./kafka-jmx-exporter-config.yml:/usr/app/kafka-jmx-exporter-config.yml
     depends_on:
       - zookeeper
@@ -81,8 +79,7 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker-3:9092,PLAINTEXT_HOST://localhost:39092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
       KAFKA_JMX_HOSTNAME: kafka-broker-3
-      KAFKA_JVM_PERFORMANCE_OPTS: >-
-        -javaagent:/usr/app/jmx_prometheus_javaagent.jar=9999:/usr/app/kafka-jmx-exporter-config.yml
+      KAFKA_JVM_PERFORMANCE_OPTS: '-javaagent:/usr/app/jmx_prometheus_javaagent.jar=9999:/usr/app/kafka-jmx-exporter-config.yml'
   grafana:
     image: grafana/grafana:latest
     ports:
@@ -92,10 +89,8 @@ services:
         condition: service_started
     volumes:
       - grafana-storage:/var/lib/grafana
-      - >-
-        ../grafana/Dockerfile/provisioning/dashboards:/etc/grafana/provisioning/dashboards
-      - >-
-        ../grafana/Dockerfile/provisioning/datasources/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+      - ../grafana/Dockerfile/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ../grafana/Dockerfile/provisioning/datasources/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
       - ../grafana/grafana.ini:/etc/grafana/grafana.ini
     environment:
       GF_SECURITY_ADMIN_USER: admin
@@ -113,4 +108,4 @@ services:
     ports:
       - '9090:9090'
 volumes:
-  grafana-storage: null
+  grafana-storage:
