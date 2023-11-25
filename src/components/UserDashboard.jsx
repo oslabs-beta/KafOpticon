@@ -38,7 +38,7 @@ function UserContainer() {
     }
   
     return (
-        <section id='metricsContainer'> 
+        <section id='userDashboardContainer'> 
             
             <section id='addPanelButton'>
             <button id='addPanel' onClick={handleAdd}>Add Panel</button>
@@ -66,13 +66,13 @@ function UserContainer() {
             {iframe.map(({ id, metric },i) => {
                 return (
                     <section key={id} id='addedPanel'>
-                        <section className='metricBox'>
-                            <iframe className='addedIframe' src={metric} width="500" height="250" frameborder="0"/>
-                    </section>
-                    <section>
-                        <button id='deletePanel' onClick={()=>deleteIframe(id)}>Delete</button>
-                    </section>
-                </section>
+                        <section className='userMetricBox'>
+                            <iframe className='addedIframe' src={metric} width="100%" height="100%" frameborder="0"/>
+                        </section>
+                        <section id='panelDeleteButton'>
+                            <button id='deletePanel' onClick={()=>deleteIframe(id)}>Delete</button>
+                        </section>
+                     </section>
                 )
             })}
         
