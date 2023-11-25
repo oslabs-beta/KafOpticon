@@ -136,7 +136,7 @@ height: 100%;
 #mainform {
   position: relative;
   height: 70px;
-  width: 450px;
+  width: 550px;
   margin-top: 10px;
 }
 
@@ -144,7 +144,7 @@ height: 100%;
   padding: 10px;
   border-radius: 7px;
   border-style: solid;
-  width: 250px;
+  width: 360px;
   border-color: white;
   margin-right: 5px;
 }
