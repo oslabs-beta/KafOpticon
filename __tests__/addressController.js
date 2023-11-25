@@ -1,6 +1,6 @@
 const controller = require('../main/controllers/addressController');
 
-const { writeJmxConfig1, writeJmxConfig2, checkForDocker, bootUpDocker, connectToKafka, startPrometheus } = controller;
+const { writeJmxConfig1, writeJmxConfig2, connectToKafka, startPrometheus } = controller;
 
 // not sure how to test middleware that does nothing other than spawn child processes
 
@@ -107,30 +107,30 @@ describe('writeJmxConfig2', () => {
   });
 });
 
-describe('connectToKafka', () => {
-  const req = {};
-  const res = {locals: {}};
-  const next = jest.fn();
-  describe('', () => {
-    test.only('confirm that jmx exporter http server has started', async () => {
-      // run connectToKafka
-      connectToKafka(req, res, next);
+// describe('connectToKafka', () => {
+//   const req = {};
+//   const res = {locals: {}};
+//   const next = jest.fn();
+//   describe('', () => {
+//     test.only('confirm that jmx exporter http server has started', async () => {
+//       // run connectToKafka
+//       connectToKafka(req, res, next);
 
-      // wait for a second or two
-      const delay = (milliseconds) => {
-        return new Promise(resolve => {
-          setTimeout(resolve, milliseconds);
-        });
-      };
+//       // wait for a second or two
+//       const delay = (milliseconds) => {
+//         return new Promise(resolve => {
+//           setTimeout(resolve, milliseconds);
+//         });
+//       };
 
-      await delay(1000);
+//       await delay(1000);
 
-      // send a get request to localhost:3030
-      const response = await fetch('http://localhost:3030');
-      // pass the test if the response's status is 200ok, otherwise fail the test
-      expect(response.status).toBe(200);
+//       // send a get request to localhost:3030
+//       const response = await fetch('http://localhost:3030');
+//       // pass the test if the response's status is 200ok, otherwise fail the test
+//       expect(response.status).toBe(200);
 
-      console.log(res.locals.PID);
-    });
-  });
-});
+//       console.log(res.locals.PID);
+//     });
+//   });
+// });

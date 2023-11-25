@@ -1,9 +1,11 @@
 const controller = require('../main/controllers/grafanaController');
 
 const { getPrometheus, createPromSource, generateDashJson, createDashboard} = controller;
-const generatedDashboard = require('../__mocks__/mockDashboards');
+const { answer } = require('../__mocks__/mockDashboards');
 
 let next = jest.fn();
+
+
 
 beforeEach(() => {
   fetch = jest.fn(() =>
@@ -112,7 +114,7 @@ describe('generateDashJson', () => {
   describe('', () => {
     test('changes uids to Prometheus\'s uid', async () => {
       await generateDashJson(req, res, next);
-      expect(res.locals.dashboardJSON).toEqual(generatedDashboard);
+      expect(res.locals.dashboardJSON).toEqual(answer);
     });
   });
 });

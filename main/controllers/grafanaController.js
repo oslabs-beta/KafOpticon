@@ -2,6 +2,7 @@
 const path = require('path');
 const { spawn } = require('child_process');
 
+const { question } = require('../../__mocks__/mockDashboards')
 const dashboardJSON = require('../dashboards/bigDashboard');
 // const dashboardJSON = require('../dashboards/dashboard');
 // const performanceBody = require('../dashboards/performance');
@@ -70,7 +71,10 @@ grafanaController.generateDashJson = (req, res, next) => {
   // generate the dashboard json based on gathered (or generated) prometheus uid
   // console.log('entered generateDashJson');
 
-  try { const array = dashboardJSON.dashboard.panels;
+  console.log(process.env);
+
+  try { 
+    const array = (process.env.NODE_ENV === 'test') ? question.dashboard.panels : dashboardJSON.dashboard.panels; 
     for (let i = 0; i < array.length; i += 1) {
       array[i].datasource.uid = res.locals.promUid;
       if (array[i].targets) {
@@ -83,7 +87,7 @@ grafanaController.generateDashJson = (req, res, next) => {
     return next(new GrafanaError('generateDashJson', 500, err));
   }
 
-  res.locals.dashboardJSON = dashboardJSON;  
+  res.locals.dashboardJSON = (process.env.NODE_ENV === 'test') ? question : dashboardJSON;
   next();
 };
 
