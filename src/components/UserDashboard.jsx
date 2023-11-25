@@ -19,9 +19,9 @@ function UserContainer() {
     }
 
     const metricsCont = {
-        1: "http://localhost:3000/d-solo/d9098b29-ef80-4e40-86bc-b28bd6e85756/test-dash?refresh=10s&orgId=1&from=now-1h&to=now&panelId=16",
-        2: "http://localhost:3000/d-solo/d9098b29-ef80-4e40-86bc-b28bd6e85756/test-dash?refresh=10s&orgId=1&from=now-1h&to=now&panelId=17",
-        3: "http://localhost:3000/d-solo/d9098b29-ef80-4e40-86bc-b28bd6e85756/test-dash?refresh=10s&orgId=1&from=now-1h&to=now&panelId=18",
+        1: "http://localhost:3000/d-solo/d9098b29-ef80-4e40-86bc-b28bd6e85756/test-dash?refresh=10s&orgId=1&from=now-1h&to=now&panelId=17",
+        2: "http://localhost:3000/d-solo/d9098b29-ef80-4e40-86bc-b28bd6e85756/test-dash?refresh=10s&orgId=1&from=now-1h&to=now&panelId=18",
+        3: "http://localhost:3000/d-solo/d9098b29-ef80-4e40-86bc-b28bd6e85756/test-dash?refresh=10s&orgId=1&from=now-1h&to=now&panelId=16",
         4: "http://localhost:3000/d-solo/d9098b29-ef80-4e40-86bc-b28bd6e85756/test-dash?refresh=10s&orgId=1&from=now-1h&to=now&panelId=19",
         5: "http://localhost:3000/d-solo/d9098b29-ef80-4e40-86bc-b28bd6e85756/test-dash?refresh=10s&orgId=1&from=now-1h&to=now&panelId=20",
         6: "http://localhost:3000/d-solo/d9098b29-ef80-4e40-86bc-b28bd6e85756/test-dash?refresh=10s&orgId=1&from=now-1h&to=now&panelId=21",
@@ -36,9 +36,9 @@ function UserContainer() {
         newIframe[iframeIndex].metric = metricsCont[metric];
         setIframe(newIframe)
     }
-  
+   
     return (
-        <section id='metricsContainer'> 
+        <section id='userDashboardContainer'> 
             
             <section id='addPanelButton'>
             <button id='addPanel' onClick={handleAdd}>Add Panel</button>
@@ -66,13 +66,13 @@ function UserContainer() {
             {iframe.map(({ id, metric },i) => {
                 return (
                     <section key={id} id='addedPanel'>
-                        <section className='metricBox'>
-                            <iframe className='addedIframe' src={metric} width="500" height="250" frameborder="0"/>
-                    </section>
-                    <section>
-                        <button id='deletePanel' onClick={()=>deleteIframe(id)}>Delete</button>
-                    </section>
-                </section>
+                        <section className='userMetricBox'>
+                            <iframe className='addedIframe' src={metric} width="100%" height="100%" frameborder="0"/>
+                        </section>
+                        <section id='panelDeleteButton'>
+                            <button id='deletePanel' onClick={()=>deleteIframe(id)}>Delete</button>
+                        </section>
+                     </section>
                 )
             })}
         
