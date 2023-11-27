@@ -81,9 +81,7 @@ function Header() {
               Send to Local Monitoring
             </label>
           </div>
-          <button id='submitbutton' type='submit'>
-            Submit
-          </button>
+          <button id='submitbutton' type='submit'>Submit</button>
         </form>
       </div>
     </section>

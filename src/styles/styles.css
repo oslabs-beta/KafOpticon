@@ -13,7 +13,7 @@ body {
   /* position: relative; */
   justify-content: space-between;
 
-  /* align-items: center; */
+  align-items: center;
   top: 10px;
   background-color: rgb(60, 114, 186, 0.3);
   height: 100px;
@@ -32,6 +32,7 @@ body {
   justify-content: space-between;
   top: 20px;
 }
+
 #metricsContainer {
   position: relative;
   display: flex;
@@ -104,7 +105,8 @@ body {
   position: relative;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  align-items: center;
+  /* justify-content: flex-end; */
   margin-top: 15px;
   margin-right: 30px;
   height: 70px;
@@ -124,12 +126,15 @@ body {
   font-weight: bold;
   border-style: solid;
   border-color: white;
+  margin-left: 5px;
 }
 
 #mainform {
+  display: flex;
+  align-items: center;
   position: relative;
   height: 70px;
-  width: 450px;
+  width: 100%;
   margin-top: 10px;
 }
 
@@ -137,7 +142,7 @@ body {
   padding: 10px;
   border-radius: 7px;
   border-style: solid;
-  width: 250px;
+  width: calc(100%- 155px);
   border-color: white;
   margin-right: 5px;
 }
@@ -167,8 +172,15 @@ body {
   position: relative;
   margin-left: 25px;
 }
+
 .checkbox-label {
   color: yellow;
+}
+
+.checkboxes {
+display: flex;
+flex-direction: column;
+margin-right: 10px;
 }
 
 #alerts {
