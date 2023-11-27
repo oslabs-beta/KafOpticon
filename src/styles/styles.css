@@ -1,11 +1,17 @@
 body {
   background-color: rgb(5, 5, 46);
   margin: 0 auto;
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
   background-size: cover;
+}
+
+#root{
+position: relative;
+height: 100%;
 }
 
 #headerLog {
@@ -45,8 +51,6 @@ body {
   border-style: none;
   border-color: black;
   box-shadow: 10px 5px 5px rgb(1, 116, 190);
-  /* height: auto;
-    width: auto; */
   border-radius: 10px;
 }
 
@@ -78,7 +82,7 @@ body {
   background-color: rgb(60, 114, 186, 0.3);
   border-style: none;
   border-color: black;
-  height: 500px;
+  height: 650px;
   width: 300px;
   border-radius: 10px;
   box-shadow: 10px 5px 5px rgb(1, 116, 190);
@@ -87,8 +91,8 @@ body {
 .metricBox {
   position: relative;
   top: 0;
-  height: 250px;
-  width: 500px;
+  height: 30%;
+  width: 45%;
   margin: 10px;
   text-align: center;
   justify-content: space-between;
@@ -96,6 +100,9 @@ body {
   border-style: solid;
   border-color: rgb(80, 185, 250);
   border-width: 4px;
+  min-width: 500px;
+  min-height: 300px;
+  max-height: 300px;
 }
 #kafopticonbg {
   height: 100px;
@@ -199,7 +206,7 @@ margin-right: 10px;
     font-weight: bold;
     border-style: solid;
     border-color: white;
-    margin-left: 50px;
+    margin-left: 10px;
 }
 
 #dropMenu{
@@ -214,7 +221,7 @@ margin-right: 10px;
     font-weight: bold;
     border-style: solid;
     border-color: white;
-    margin-left: 50px;
+    margin-left: 10px;
 }
 
 #deletePanel{
@@ -233,7 +240,8 @@ margin-right: 10px;
 }
 
 #dropDownMenu {
-    width: 800px;
+    width: 75%;
+    min-width: 800px;
 }
 
 #menuSection {
@@ -243,7 +251,7 @@ margin-right: 10px;
     border-color: white;
     width: 300px;
     border-radius: 5px;
-    margin-left: 20px;
+    margin-left: 50px;
     max-height: 70px;
     overflow-y: auto;
 }
@@ -267,3 +275,50 @@ button:hover {
     cursor: pointer
 }
 
+#addedPanel {
+  position: relative;
+  min-width: 500px;
+  min-height: 350px;
+  max-height: 350px;
+  width: 48%;
+  height: 33%;
+}
+
+.userMetricBox {
+   position: relative;
+    top: 0;
+    height: 81%;
+    width: 95%;
+    margin: 10px;
+    text-align: center;
+    justify-content: space-between;
+    background-color: none;
+    border-style: solid;
+    border-color: rgb(80, 185, 250);
+    border-width: 4px;
+}
+
+#panelDeleteButton {
+  position: relative
+}
+
+#userDashboardContainer{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: flex-start;
+  background-color: rgb(60, 114, 186, 0.3);
+  margin-right: 30px;
+  border-style: none;
+  border-color: black;
+  box-shadow: 10px 5px 5px rgb(1, 116, 190);
+  border-radius: 10px;
+  overflow-y: auto;
+  width: 80%;
+}
+
+#addPanelButton{
+  width: 10%
+}
