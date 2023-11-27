@@ -17,14 +17,22 @@ function followPullProgress(stream) {
 async function stopAndRemoveContainer(containerName) {
   try {
     const container = docker.getContainer(containerName);
-    await container.stop();
-    await container.remove();
+    const data = await container.inspect(); // Get container details
+    if (data) {
+      // Check if the container is running
+      if (data.State.Running) {
+        await container.stop(); // Stop it if it's running
+      }
+      await container.remove(); // Remove the container
+    }
   } catch (err) {
-    // Handle errors (e.g., container not found)
-    console.log(
-      `Error stopping/removing container ${containerName}:`,
-      err.message,
-    );
+    if (err.statusCode !== 404) {
+      // Ignore error if container doesn't exist
+      console.log(
+        `Error stopping/removing container ${containerName}:`,
+        err.message,
+      );
+    }
   }
 }
 async function pullDockerImages() {
