@@ -17,8 +17,10 @@ class GrafanaError {
 
 grafanaController.getPrometheus = async (req, res, next) => {
   console.log('entered getPrometheus');
-  // get the uid of local user's prometheus data source
+  // check whether the user already has a prometheus datasource for their grafana
+  // and if they do save its uid
 
+  // since this is called twice, if information has already been gathered, skip it
   if (res.locals.prom) return next();
   try {
     const response = await fetch('http://localhost:3000/api/datasources/name/Prometheus');
@@ -40,6 +42,7 @@ grafanaController.createPromSource = async (req, res, next) => {
   // if the user does not have prometheus set up as a data source, create it
   console.log('entered createPromSource');
 
+  // skip if user has prometheus and we already have its uid
   if (res.locals.prom) return next();
 
   const body = {
@@ -66,7 +69,7 @@ grafanaController.createPromSource = async (req, res, next) => {
 };
 
 grafanaController.generateDashJson = (req, res, next) => {
-  // generate the dashboard json based on gathered (or generated) prometheus uid
+  // generate the dashboard json based on gathered prometheus uid
   console.log('entered generateDashJson');
 
   try { 
@@ -100,20 +103,17 @@ grafanaController.createDashboard = async (req, res, next) => {
         "Content-Type": 'application/json'
       }});
     
-
-
-
     const text = await data.json();
     console.log('grafanaController.createDashboard= ~ text:', text);
-    res.locals.grafanaResponse = text;
-    
+
+    // save response to res.locals for testing purposes
+    res.locals.grafanaResponse = text;    
 
     return next();
     
   } catch (err) {
     return next(new GrafanaError('createDashboard', 500, err));
   }
-
 };
 
 module.exports = grafanaController;
