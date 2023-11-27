@@ -1,7 +1,9 @@
 import React from "react"
 
 function alertsContainer(){
-
+    const handleClick = () => {
+        alert('Button Clicked!')
+    };
 //accept email and password credentials to forward alerts from grafana to selected emails
     return (
     <section id="alertsContainer">
