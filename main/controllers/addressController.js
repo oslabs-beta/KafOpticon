@@ -6,6 +6,7 @@ const { spawn } = require('child_process');
 
 const addressController = {};
 
+// error constructor for this controller
 class ACError {
   constructor (location, status, message) {
     this.log = 'An error occurred in addressController.' + location;
@@ -28,6 +29,7 @@ addressController.writeJmxConfig2 = async (req, res, next) => {
   // write the jmx config file using the user inputted kafka address
   // console.log('entered writeJmxConfig2');
 
+  // get paths to configuration files
   const templateFileAddress = path.join(__dirname, '..', '..', 'local-test', 'scraping-config', 'jmxConfigTemplate.yml');
   const destination = path.join(__dirname, '..', '..', 'local-test', 'scraping-config', 'jmxconfig.yml'); 
   
@@ -57,7 +59,7 @@ addressController.connectToKafka = (req, res, next) => {
 
   const child = spawn('npm run exportJmx', {
     shell: true,
-    stdio: 'inherit',
+    // stdio: 'inherit',
     cwd: path.join(__dirname, '..', '..', 'local-test')
   });
 
@@ -70,7 +72,7 @@ addressController.startPrometheus = (req, res, next) => {
 
   const child = spawn('npm run prometheus', {
     shell: true,
-    stdio: 'inherit',
+    // stdio: 'inherit',
     cwd: path.join(__dirname, '..', '..', 'local-test')
   });
 
