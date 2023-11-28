@@ -1,3 +1,6 @@
+<img src="./assets/kafopticon.png" width="500px"></img>  
+
+
 # KafOpticon
 Kafka Cluster Monitor and Visualizer
 
@@ -65,7 +68,6 @@ Congratulations! 🏆️ You should now be able to receive automatic email alert
 
 # Road Map
 Check out [issues](https://github.com/oslabs-beta/KafOpticon/issues) for further information about possible new features
-
 
 # Contributing
 Contributions are what make the open source community a great place to 
