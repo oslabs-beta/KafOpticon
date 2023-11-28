@@ -1,5 +1,7 @@
 # KafOpticon
-Kafka cluster visualizer
+Kafka Cluster Monitor and Visualizer
+  <br><img src="./assets/KafOpticon Sample.png" width="300px"></img>  
+
 
 # Run local test
 Preconditions: Prometheus and Grafana must be installed
