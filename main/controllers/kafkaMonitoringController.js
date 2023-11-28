@@ -2,8 +2,11 @@ const Docker = require('dockerode');
 const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
+const log = require('electron-log/main');
+
 const docker = new Docker();
 const pullImage = promisify(docker.pull.bind(docker));
+
 
 const kafkaMonitoringController = {};
 
@@ -65,6 +68,15 @@ async function generatePrometheusConfig(jmxPorts) {
   // if (jmxPorts.every(port => port.includes(':'))) {
   //   jmxTargets = jmxPorts;
   // } else {
+
+  // return res.send('entered generatePrometheusConfig');
+   
+  // if in production
+  const fileLocation = path.join(process.resourcesPath, '..', 'templates', 'docker-route', 'prometheus.yml');
+
+  // if in development
+  // const fileLocation = path.join(__dirname, 'prometheus.yml');
+
   console.log(jmxPorts);
   jmxTargets = jmxPorts.map(port => `host.docker.internal:${port}`);
   // }
@@ -79,14 +91,18 @@ scrape_configs:
 `;
 
   fs.writeFileSync(
-    path.join(__dirname, 'prometheus.yml'),
+    fileLocation,
     prometheusConfigTemplate.trim(),
   );
 }
 
 async function createPrometheusContainer(networkName) {
   try {
-    const promConfigPath = path.join(__dirname, 'prometheus.yml');
+    // if in development
+    // const promConfigPath = path.join(__dirname, 'prometheus.yml');
+
+    // if in production
+    const promConfigPath = path.join(process.resourcesPath, '..', 'templates', 'docker-route', 'prometheus.yml');
     const container = await docker.createContainer({
       name: 'prometheus',
       Image: 'prom/prometheus:latest',
@@ -118,6 +134,9 @@ async function createPrometheusContainer(networkName) {
 
 async function createGrafanaContainer(networkName) {
   try {
+
+    // return res.send('entered createGrafanaContainer');
+
     const storageVolume = await docker.createVolume({
       Name: 'grafana-storage',
     });
@@ -193,6 +212,7 @@ kafkaMonitoringController.setUpDocker = async (req, res, next) => {
     res.send('Monitoring setup initiated successfully.');
   } catch (err) {
     console.log('Setup failed:', err);
+    log.info(err);
     res.status(500).send('Failed to setup monitoring.');
   }
 };

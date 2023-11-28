@@ -2,20 +2,22 @@
 
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const log = require('electron-log/main');
+log.info('Log from the main process');
 
 // require in express server so that it gets booted when electron app is ready
 const expressServer = require('./expressServer');
 
 // electron reloader documentation recommends using a try/catch block to avoid
 // crashin the app is node environment is in production
-try {
-  const electronReloader = require('electron-reloader');
-  electronReloader(module, {
-    ignore: [path.join(__dirname), path.join(__dirname, '..', 'src')],
-  });
-} catch {
-  console.log('electron reloader failed');
-}
+// try {
+//   const electronReloader = require('electron-reloader');
+//   electronReloader(module, {
+//     ignore: [path.join(__dirname), path.join(__dirname, '..', 'src')],
+//   });
+// } catch {
+//   console.log('electron reloader failed');
+// }
 
 const createWindow = () => {
   // create a browser window
@@ -44,6 +46,7 @@ const handleConnect = (event, data) => {
 app.on('ready', () => {
   expressServer.listen(3010, () => {
     console.log('Server listening on port 3010');
+    log.info('Server listening on port 3010');
   });
   ipcMain.on('connect', handleConnect);
   createWindow();
