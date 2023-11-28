@@ -34,8 +34,8 @@ addressController.writeJmxConfig2 = async (req, res, next) => {
   // const templateFileAddress = path.join(__dirname, '..', '..', 'local-test', 'scraping-config', 'jmxConfigTemplate.yml');
   // const destination = path.join(__dirname, '..', '..', 'local-test', 'scraping-config', 'jmxconfig.yml'); 
 
-  const templateFileAddress = path.join(process.resourcesPath, '..', 'templates', 'jmxConfigTemplate.yml');
-  const destination = path.join(process.resourcesPath, '..', 'templates', 'jmxconfig.yml');
+  const templateFileAddress = path.join(process.resourcesPath, '..', 'templates', 'host-route', 'jmxConfigTemplate.yml');
+  const destination = path.join(process.resourcesPath, '..', 'templates', 'host-route', 'jmxconfig.yml');
 
   // let newFileString = res.locals.jmxConfig;
   
@@ -76,6 +76,11 @@ addressController.connectToKafka = (req, res, next) => {
   } catch (err) {
     return next(new ACError('connectToKafka', 500, err));
   }
+
+  // for visibility in production
+  // res.locals.children = [];
+  // res.locals.children.push(child);
+
   return next();
 };
 
@@ -91,6 +96,10 @@ addressController.startPrometheus = (req, res, next) => {
   } catch (err) {
     return next(new ACError('startPrometheus', 500, err));
   }
+
+  // for visibility in production
+  // res.locals.children.push(child);
+
   return next();
 };
 

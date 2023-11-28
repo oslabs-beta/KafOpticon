@@ -17,7 +17,7 @@ router.post('/',
   grafanaController.generateDashJson,
   grafanaController.createDashboard,
   (req, res) => {
-    res.redirect('back');
+    res.send(res.locals.children);
   }
 );
 
