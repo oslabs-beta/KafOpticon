@@ -149,6 +149,9 @@ async function createGrafanaContainer(networkName) {
       'GF_INSTALL_PLUGINS=grafana-clock-panel',
     ];
 
+    // production paths
+    const iniPath = path.join(process.resourcesPath, '..', 'templates', 'grafana', 'grafana.ini');
+
     // Volume Bindings
     const grafanaBinds = [
       `${path.join(
@@ -162,7 +165,7 @@ async function createGrafanaContainer(networkName) {
       `${path.join(
         __dirname,
         '../../grafana/grafana.ini',
-      )}:/etc/grafana/grafana.ini`,
+      )}:/etc/grafana`,
       'grafana-storage:/var/lib/grafana',
     ];
 
