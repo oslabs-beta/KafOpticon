@@ -6,6 +6,7 @@ const { spawn } = require('child_process');
 
 const addressController = {};
 
+// error constructor for this controller
 class ACError {
   constructor (location, status, message) {
     this.log = 'An error occurred in addressController.' + location;
