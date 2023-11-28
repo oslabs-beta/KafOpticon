@@ -91,7 +91,7 @@ git push origin newFeature
 5. Open a Pull Request
 
 # Contributors
-/n https://github.com/anewatech
-/n https://github.com/GOsorioCanales
-/n https://github.com/kelaompachai
-/n https://github.com/zackweiss
+<br>https://github.com/anewatech
+<br>https://github.com/GOsorioCanales
+<br>https://github.com/kelaompachai
+<br>https://github.com/zackweiss
