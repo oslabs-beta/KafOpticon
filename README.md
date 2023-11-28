@@ -63,6 +63,8 @@ You can send test email using the test button.
 Configure and customize threshholds for the alerts within Grafana. 
 Congratulations! 🏆️ You should now be able to receive automatic email alerts about your Kafka clusters.
 
+# Road Map
+Check out [issues](https://github.com/oslabs-beta/KafOpticon/issues) for further information about possible new features
 # Contributors
 https://github.com/anewatech
 https://github.com/GOsorioCanales
