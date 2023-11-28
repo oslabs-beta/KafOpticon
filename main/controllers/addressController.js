@@ -6,6 +6,7 @@ const { spawn } = require('child_process');
 
 const addressController = {};
 
+// error constructor for this controller
 class ACError {
   constructor (location, status, message) {
     this.log = 'An error occurred in addressController.' + location;
@@ -15,106 +16,67 @@ class ACError {
 }
 
 
-addressController.writeJmxConfig = async (req, res, next) => {
-  // write the jmx config file using the user inputted kafka address
-  console.log('entered writeJmxConfig');
+addressController.writeJmxConfig1 = (req, res, next) => {
+  // gets information off the request body and puts a transformation of it onto res.locals
+  const { address } = req.body;
 
+  res.locals.jmxConfig = `hostPort: ${address}\n`;
+
+  return next();
+};
+
+addressController.writeJmxConfig2 = async (req, res, next) => {
+  // write the jmx config file using the user inputted kafka address
+  // console.log('entered writeJmxConfig2');
+
+  // get paths to configuration files
   const templateFileAddress = path.join(__dirname, '..', '..', 'local-test', 'scraping-config', 'jmxConfigTemplate.yml');
   const destination = path.join(__dirname, '..', '..', 'local-test', 'scraping-config', 'jmxconfig.yml'); 
-  const { address } = req.body;
-  // console.log(address);
-  // PROBABLY SHOULD SANITIZE HERE
-
-  const lineToAppend = `hostPort: ${address}`;
-
-  // a variable to store what is in the template config file
-  let newFileString = lineToAppend + '\n';
+  
+  let newFileString = res.locals.jmxConfig;
   
   // read the information from the template file and append it to newFileString
   try {
     const contents = await fsp.readFile(templateFileAddress, 'utf8');
-    newFileString += contents;
+    res.locals.jmxConfig += contents;
   } catch (err) {
-    return next(new ACError('writeJmxConfig', 422, err));
+    return next(new ACError('writeJmxConfig2', 422, err));
   }
 
   // write the newFileString to the destination file
   try {
-    await fsp.writeFile(destination, newFileString, 'utf8');
+    await fsp.writeFile(destination, res.locals.jmxConfig, 'utf8');
   } catch (err) {
-    return next(new ACError('writeJmxConfig', 422, err));
+    return next(new ACError('writeJmxConfig2', 422, err));
   }
 
   return next();
 }
 
-addressController.checkForDocker = async (req, res, next) => {
-  // this middleware checks for docker
-
-  // first check whether docker is running
-  // do this by running docker ps and watching the output
-  const child = spawn('docker ps', {
-    shell: true
-  });
-
-  let answer = '';
-
-  child.stdout.on('data', (data) => {
-    answer += data;
-  });
-
-  // assign the appropriate boolean to res.locals.docker
-  // and call the next middleware
-  child.on('close', () => {
-    if (answer.includes('CONTAINER ID')){
-      res.locals.docker = true;
-    } else res.locals.docker = false;
-    next();
-  });
-
-  // write something that will call next() even if child process doesn't close
-  // properly/in a timely manner
-};
-
-
-addressController.bootUpDocker = (req, res, next) => {
-  // if the docker daemon is running, this middleware will boot up
-  // our stuff in docker by running docker compose up -d in the docker-test directory
-
-  if (res.locals.docker) {
-    const child = spawn('docker-compose up -d', {
-      shell: true,
-      stdio: 'inherit',
-      cwd: path.join(__dirname, '..', '..', 'docker-test')
-    });
-  }
-  next();
-};
-
 addressController.connectToKafka = (req, res, next) => {
   // create child process that runs jmx exporter and connect it to the kafka cluster
-  console.log('entered conntectToKafka');
+  // console.log('entered conntectToKafka');
 
   const child = spawn('npm run exportJmx', {
     shell: true,
-    stdio: 'inherit',
+    // stdio: 'inherit',
     cwd: path.join(__dirname, '..', '..', 'local-test')
   });
 
-  next();
+  return next();
 };
 
 addressController.startPrometheus = (req, res, next) => {
   // create child process that runs prometheus and connect it to jmx exporter
-  console.log('entered startPrometheus');
+  // console.log('entered startPrometheus');
 
   const child = spawn('npm run prometheus', {
     shell: true,
-    stdio: 'inherit',
+    // stdio: 'inherit',
     cwd: path.join(__dirname, '..', '..', 'local-test')
   });
 
-  setTimeout(() => {next();}, 2000);
+  return next();
 };
 
 

@@ -62,9 +62,7 @@ function Header() {
             value={clusterURL}
             onChange={e => setClusterURL(e.target.value)}>
           </input>
-          <button id='submitbutton' type='submit'>
-            Submit
-          </button>
+
           <div className='checkboxes'>
             <label className='checkbox-label'>
               <input
@@ -85,7 +83,7 @@ function Header() {
               Send to Local Monitoring
             </label>
           </div>
-         
+          <button id='submitbutton' type='submit'>Submit</button>
         </form>
       </div>
     </section>
