@@ -65,6 +65,29 @@ Congratulations! 🏆️ You should now be able to receive automatic email alert
 
 # Road Map
 Check out [issues](https://github.com/oslabs-beta/KafOpticon/issues) for further information about possible new features
+
+
+# Contributing
+Contributions are what make the open source community a great place to 
+If you would like to contribute to this project take the steps below:
+1. Fork the Project 
+2. Create a Feature Branch 
+Use `git checkout -b newFeature`    
+```javascript
+git checkout -b newFeature
+```
+3. Commit your Changes
+Use `git commit -m newFeature`
+```javascript
+git commit -m newFeature
+```
+4. Push to the Branch
+Use `git push origin newFeature`
+```javascript
+git push origin newFeature
+```
+5. Open a Pull Request
+
 # Contributors
 https://github.com/anewatech
 https://github.com/GOsorioCanales
