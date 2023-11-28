@@ -28,10 +28,16 @@ addressController.writeJmxConfig2 = async (req, res, next) => {
   // write the jmx config file using the user inputted kafka address
   // console.log('entered writeJmxConfig2');
 
-  const templateFileAddress = path.join(__dirname, '..', '..', 'local-test', 'scraping-config', 'jmxConfigTemplate.yml');
-  const destination = path.join(__dirname, '..', '..', 'local-test', 'scraping-config', 'jmxconfig.yml'); 
-  
-  let newFileString = res.locals.jmxConfig;
+  // return res.send(path.join(process.resourcesPath, 'templates', 'jmxconfig.yml'));
+
+  // correct paths for npm start (in development)
+  // const templateFileAddress = path.join(__dirname, '..', '..', 'local-test', 'scraping-config', 'jmxConfigTemplate.yml');
+  // const destination = path.join(__dirname, '..', '..', 'local-test', 'scraping-config', 'jmxconfig.yml'); 
+
+  const templateFileAddress = path.join(process.resourcesPath, '..', 'templates', 'jmxConfigTemplate.yml');
+  const destination = path.join(process.resourcesPath, '..', 'templates', 'jmxconfig.yml');
+
+  // let newFileString = res.locals.jmxConfig;
   
   // read the information from the template file and append it to newFileString
   try {
@@ -55,25 +61,36 @@ addressController.connectToKafka = (req, res, next) => {
   // create child process that runs jmx exporter and connect it to the kafka cluster
   // console.log('entered conntectToKafka');
 
-  const child = spawn('npm run exportJmx', {
-    shell: true,
-    stdio: 'inherit',
-    cwd: path.join(__dirname, '..', '..', 'local-test')
-  });
+  // dev path
+  // const workDir = path.join(__dirname, '..', '..');
 
+  // production path
+  // const workDir = path.join(process.resourcesPath, )
+
+  try {
+    const child = spawn('npm run exportJmx', {
+      shell: true,
+      stdio: 'inherit',
+      // cwd: path.join(__dirname, '..', '..')
+    });
+  } catch (err) {
+    return next(new ACError('connectToKafka', 500, err));
+  }
   return next();
 };
 
 addressController.startPrometheus = (req, res, next) => {
   // create child process that runs prometheus and connect it to jmx exporter
   // console.log('entered startPrometheus');
-
-  const child = spawn('npm run prometheus', {
-    shell: true,
-    stdio: 'inherit',
-    cwd: path.join(__dirname, '..', '..', 'local-test')
-  });
-
+  try {
+    const child = spawn('npm run prometheus', {
+      shell: true,
+      stdio: 'inherit',
+      // cwd: path.join(__dirname, '..', '..')
+    });
+  } catch (err) {
+    return next(new ACError('startPrometheus', 500, err));
+  }
   return next();
 };
 

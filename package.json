@@ -2,6 +2,17 @@
   "name": "kafopticon",
   "version": "1.0.0",
   "description": "kafka surveillance",
+  "main": "main/electron.js",
+  "build": {
+    "productName": "Kafopticon",
+    "appId": "com.oslabs.kafopticon",
+    "extraFiles": [
+      "templates"
+    ],
+    "directories": {
+      "output": "out/"
+    }
+  },
   "scripts": {
     "test": "jest --verbose",
     "build": "webpack --config ./webpack.config.js --watch",
@@ -14,7 +25,8 @@
     "consume": "kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic",
     "produce": "node ./local-test/producers-and-consumers/producer.js",
     "exportJmx": "java -jar local-test/jmx_prometheus_httpserver-0.19.0.jar 3030 ./local-test/scraping-config/jmxconfig.yml",
-    "prometheus": "prometheus --config.file=./local-test/scraping-config/prometheus.yml"
+    "prometheus": "prometheus --config.file=./local-test/scraping-config/prometheus.yml",
+    "electron-pack": "electron-builder build"
   },
   "repository": {
     "type": "git",
@@ -35,10 +47,10 @@
     "concurrently": "^8.2.2",
     "css-loader": "^6.8.1",
     "electron": "^27.0.3",
+    "electron-builder": "^24.9.1",
     "electron-reloader": "^1.2.3",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.3",
-    "ini": "^4.1.1",
     "jest": "^29.7.0",
     "nodemon": "^3.0.1",
     "react-router": "^6.18.0",
@@ -52,8 +64,8 @@
   "dependencies": {
     "axios": "^1.6.2",
     "dockerode": "^4.0.0",
-    "electron-builder": "^24.9.1",
     "express": "^4.18.2",
+    "ini": "^4.1.1",
     "kafkajs": "^2.2.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
