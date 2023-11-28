@@ -1,3 +1,4 @@
+#sets up prometheus ad a data source for grafana and specifies where dashboars are stored
 apiVersion: 1
 
 providers:
