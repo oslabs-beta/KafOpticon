@@ -9,19 +9,19 @@ Kafka is a powerful open source, datastream processing software platform.
 Why:
 Monitoring relevant cluster metrics is difficult because there are many metrics (many of which are not critical for day to day use)
 and they are not easily accessible.
-KafOpticon aims to solve these problems. With KafOpticon, you have REAL TIME monitoring, visualizing and alerting features.
-  <br><img src="./assets/KafOpticon Sample.png" width="300px"></img>  
+KafOpticon aims to solve these problems. With KafOpticon, you have REAL TIME monitor, visualization and alert features.
+  <br><img src="./assets/KafOpticon Sample1.png" width="300px"></img>  
 
 Not only that, but you can customize your own dashboard with user selected metrics if you want more granular control over what is displayed.
-Dependencies: Grafana and Prometheus
 
+Dependencies: Grafana and Prometheus
 
 # Run local test
 Preconditions: Prometheus and Grafana must be installed
 Grafana must be running already and must be configured to allow anonymous access with the admin role in the Main Org.
 
 Open up two terminals in the root directory.
-Run 'npm run bootZoo' and 'npm run bootKaf1'.
+Run 'npm run bootZoo' and 'npm run bootKaf1' in the separate terminals.
 ```javascript
 npm run bootZoo
 ```
@@ -54,9 +54,9 @@ npm start
 docker-compose down
 ```
 # Alerts
-In order to enable automatic alerts an email and app password are required. The easiest way for this is to provide a gmail username and an app password
+In order to enable automatic alerts an email and app password are required. The easiest way to do this is to provide a gmail username and an app password
 in the relevant fields of the alerts dashboard. After clicking the submit button, you must restart Grafana for the changes to take place.
 After Grafana has been restarted, you are now free to add any emails you want to receive the alerts in the Grafana alerts contact points.
 You can send test email using the test button.
 Configure and customize threshholds for the alerts within Grafana. 
-Congratulations! You can now receive automatic email alerts about your Kafka clusters.
+Congratulations! You should now be able to receive automatic email alerts about your Kafka clusters.
