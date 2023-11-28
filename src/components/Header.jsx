@@ -62,6 +62,7 @@ function Header() {
             value={clusterURL}
             onChange={e => setClusterURL(e.target.value)}>
           </input>
+
           <div className='checkboxes'>
             <label className='checkbox-label'>
               <input

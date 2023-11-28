@@ -141,7 +141,7 @@ height: 100%;
   align-items: center;
   position: relative;
   height: 70px;
-  width: 100%;
+  width: 550px;
   margin-top: 10px;
 }
 
@@ -149,7 +149,7 @@ height: 100%;
   padding: 10px;
   border-radius: 7px;
   border-style: solid;
-  width: calc(100%- 155px);
+  width: 360px;
   border-color: white;
   margin-right: 5px;
 }
