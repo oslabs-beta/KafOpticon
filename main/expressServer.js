@@ -3,6 +3,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const log = require('electron-log/main');
 
 const addressRouter = require('./routers/addressRouter');
 const kafkaMonitoringRouter = require('./routers/kafkaMonitoringRouter');
@@ -45,7 +46,8 @@ app.use((err, req, res, next) => {
   };
   console.log(trueError.message);
   console.log(trueError.log);
-  res.status(trueError.status).send(trueError.message);
+  log.info(trueError);
+  return res.status(trueError.status).send(trueError.message);
 });
 
 // server is started in electron.js--only use this code if testing backend without frontend

@@ -2,7 +2,6 @@ const Docker = require('dockerode');
 const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
-const log = require('electron-log/main');
 
 const docker = new Docker();
 const pullImage = promisify(docker.pull.bind(docker));
@@ -12,7 +11,7 @@ const kafkaMonitoringController = {};
 
 class KMError {
   constructor(location, status, message) {
-    this.log = 'An error occurred in addressController.' + location;
+    this.log = 'An error occurred in kafkaMonitoringController.' + location;
     this.status = status;
     this.message = { err: message };
   }
@@ -63,8 +62,12 @@ scrape_configs:
     static_configs:
       - targets: ${JSON.stringify(jmxTargets)}
 `;
+
+    // production path
+    const prometheusConfigPath = path.join(process.resourcesPath, '..', 'templates', 'docker-route', 'prometheus.yml');
+
     fs.writeFileSync(
-      path.join(__dirname, 'prometheus.yml'),
+      prometheusConfigPath,
       prometheusConfigTemplate.trim(),
     );
     next();
@@ -107,6 +110,7 @@ kafkaMonitoringController.createPrometheusContainer = async (
 
     // if in production
     const promConfigPath = path.join(process.resourcesPath, '..', 'templates', 'docker-route', 'prometheus.yml');
+
     const container = await docker.createContainer({
       name: 'prometheus',
       Image: 'prom/prometheus:latest',
@@ -127,6 +131,12 @@ kafkaMonitoringController.createPrometheusContainer = async (
 
 kafkaMonitoringController.createGrafanaContainer = async (req, res, next) => {
   try {
+
+    // for production
+    const iniPath = path.join(process.resourcesPath, '..', 'templates', 'grafana', 'grafana.ini');
+    const dashboardsPath = path.join(process.resourcesPath, '..', 'templates', 'grafana', 'Dockerfile', 'provisioning', 'dashboards');
+    const datasourcePath = path.join(process.resourcesPath, '..', 'templates', 'grafana', 'Dockerfile', 'provisioning', 'datasources', 'datasource.yml');
+
     const grafanaEnv = [
       'GF_SECURITY_ADMIN_USER=admin',
       'GF_SECURITY_ADMIN_PASSWORD=admin',
@@ -136,18 +146,9 @@ kafkaMonitoringController.createGrafanaContainer = async (req, res, next) => {
       'GF_INSTALL_PLUGINS=grafana-clock-panel',
     ];
     const grafanaBinds = [
-      `${path.join(
-        __dirname,
-        '../../grafana/Dockerfile/provisioning/dashboards',
-      )}:/etc/grafana/provisioning/dashboards`,
-      `${path.join(
-        __dirname,
-        '../../grafana/Dockerfile/provisioning/datasources/datasource.yml',
-      )}:/etc/grafana/provisioning/datasources/datasource.yml`,
-      `${path.join(
-        __dirname,
-        '../../grafana/grafana.ini',
-      )}:/etc/grafana`,
+      `${dashboardsPath}:/etc/grafana/provisioning/dashboards`,
+      `${datasourcePath}:/etc/grafana/provisioning/datasources/datasource.yml`,
+      `${iniPath}:/etc/grafana/grafana.ini`,
       'grafana-storage:/var/lib/grafana',
     ];
     const container = await docker.createContainer({
