@@ -47,7 +47,7 @@ app.use((err, req, res, next) => {
   console.log(trueError.message);
   console.log(trueError.log);
   log.info(trueError);
-  return res.status(trueError.status).send(trueError.message);
+  return res.status(trueError.status).send(trueError);
 });
 
 // server is started in electron.js--only use this code if testing backend without frontend

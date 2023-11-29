@@ -35,9 +35,12 @@ addressController.writeJmxConfig2 = async (req, res, next) => {
   // const templateFileAddress = path.join(__dirname, '..', '..', 'local-test', 'scraping-config', 'jmxConfigTemplate.yml');
   // const destination = path.join(__dirname, '..', '..', 'local-test', 'scraping-config', 'jmxconfig.yml'); 
 
-  const templateFileAddress = path.join(process.resourcesPath, '..', 'templates', 'host-route', 'jmxConfigTemplate.yml');
-  const destination = path.join(process.resourcesPath, '..', 'templates', 'host-route', 'jmxconfig.yml');
+  // const templateFileAddress = path.join(process.resourcesPath, '..', 'templates', 'host-route', 'jmxConfigTemplate.yml');
+  // const destination = path.join(process.resourcesPath, '..', 'templates', 'host-route', 'jmxconfig.yml');
 
+  // make file paths conditional on node environment
+  const templateFileAddress = (process.env.NODE_ENV === 'development') ? path.join(__dirname, '..', '..', 'templates', 'host-route', 'jmxConfigTemplate.yml') : path.join(process.resourcesPath, '..', 'templates', 'host-route', 'jmxConfigTemplate.yml');
+  const destination = (process.env.NODE_ENV === 'development') ? path.join(__dirname, '..', '..', 'templates', 'host-route', 'jmxconfig.yml') : path.join(process.resourcesPath, '..', 'templates', 'host-route', 'jmxconfig.yml');
   // let newFileString = res.locals.jmxConfig;
   
   // read the information from the template file and append it to newFileString
