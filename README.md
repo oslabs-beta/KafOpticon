@@ -14,9 +14,17 @@ Why:
 Monitoring relevant cluster metrics is difficult because there are many metrics (many of which are not critical for day to day use)
 and they are not easily accessible.
 KafOpticon aims to solve these problems. With KafOpticon, you have REAL TIME monitor, visualization and alert features.
-  <br><img src="./assets/KafOpticon Sample1.png" width="500px"></img>  
+  <br><img src="./assets/HealthPerformance.gif" width="700px"></img> 
+
+Submit Broker's URL's or Port Numbers
+   <br><img src="./assets/Submit.gif" width="700px"></img>   
 
 Not only that, but you can customize your own dashboard with user selected metrics if you want more granular control over what is displayed.
+   <br><img src="./assets/CreateDashboard.gif" width="700px"></img>
+
+Customize Automatic Email Alerts
+  <br><img src="./assets/Alerts.gif" width="700px"></img>
+
 
 Dependencies: Grafana and Prometheus
 
