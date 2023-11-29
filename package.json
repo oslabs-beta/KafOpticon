@@ -25,13 +25,6 @@
         "zip"
       ]
     },
-    "linux": {
-      "target": [
-        "AppImage",
-        "deb"
-      ],
-      "category": "Utility"
-    },
     "files": [
       "**/*",
       "!**/*.ts",
