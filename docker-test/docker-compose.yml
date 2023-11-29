@@ -8,6 +8,7 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - '2181:2181'
+
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -19,24 +20,25 @@ services:
       - '8081:8081'
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper:2181
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
       SCHEMA_REGISTRY_LISTENERS: http://schema-registry:8081
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka-broker-2:9092,PLAINTEXT_INTERNAL://localhost:29092
       SCHEMA_REGISTRY_DEBUG: 'true'
+
   kafka-broker-1:
     image: confluentinc/cp-kafka:latest
     hostname: kafka-broker-1
     ports:
       - '19092:19092'
+      - '9991:9999'
     volumes:
-      
       - ./jmx_prometheus_javaagent-0.20.0.jar:/usr/app/jmx_prometheus_javaagent.jar
       - ./kafka-jmx-exporter-config.yml:/usr/app/kafka-jmx-exporter-config.yml
     depends_on:
       - zookeeper
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker-1:9092,PLAINTEXT_HOST://localhost:19092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
@@ -47,15 +49,15 @@ services:
     hostname: kafka-broker-2
     ports:
       - '29092:29092'
+      - '9992:9999'
     volumes:
-      
-      -  ./jmx_prometheus_javaagent-0.20.0.jar:/usr/app/jmx_prometheus_javaagent.jar
+      - ./jmx_prometheus_javaagent-0.20.0.jar:/usr/app/jmx_prometheus_javaagent.jar
       - ./kafka-jmx-exporter-config.yml:/usr/app/kafka-jmx-exporter-config.yml
     depends_on:
       - zookeeper
     environment:
       KAFKA_BROKER_ID: 2
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker-2:9092,PLAINTEXT_HOST://localhost:29092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
@@ -66,44 +68,17 @@ services:
     hostname: kafka-broker-3
     ports:
       - '39092:39092'
+      - '9993:9999'
     volumes:
-      
-      -  ./jmx_prometheus_javaagent-0.20.0.jar:/usr/app/jmx_prometheus_javaagent.jar
+      - ./jmx_prometheus_javaagent-0.20.0.jar:/usr/app/jmx_prometheus_javaagent.jar
       - ./kafka-jmx-exporter-config.yml:/usr/app/kafka-jmx-exporter-config.yml
     depends_on:
       - zookeeper
     environment:
       KAFKA_BROKER_ID: 3
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker-3:9092,PLAINTEXT_HOST://localhost:39092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
       KAFKA_JMX_HOSTNAME: kafka-broker-3
       KAFKA_JVM_PERFORMANCE_OPTS: '-javaagent:/usr/app/jmx_prometheus_javaagent.jar=9999:/usr/app/kafka-jmx-exporter-config.yml'
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - '3000:3000'
-    depends_on:
-      prometheus:
-        condition: service_started
-    volumes:
-      - grafana-storage:/var/lib/grafana
-      - ../grafana/Dockerfile/provisioning/dashboards:/etc/grafana/provisioning/dashboards
-      - ../grafana/Dockerfile/provisioning/datasources/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
-      - ../grafana/grafana.ini:/etc/grafana/grafana.ini
-    environment:
-      GF_SECURITY_ADMIN_USER: admin
-      GF_SECURITY_ADMIN_PASSWORD: admin
-      GF_USERS_ALLOW_SIGN_UP: 'false'
-      GF_SECURITY_ALLOW_EMBEDDING: 'true'
-      GF_AUTH_ANONYMOUS_ENABLED: 'true'
-      GF_INSTALL_PLUGINS: grafana-clock-panel
-  prometheus:
-    image: prom/prometheus:latest
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-    ports:
-      - '9090:9090'
-volumes:
-  grafana-storage:
