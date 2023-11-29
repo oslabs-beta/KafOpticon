@@ -1,4 +1,5 @@
 const Docker = require('dockerode');
+const { app } = require('electron');
 const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
@@ -6,12 +7,11 @@ const { promisify } = require('util');
 const docker = new Docker();
 const pullImage = promisify(docker.pull.bind(docker));
 
-
 const kafkaMonitoringController = {};
 
 class KMError {
   constructor(location, status, message) {
-    this.log = 'An error occurred in kafkaMonitoringController.' + location;
+    this.log = `An error occurred in kafkaMonitoringController.${location}`;
     this.status = status;
     this.message = { err: message };
   }
@@ -23,6 +23,16 @@ function followPullProgress(stream) {
       err ? reject(err) : resolve(res),
     );
   });
+}
+
+// Helper function to resolve paths both in development and production
+function getPathForFileInTemplates(relativePath) {
+  if (app.isPackaged) {
+    return path.join(process.resourcesPath, 'templates', relativePath);
+  } else {
+    // If not packaged, 'templates' directory is assumed to be in the project root
+    return path.join(__dirname, '../../templates', relativePath);
+  }
 }
 
 kafkaMonitoringController.pullDockerImages = async (req, res, next) => {
@@ -63,39 +73,42 @@ scrape_configs:
       - targets: ${JSON.stringify(jmxTargets)}
 `;
 
-    // production path
-    const prometheusConfigPath = path.join(process.resourcesPath, '..', 'templates', 'docker-route', 'prometheus.yml');
-
-    fs.writeFileSync(
-      prometheusConfigPath,
-      prometheusConfigTemplate.trim(),
+    const prometheusConfigPath = getPathForFileInTemplates(
+      'docker-route/prometheus.yml',
     );
+
+    fs.writeFileSync(prometheusConfigPath, prometheusConfigTemplate.trim());
     next();
   } catch (err) {
     next(new KMError('generatePrometheusConfig', 424, err));
   }
 };
 
-kafkaMonitoringController.stopAndRemoveContainer = async (
-  containerName,
-  req,
-  res,
-  next,
-) => {
+kafkaMonitoringController.stopAndRemoveContainers = async (req, res, next) => {
+  const containerNames = ['prometheus', 'grafana'];
   try {
-    const container = docker.getContainer(containerName);
-    const data = await container.inspect();
-    if (data.State.Running) {
-      await container.stop();
+    for (const containerName of containerNames) {
+      const container = docker.getContainer(containerName);
+      await container
+        .stop()
+        .catch(err =>
+          console.log(
+            `Error stopping container ${containerName}:`,
+            err.message,
+          ),
+        );
+      await container
+        .remove()
+        .catch(err =>
+          console.log(
+            `Error removing container ${containerName}:`,
+            err.message,
+          ),
+        );
     }
-    await container.remove();
     next();
   } catch (err) {
-    if (err.statusCode !== 404) {
-      next(new KMError('getContainer', 424, err));
-    } else {
-      next();
-    }
+    next(new KMError('stopAndRemoveContainer', 424, err));
   }
 };
 
@@ -105,12 +118,9 @@ kafkaMonitoringController.createPrometheusContainer = async (
   next,
 ) => {
   try {
-    // if in development
-    // const promConfigPath = path.join(__dirname, 'prometheus.yml');
-
-    // if in production
-    const promConfigPath = path.join(process.resourcesPath, '..', 'templates', 'docker-route', 'prometheus.yml');
-
+    const promConfigPath = getPathForFileInTemplates(
+      'docker-route/prometheus.yml',
+    );
     const container = await docker.createContainer({
       name: 'prometheus',
       Image: 'prom/prometheus:latest',
@@ -131,11 +141,13 @@ kafkaMonitoringController.createPrometheusContainer = async (
 
 kafkaMonitoringController.createGrafanaContainer = async (req, res, next) => {
   try {
-
-    // for production
-    const iniPath = path.join(process.resourcesPath, '..', 'templates', 'grafana', 'grafana.ini');
-    const dashboardsPath = path.join(process.resourcesPath, '..', 'templates', 'grafana', 'Dockerfile', 'provisioning', 'dashboards');
-    const datasourcePath = path.join(process.resourcesPath, '..', 'templates', 'grafana', 'Dockerfile', 'provisioning', 'datasources', 'datasource.yml');
+    const iniPath = getPathForFileInTemplates('grafana/grafana.ini');
+    const dashboardsPath = getPathForFileInTemplates(
+      'grafana/Dockerfile/provisioning/dashboards',
+    );
+    const datasourcePath = getPathForFileInTemplates(
+      'grafana/Dockerfile/provisioning/datasources/datasource.yml',
+    );
 
     const grafanaEnv = [
       'GF_SECURITY_ADMIN_USER=admin',
@@ -166,7 +178,7 @@ kafkaMonitoringController.createGrafanaContainer = async (req, res, next) => {
     await container.start();
     next();
   } catch (err) {
-    next(new KMError('createGrafanaError', 424, err));
+    next(new KMError('createGrafanaContainer', 424, err));
   }
 };
 

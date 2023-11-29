@@ -6,12 +6,59 @@
   "build": {
     "productName": "Kafopticon",
     "appId": "com.oslabs.kafopticon",
-    "extraFiles": [
-      "templates"
+    "extraResources": [
+      {
+        "from": "./templates",
+        "to": "templates",
+        "filter": [
+          "**/*"
+        ]
+      }
     ],
     "directories": {
       "output": "out/"
-    }
+    },
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Utility"
+    },
+    "files": [
+      "**/*",
+      "!**/*.ts",
+      "!*.code-workspace",
+      "!**/*.js.map",
+      "!**/*.tsbuildinfo",
+      "!**/tsconfig.json",
+      "!**/tslint.json",
+      "!**/*.spec.ts",
+      "!**/*.test.ts",
+      "!**/*.spec.tsx",
+      "!**/*.test.tsx",
+      "!**/*.scss",
+      "!**/*.sass",
+      "!**/*.md",
+      "!build/",
+      "!scripts/",
+      "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+      "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+      "!**/node_modules/*.d.ts",
+      "!**/node_modules/.bin",
+      "!**/*.{o,hprof,orig,pyc,pyo,rbc}",
+      "!**/._*",
+      "!**/electron-builder.{yaml,yml,json,json5,toml}",
+      "!**/{.git,.hg,.svn,CVS,RCS,SCCS,__pycache__,thumbs.db,.DS_Store,ehthumbs.db,Desktop.ini}",
+      "!**/{@eaDir,npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}"
+    ]
   },
   "scripts": {
     "test": "jest --verbose",
@@ -26,7 +73,8 @@
     "produce": "node ./local-test/producers-and-consumers/producer.js",
     "exportJmx": "java -jar local-test/jmx_prometheus_httpserver-0.19.0.jar 3030 ./local-test/scraping-config/jmxconfig.yml",
     "prometheus": "prometheus --config.file=./local-test/scraping-config/prometheus.yml",
-    "electron-pack": "electron-builder build"
+    "electron-pack": "electron-builder build",
+    "dist": "electron-builder -ml"
   },
   "repository": {
     "type": "git",
