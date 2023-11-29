@@ -4,6 +4,8 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const log = require('electron-log/main');
 log.info('Log from the main process');
+log.info('node environment: ', process.env.NODE_ENV);
+// console.log(process.env.NODE_ENV);
 
 // require in express server so that it gets booted when electron app is ready
 const expressServer = require('./expressServer');

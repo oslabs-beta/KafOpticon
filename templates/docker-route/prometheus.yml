@@ -4,4 +4,4 @@ global:
 scrape_configs:
   - job_name: 'kafka'
     static_configs:
-     - targets: ["host.docker.internal:9991","host.docker.internal:9992","host.docker.internal:9993"]
+      - targets: ["host.docker.internal:1000","host.docker.internal:1001","host.docker.internal:1002`"]

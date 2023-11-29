@@ -16,7 +16,7 @@
   "scripts": {
     "test": "jest --verbose",
     "build": "webpack --config ./webpack.config.js --watch",
-    "start": "concurrently \"npm run build\" \"electron main/electron.js\" --kill-others",
+    "start": "concurrently \"npm run build\" \"NODE_ENV=development electron main/electron.js\" --kill-others",
     "server": "nodemon main/expressServer.js",
     "bootZoo": "zookeeper-server-start.sh ./local-test/kafka-config/zookeeper.properties",
     "bootKaf1": "JMX_PORT=2020 kafka-server-start.sh ./local-test/kafka-config/server1.properties",

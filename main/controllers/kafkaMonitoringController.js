@@ -64,7 +64,11 @@ scrape_configs:
 `;
 
     // production path
-    const prometheusConfigPath = path.join(process.resourcesPath, '..', 'templates', 'docker-route', 'prometheus.yml');
+    // const prometheusConfigPath = path.join(process.resourcesPath, '..', 'templates', 'docker-route', 'prometheus.yml');
+
+    // set a different path depending on whether node environment is production or development
+    const prometheusConfigPath = (process.env.NODE_ENV === 'development') ? path.join(__dirname, '..', '..', 'templates', 'docker-route', 'prometheus.yml') : path.join(process.resourcesPath, '..', 'templates', 'docker-route', 'prometheus.yml'); 
+    // console.log('prometheusConfigPath:', prometheusConfigPath);
 
     fs.writeFileSync(
       prometheusConfigPath,
@@ -109,7 +113,10 @@ kafkaMonitoringController.createPrometheusContainer = async (
     // const promConfigPath = path.join(__dirname, 'prometheus.yml');
 
     // if in production
-    const promConfigPath = path.join(process.resourcesPath, '..', 'templates', 'docker-route', 'prometheus.yml');
+    // const promConfigPath = path.join(process.resourcesPath, '..', 'templates', 'docker-route', 'prometheus.yml');
+
+    // set a different path depending on whether app is in production or development
+    const promConfigPath = (process.env.NODE_ENV === 'development') ? path.join(__dirname, '..', '..', 'templates', 'docker-route', 'prometheus.yml') : path.join(process.resourcesPath, '..', 'templates', 'docker-route', 'prometheus.yml');
 
     const container = await docker.createContainer({
       name: 'prometheus',
@@ -133,9 +140,14 @@ kafkaMonitoringController.createGrafanaContainer = async (req, res, next) => {
   try {
 
     // for production
-    const iniPath = path.join(process.resourcesPath, '..', 'templates', 'grafana', 'grafana.ini');
-    const dashboardsPath = path.join(process.resourcesPath, '..', 'templates', 'grafana', 'Dockerfile', 'provisioning', 'dashboards');
-    const datasourcePath = path.join(process.resourcesPath, '..', 'templates', 'grafana', 'Dockerfile', 'provisioning', 'datasources', 'datasource.yml');
+    // const iniPath = path.join(process.resourcesPath, '..', 'templates', 'grafana', 'grafana.ini');
+    // const dashboardsPath = path.join(process.resourcesPath, '..', 'templates', 'grafana', 'Dockerfile', 'provisioning', 'dashboards');
+    // const datasourcePath = path.join(process.resourcesPath, '..', 'templates', 'grafana', 'Dockerfile', 'provisioning', 'datasources', 'datasource.yml');
+
+    // create different paths depending on whether environment is development or production
+    const iniPath = (process.env.NODE_ENV === 'development') ? path.join(__dirname, '..', '..', 'templates', 'grafana', 'grafana.ini') : path.join(process.resourcesPath, '..', 'templates', 'grafana', 'grafana.ini');
+    const dashboardsPath = (process.env.NODE_ENV === 'development') ? path.join(__dirname, '..', '..', 'templates', 'grafana', 'Dockerfile', 'provisioning', 'dashboards') : path.join(process.resourcesPath, '..', 'templates', 'grafana', 'Dockerfile', 'provisioning', 'dashboards');
+    const datasourcePath = (process.env.NODE_ENV === 'development') ? path.join(__dirname, '..', '..', 'templates', 'grafana', 'Dockerfile', 'provisioning', 'datasources', 'datasource.yml') : path.join(process.resourcesPath, '..', 'templates', 'grafana', 'Dockerfile', 'provisioning', 'datasources', 'datasource.yml');
 
     const grafanaEnv = [
       'GF_SECURITY_ADMIN_USER=admin',
