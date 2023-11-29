@@ -28,7 +28,7 @@ function followPullProgress(stream) {
 // Helper function to resolve paths both in development and production
 function getPathForFileInTemplates(relativePath) {
   if (app.isPackaged) {
-    return path.join(process.resourcesPath, 'templates', relativePath);
+    return path.join(app.getPath('userData'), 'templates', relativePath);
   } else {
     // If not packaged, 'templates' directory is assumed to be in the project root
     return path.join(__dirname, '../../templates', relativePath);
@@ -84,31 +84,26 @@ scrape_configs:
   }
 };
 
-kafkaMonitoringController.stopAndRemoveContainers = async (req, res, next) => {
-  const containerNames = ['prometheus', 'grafana'];
+kafkaMonitoringController.stopAndRemoveContainer = async (
+  containerName,
+  req,
+  res,
+  next,
+) => {
   try {
-    for (const containerName of containerNames) {
-      const container = docker.getContainer(containerName);
-      await container
-        .stop()
-        .catch(err =>
-          console.log(
-            `Error stopping container ${containerName}:`,
-            err.message,
-          ),
-        );
-      await container
-        .remove()
-        .catch(err =>
-          console.log(
-            `Error removing container ${containerName}:`,
-            err.message,
-          ),
-        );
+    const container = docker.getContainer(containerName);
+    const data = await container.inspect();
+    if (data.State.Running) {
+      await container.stop();
+      await container.remove();
     }
     next();
   } catch (err) {
-    next(new KMError('stopAndRemoveContainer', 424, err));
+    if (err.statusCode !== 404) {
+      next(new KMError('getContainer', 424, err));
+    } else {
+      next();
+    }
   }
 };
 

@@ -7,7 +7,15 @@ router.post(
   kafkaMonitoringController.pullDockerImages,
   kafkaMonitoringController.createNetwork,
   kafkaMonitoringController.generatePrometheusConfig,
-  kafkaMonitoringController.stopAndRemoveContainers,
+  (req, res, next) =>
+    kafkaMonitoringController.stopAndRemoveContainer(
+      'prometheus',
+      req,
+      res,
+      next,
+    ),
+  (req, res, next) =>
+    kafkaMonitoringController.stopAndRemoveContainer('grafana', req, res, next),
   kafkaMonitoringController.createPrometheusContainer,
   kafkaMonitoringController.createGrafanaContainer,
   (req, res) => {

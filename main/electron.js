@@ -3,6 +3,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const log = require('electron-log/main');
+const fs = require('fs-extra');
 log.info('Log from the main process');
 
 // require in express server so that it gets booted when electron app is ready
@@ -32,7 +33,20 @@ const createWindow = () => {
   // load the index.html into it
   win.loadFile(path.join(__dirname, '..', 'dist', 'index.html'));
 };
-
+function setupTemplates() {
+  try {
+    const sourceTemplatesPath = path.join(
+      path.join(process.resourcesPath, 'templates'),
+    );
+    const targetTemplatesPath = path.join(app.getPath('userData'), 'templates');
+    if (!fs.existsSync(targetTemplatesPath)) {
+      fs.copySync(sourceTemplatesPath, targetTemplatesPath);
+    }
+    log.info('Templates copied successfully.');
+  } catch (err) {
+    log.info('Error setting up templates:', err);
+  }
+}
 
 // when electron is finished initializing and the 'ready' event is
 // emitted, boot up express server and run createWindow
@@ -41,5 +55,6 @@ app.on('ready', () => {
     console.log('Server listening on port 3010');
     log.info('Server listening on port 3010');
   });
+  setupTemplates();
   createWindow();
 });
