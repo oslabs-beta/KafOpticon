@@ -26,6 +26,7 @@ const createWindow = () => {
   const win = new BrowserWindow({
     height: 600, // look into auto full-screen?
     width: 800,
+    icon: path.join(__dirname, '../assets/icon.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },

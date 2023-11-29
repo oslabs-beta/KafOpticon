@@ -1,5 +1,5 @@
 {
-  "name": "kafopticon",
+  "name": "KafOpticon",
   "version": "1.0.0",
   "description": "kafka surveillance",
   "main": "main/electron.js",
@@ -23,17 +23,18 @@
   "build": {
     "productName": "KafOpticon",
     "appId": "com.oslabs.kafopticon",
-    "win": {
+    "win" : {
       "target": ["nsis", "portable"]
     },
     "linux": {
+      "icon": "assets/icon.png",
       "target": [
         "AppImage", 
         "deb",
-        "snap",
-        "flatpak",
+        "flatpak"
       ]
     },
+    
     "extraFiles": [
       "templates"
     ],
