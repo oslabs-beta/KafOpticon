@@ -23,7 +23,8 @@
       "target": [
         "dmg",
         "zip"
-      ]
+      ],
+      "icon": "./assets/appIcon.icns"
     },
     "files": [
       "**/*",
