@@ -3,20 +3,12 @@
   "version": "1.0.0",
   "description": "kafka surveillance",
   "main": "main/electron.js",
-  "build": {
-    "productName": "Kafopticon",
-    "appId": "com.oslabs.kafopticon",
-    "extraFiles": [
-      "templates"
-    ],
-    "directories": {
-      "output": "out/"
-    }
-  },
-  "scripts": {
+   "scripts": {
     "test": "jest --verbose",
-    "build": "webpack --config ./webpack.config.js --watch",
-    "start": "concurrently \"npm run build\" \"NODE_ENV=development electron main/electron.js\" --kill-others",
+    "build": "webpack --config ./webpack.config.js",
+    "start": "electron main/electron.js",
+    "pack": "electron-builder --dir",  
+    "dist": "electron-builder --linux --win",  
     "server": "nodemon main/expressServer.js",
     "bootZoo": "zookeeper-server-start.sh ./local-test/kafka-config/zookeeper.properties",
     "bootKaf1": "JMX_PORT=2020 kafka-server-start.sh ./local-test/kafka-config/server1.properties",
@@ -28,11 +20,35 @@
     "prometheus": "prometheus --config.file=./local-test/scraping-config/prometheus.yml",
     "electron-pack": "electron-builder build"
   },
+  "build": {
+    "productName": "KafOpticon",
+    "appId": "com.oslabs.kafopticon",
+    "win": {
+      "target": ["nsis", "portable"]
+    },
+    "linux": {
+      "target": [
+        "AppImage", 
+        "deb",
+        "snap",
+        "flatpak",
+      ]
+    },
+    "extraFiles": [
+      "templates"
+    ],
+    "directories": {
+      "output": "out/"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/oslabs-beta/KafOpticon.git"
   },
-  "author": "Andrew Cirt, Ernesto Osorio, Joseph Paul, Zack Weiss",
+  "author": {
+    "name": "KafOpticon",
+    "email": "test.me75j@simplelogin.com"
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/oslabs-beta/KafOpticon/issues"
