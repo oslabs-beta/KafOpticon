@@ -38,36 +38,43 @@ It is also possible to clone the repository, checkout into the electron-builder
 branch that matches your OS, and execute `npm run dist`. The app will be in the
 out/ folder at the repository's root.
 
-# Run local test
+## Using KafOpticon with Docker-mediated Prometheus and Grafana
 
-1. Preconditions:
+KafOpticon is specially designed for ease of monitoring Kafka clusters. It
+automatically generates Prometheus and Grafana containers in Docker, which
+connect to the metrics endpoints you provide. This setup uses JMX Exporter's
+JMX-Prometheus Java Agent to scrape metric endpoints from each Kafka cluster.
 
-- Prometheus and Grafana must be installed
-- Grafana must be running already (on port 3000) and must be configured to allow
-  anonymous access with the admin role in the Main Org.
-- Ports 9090, 3030, and 9092 must be available
+### Configuration Steps:
 
-2. Open up two terminals in the root directory.
-3. Run `npm run bootZoo` and `npm run bootKaf1` in the separate terminals.
+1. **Set Up Your Kafka Cluster for Monitoring:**
 
-```javascript
-npm run bootZoo
-```
+   - For configuring your own Kafka cluster to be monitored using KafOpticon,
+     refer to the `docker-test` folder in the repository and the
+     `run docker test` instructions below.
+   - Ensure that your Kafka cluster exposes Prometheus-readable metrics data.
+     This is crucial for KafOpticon’s Prometheus container to connect
+     effectively.
+   - For more information on setting up JMX Exporter, visit the
+     [JMX Exporter GitHub page](https://github.com/prometheus/jmx_exporter).
 
-```javascript
-npm run bootKaf1
-```
+2. **Connect KafOpticon to Your Cluster:**
+   - Open the KafOpticon app.
+   - Provide a comma-separated list of the exposed JMX Endpoints of your Kafka
+     cluster (e.g., ports 9991, 9992, and 9993).
+   - Click on the “send to Docker monitoring” checkbox and hit send.
 
-4. Open up a terminal in the root directory. Run `npm start` in the root
-   directory
+### Monitoring with Docker Desktop:
 
-```javascript
-npm start
-```
-
-5. In the electron app, type 'localhost:2020' into the form, check 'send to
-   local monitoring' and submit it. Wait. Refresh if necessary. Click into
-   performance or health metrics. Data on the kafka cluster should be displayed.
+- After setting up, monitor the process in Docker Desktop. Prometheus and
+  Grafana containers will be built for monitoring your cluster.
+- Allow KafOpticon some time to refresh as these containers are built and
+  monitoring information is sent to the app.
+- If the dashboard is not displaying as expected, press `Command+R` (or `Ctrl+R`
+  on Windows) to refresh the page.
+- Regularly check Docker Desktop to ensure the Prometheus and Grafana containers
+  are running as expected. Restart any containers that have exited to
+  troubleshoot potential issues.
 
 ## Run Docker Test
 
@@ -113,6 +120,37 @@ npm start
 docker-compose down
 ```
 
+# Run local test
+
+1. Preconditions:
+
+- Prometheus and Grafana must be installed
+- Grafana must be running already (on port 3000) and must be configured to allow
+  anonymous access with the admin role in the Main Org.
+- Ports 9090, 3030, and 9092 must be available
+
+2. Open up two terminals in the root directory.
+3. Run `npm run bootZoo` and `npm run bootKaf1` in the separate terminals.
+
+```javascript
+npm run bootZoo
+```
+
+```javascript
+npm run bootKaf1
+```
+
+4. Open up a terminal in the root directory. Run `npm start` in the root
+   directory
+
+```javascript
+npm start
+```
+
+5. In the electron app, type 'localhost:2020' into the form, check 'send to
+   local monitoring' and submit it. Wait. Refresh if necessary. Click into
+   performance or health metrics. Data on the kafka cluster should be displayed.
+
 # Alerts
 
 In order to enable automatic alerts an email and app password are required. The
@@ -141,7 +179,7 @@ information about possible new features
 
 # Contributing
 
-Contributions are what make the open source community a great place to If you
+Contributions are what make the open source community a great place! If you
 would like to contribute to this project take the steps below:
 
 1. Fork the Project
