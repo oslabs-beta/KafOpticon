@@ -65,11 +65,10 @@ function Header() {
         <form id='mainform' onSubmit={handleSubmit}>
           <input
             id='input'
-            placeholder='Cluster URL'
+            placeholder='JMX Ports'
             name='address'
             value={clusterURL}
-            onChange={e => setClusterURL(e.target.value)}>
-          </input>
+            onChange={e => setClusterURL(e.target.value)}></input>
 
           <div className='checkboxes'>
             <label className='checkbox-label'>
@@ -91,7 +90,9 @@ function Header() {
               Send to Local Monitoring
             </label>
           </div>
-          <button id='submitbutton' type='submit'>Submit</button>
+          <button id='submitbutton' type='submit'>
+            Submit
+          </button>
         </form>
       </div>
     </section>
