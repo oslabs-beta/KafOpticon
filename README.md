@@ -211,7 +211,7 @@ information about possible new features
   development, tear them down properly,
 - Enable connecting to more than one kafka broker.
 
-2. Expand the user's ability to configure the dashboard.
+2. Expand the user's ability to configure the dashboard and have it persist.
 3. Increase testing coverage.
 4. Create Windows distribution.
 
