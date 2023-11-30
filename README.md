@@ -9,7 +9,8 @@ Kafka Cluster Monitor and Visualizer
 **What:** KafOpticon is an open-source electron app used for monitoring,
 visualizing, and alerting users of Kafka cluster/server metrics. Kafka is a
 powerful open-source data stream processing software platform. KafOpticon
-article can be found at:
+article can be found
+[here](https://medium.com/@gosoriocanales/monitor-and-visualize-your-kafka-clusters-with-kafopticon-3a08b1db822d).
 
 **Why:** Monitoring relevant cluster metrics is challenging due to the volume
 and accessibility of the metrics. KafOpticon aims to solve these problems by
@@ -50,9 +51,7 @@ JMX-Prometheus Java Agent to scrape metric endpoints from each Kafka cluster.
 1. **Set Up Your Kafka Cluster for Monitoring:**
 
    - For configuring your own Kafka cluster to be monitored using KafOpticon,
-     refer to the `docker-test` folder in the repository and the
-     `run docker test` instructions below.
-   - Ensure that your Kafka cluster exposes Prometheus-readable metrics data.
+     ensure that your Kafka cluster exposes Prometheus-readable metrics data.
      This is crucial for KafOpticon’s Prometheus container to connect
      effectively.
    - For more information on setting up JMX Exporter, visit the
@@ -61,7 +60,7 @@ JMX-Prometheus Java Agent to scrape metric endpoints from each Kafka cluster.
 2. **Connect KafOpticon to Your Cluster:**
    - Open the KafOpticon app.
    - Provide a comma-separated list of the exposed JMX Endpoints of your Kafka
-     cluster (e.g., ports 9991, 9992, and 9993).
+     cluster (e.g. 9991, 9992, 9993).
    - Click on the “send to Docker monitoring” checkbox and hit send.
 
 ### Monitoring with Docker Desktop:
@@ -78,10 +77,13 @@ JMX-Prometheus Java Agent to scrape metric endpoints from each Kafka cluster.
 
 ## Run Docker Test
 
+If you want to test the app, but you don't have your own Kafka cluster, follow
+the directions below.
+
 1. Preconditions:
 
    - Docker Desktop must be installed and the Docker daemon must be running.
-   - Ports 3000, 9090, 9991, 9992, and 9993 must be available.
+   - Ports 3000, 3010, 9090, 9991, 9992, and 9993 must be available.
 
 2. Run Kafka Test Cluster in Docker:
 
@@ -109,7 +111,7 @@ npm start
 - Provide a comma-separated list of the exposed JMX Endpoints of your Kafka
   cluster (9991, 9992, 9993 if using the provided docker-compose file), check
   the “send to Docker monitoring checkbox”, and hit send. Monitor the setup in
-  Docker Desktop and refresh the app as needed using `command + r`.
+  Docker Desktop and refresh the app as needed using `COMMAND+R`.
 
 5. Stop Docker Test:
 
@@ -120,14 +122,15 @@ npm start
 docker-compose down
 ```
 
-# Run local test
+## Run local test
 
 1. Preconditions:
 
-- Prometheus and Grafana must be installed
-- Grafana must be running already (on port 3000) and must be configured to allow
-  anonymous access with the admin role in the Main Org.
-- Ports 9090, 3030, and 9092 must be available
+   - Prometheus and Grafana must be installed
+   - Ensure that Prometheus and Kafka are in your `$PATH`
+   - Grafana must be running already (on port 3000) and must be configured to
+     allow anonymous access with the admin role in the Main Org.
+   - Ports 3010, 9090, 3030, and 9092 must be available
 
 2. Open up two terminals in the root directory.
 3. Run `npm run bootZoo` and `npm run bootKaf1` in the separate terminals.
@@ -150,6 +153,40 @@ npm start
 5. In the electron app, type 'localhost:2020' into the form, check 'send to
    local monitoring' and submit it. Wait. Refresh if necessary. Click into
    performance or health metrics. Data on the kafka cluster should be displayed.
+
+## Customization
+
+KafOpticon offers flexible customization options for both locally mediated and
+Docker-mediated testing environments.
+
+### Customizing Monitoring Dashboard:
+
+- **Pre-configured Panels:** You can configure an additional monitoring tab with
+  up to 10 panels of pre-selected metrics.
+- **Grafana Dashboard Customization:**
+  1.  Navigate to `localhost:3000` in your browser.
+  2.  Click into `Dashboards`, and locate a dashboard titled _KafOpticon
+      Dashboard_.
+  3.  Use the features of Grafana to customize your dashboard to your
+      preference.
+
+### Making Customizations Persistent:
+
+- **Saving Changes in Grafana:**
+
+  - After making your desired changes, save them within Grafana.
+  - Export the dashboard JSON that Grafana provides.
+
+- **Updating the Source Code:**
+  - If you are running KafOpticon from the source code, navigate to
+    `grafana/Dockerfile/provisioning/dashboards`.
+  - Replace the existing `dashboard.json` with your new one and save the
+    changes.
+  - Currently, this will only work if you choose to use KafOpticon's Docker
+    route to monitor your clusters.
+
+By following these steps, you can tailor the KafOpticon monitoring experience to
+better suit your specific needs and preferences.
 
 # Alerts
 
@@ -176,6 +213,7 @@ information about possible new features
 
 2. Expand the user's ability to configure the dashboard.
 3. Increase testing coverage.
+4. Create Windows distribution.
 
 # Contributing
 
