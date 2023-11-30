@@ -205,15 +205,16 @@ about your Kafka clusters.
 Check out [issues](https://github.com/oslabs-beta/KafOpticon/issues) for further
 information about possible new features
 
-1. Work on local route.
+1. Solve bugs associated with sending form data to the docker route on linux.
+2. Work on local route.
 
 - Dynamically boot up Prometheus jmxExporter http server in production; in
   development, tear them down properly,
 - Enable connecting to more than one kafka broker.
 
-2. Expand the user's ability to configure the dashboard and have it persist.
-3. Increase testing coverage.
-4. Create Windows distribution.
+3. Expand the user's ability to configure the dashboard and have it persist.
+4. Increase testing coverage.
+5. Create Windows distribution.
 
 # Contributing
 
