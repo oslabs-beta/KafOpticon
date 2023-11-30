@@ -21,7 +21,7 @@ module.exports = {
     "editable": true,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
-    // "id": 8,
+    // "id": 1,
     "links": [],
     "liveNow": false,
     "panels": [
@@ -30,49 +30,100 @@ module.exports = {
           "type": "prometheus",
           "uid": "f370827f-878f-4256-a0d4-192418827a14"
         },
+        "description": "Subset of replicas for a partition that are considered to be in sync with the leader replica. ",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
         "gridPos": {
           "h": 8,
           "w": 12,
           "x": 0,
           "y": 0
         },
-        "id": 15,
+        "id": 25,
         "options": {
-          "bgColor": "super-light-yellow",
-          "clockType": "12 hour",
-          "countdownSettings": {
-            "endCountdownTime": "2023-11-14T23:10:31-06:00",
-            "endText": "00:00:00"
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
           },
-          "countupSettings": {
-            "beginCountupTime": "2023-11-14T23:10:31-06:00",
-            "beginText": "00:00:00"
-          },
-          "dateSettings": {
-            "dateFormat": "YYYY-MM-DD",
-            "fontSize": "20px",
-            "fontWeight": "normal",
-            "locale": "",
-            "showDate": true
-          },
-          "fontMono": false,
-          "mode": "time",
-          "refresh": "sec",
-          "timeSettings": {
-            "fontSize": "30px",
-            "fontWeight": "bold"
-          },
-          "timezone": "US/Central",
-          "timezoneSettings": {
-            "fontSize": "12px",
-            "fontWeight": "normal",
-            "showTimezone": false,
-            "zoneFormat": "offsetAbbv"
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
           }
         },
-        "pluginVersion": "2.1.3",
-        "title": "Houston",
-        "type": "grafana-clock-panel"
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "f370827f-878f-4256-a0d4-192418827a14"
+            },
+            "disableTextWrap": false,
+            "editorMode": "builder",
+            "expr": "kafka_cluster_partition_insyncreplicascount{topic!=\"__consumer_offsets\"}",
+            "fullMetaSearch": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{instance}}, partition: {{partition}}, topic: {{topic}}",
+            "range": true,
+            "refId": "A",
+            "useBackend": false
+          }
+        ],
+        "title": "In Sync Replicas Count",
+        "type": "timeseries"
       },
       {
         "datasource": {
@@ -164,7 +215,8 @@ module.exports = {
             },
             "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "kafka_server_replicamanager_underreplicatedpartitions",
+            "expr": "kafka_server_replicamanager_underreplicatedpartitions{topic!=\"__consumer_offsets\"}",
+            // "expr": "kafka_cluster_partition_underreplicated{topic!=\"__consumer_offsets\"}",
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
@@ -182,49 +234,100 @@ module.exports = {
           "type": "prometheus",
           "uid": "f370827f-878f-4256-a0d4-192418827a14"
         },
+        "description": "Number of copies or replicas of a partition that are maintained across different broker nodes in a Kafka cluster. ",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-BlYlRd"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
         "gridPos": {
           "h": 8,
           "w": 12,
           "x": 0,
           "y": 8
         },
-        "id": 14,
+        "id": 24,
         "options": {
-          "bgColor": "dark-purple",
-          "clockType": "12 hour",
-          "countdownSettings": {
-            "endCountdownTime": "2023-11-14T23:09:08-06:00",
-            "endText": "00:00:00"
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
           },
-          "countupSettings": {
-            "beginCountupTime": "2023-11-14T23:09:08-06:00",
-            "beginText": "00:00:00"
-          },
-          "dateSettings": {
-            "dateFormat": "YYYY-MM-DD",
-            "fontSize": "20px",
-            "fontWeight": "normal",
-            "locale": "",
-            "showDate": true
-          },
-          "fontMono": false,
-          "mode": "time",
-          "refresh": "sec",
-          "timeSettings": {
-            "fontSize": "30px",
-            "fontWeight": "bold"
-          },
-          "timezone": "America/Los_Angeles",
-          "timezoneSettings": {
-            "fontSize": "12px",
-            "fontWeight": "normal",
-            "showTimezone": false,
-            "zoneFormat": "offsetAbbv"
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
           }
         },
-        "pluginVersion": "2.1.3",
-        "title": "Los Angeles",
-        "type": "grafana-clock-panel"
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "f370827f-878f-4256-a0d4-192418827a14"
+            },
+            "disableTextWrap": false,
+            "editorMode": "builder",
+            "expr": "kafka_cluster_partition_replicascount{topic!=\"__consumer_offsets\"}",
+            "fullMetaSearch": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{instance}}, partition: {{partition}}, topic: {{topic}}",
+            "range": true,
+            "refId": "A",
+            "useBackend": false
+          }
+        ],
+        "title": "Replicas Count",
+        "type": "timeseries"
       },
       {
         "datasource": {
@@ -253,44 +356,7 @@ module.exports = {
             },
             "unit": "short"
           },
-          "overrides": [
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "{__name__=\"kafka_controller_ControllerStats_UncleanLeaderElectionEnableRateAndTimeMs_count\", instance=\"kafka-broker-1:9999\", job=\"kafka\"}"
-              },
-              "properties": [
-                {
-                  "id": "displayName",
-                  "value": "ULExMs : Broker 1:9999"
-                }
-              ]
-            },
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "{__name__=\"kafka_controller_ControllerStats_UncleanLeaderElectionEnableRateAndTimeMs_count\", instance=\"kafka-broker-2:9999\", job=\"kafka\"}"
-              },
-              "properties": [
-                {
-                  "id": "displayName",
-                  "value": "ULExMs : Broker 2:9999"
-                }
-              ]
-            },
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "{__name__=\"kafka_controller_ControllerStats_UncleanLeaderElectionEnableRateAndTimeMs_count\", instance=\"kafka-broker-3:9999\", job=\"kafka\"}"
-              },
-              "properties": [
-                {
-                  "id": "displayName",
-                  "value": "ULExMs : Broker 3:9999"
-                }
-              ]
-            }
-          ]
+          "overrides": []
         },
         "gridPos": {
           "h": 8,
@@ -305,15 +371,14 @@ module.exports = {
           "justifyMode": "auto",
           "orientation": "auto",
           "reduceOptions": {
-            "calcs": [
-              "lastNotNull"
-            ],
+            "calcs": ["lastNotNull"],
             "fields": "",
             "values": false
           },
-          "textMode": "auto"
+          "textMode": "auto",
+          "wideLayout": true
         },
-        "pluginVersion": "10.2.0",
+        "pluginVersion": "10.2.2",
         "targets": [
           {
             "datasource": {
@@ -326,7 +391,7 @@ module.exports = {
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -340,49 +405,70 @@ module.exports = {
           "type": "prometheus",
           "uid": "f370827f-878f-4256-a0d4-192418827a14"
         },
+        "description": "Measures the total number of network-related errors that occur during communication between clients and the Kafka broker.",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              }
+            },
+            "mappings": []
+          },
+          "overrides": []
+        },
         "gridPos": {
           "h": 8,
           "w": 12,
           "x": 0,
           "y": 16
         },
-        "id": 13,
+        "id": 23,
         "options": {
-          "bgColor": "dark-blue",
-          "clockType": "12 hour",
-          "countdownSettings": {
-            "endCountdownTime": "2023-11-14T23:07:27-06:00",
-            "endText": "00:00:00"
+          "displayLabels": ["percent"],
+          "legend": {
+            "calcs": [],
+            "displayMode": "hidden",
+            "placement": "right",
+            "showLegend": false,
+            "values": []
           },
-          "countupSettings": {
-            "beginCountupTime": "2023-11-14T23:07:27-06:00",
-            "beginText": "00:00:00"
+          "pieType": "donut",
+          "reduceOptions": {
+            "calcs": ["lastNotNull"],
+            "fields": "",
+            "values": false
           },
-          "dateSettings": {
-            "dateFormat": "YYYY-MM-DD",
-            "fontSize": "20px",
-            "fontWeight": "normal",
-            "locale": "",
-            "showDate": true
-          },
-          "fontMono": false,
-          "mode": "time",
-          "refresh": "sec",
-          "timeSettings": {
-            "fontSize": "30px",
-            "fontWeight": "bold"
-          },
-          "timezone": "America/New_York",
-          "timezoneSettings": {
-            "fontSize": "12px",
-            "fontWeight": "normal",
-            "showTimezone": false,
-            "zoneFormat": "offsetAbbv"
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
           }
         },
-        "pluginVersion": "2.1.3",
-        "title": "New York",
-        "type": "grafana-clock-panel"
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "f370827f-878f-4256-a0d4-192418827a14"
+            },
+            "disableTextWrap": false,
+            "editorMode": "builder",
+            "expr": "kafka_network_requestmetrics_errors_total",
+            "fullMetaSearch": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{instance}}, Error: {{error}}, Request: {{request}}",
+            "range": true,
+            "refId": "A",
+            "useBackend": false
+          }
+        ],
+        "title": "Network Error Total",
+        "type": "piechart"
       },
       {
         "datasource": {
@@ -475,7 +561,7 @@ module.exports = {
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}, quantile: {{quantile}}, request: {{request}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -489,66 +575,22 @@ module.exports = {
           "type": "prometheus",
           "uid": "f370827f-878f-4256-a0d4-192418827a14"
         },
-        "description": "Number of offline partitions",
+        "description": "Measures the total number of network requests made to the Kafka broker.",
         "fieldConfig": {
           "defaults": {
-            "mappings": [],
-            "thresholds": {
-              "mode": "percentage",
-              "steps": [
-                {
-                  "color": "super-light-blue",
-                  "value": null
-                },
-                {
-                  "color": "dark-blue",
-                  "value": 70
-                },
-                {
-                  "color": "dark-purple",
-                  "value": 85
-                }
-              ]
-            }
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              }
+            },
+            "mappings": []
           },
-          "overrides": [
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "{__name__=\"kafka_controller_KafkaController_OfflinePartitionsCount\", instance=\"kafka-broker-1:9999\", job=\"kafka\"}"
-              },
-              "properties": [
-                {
-                  "id": "displayName",
-                  "value": "OPC : Broker 1:9999"
-                }
-              ]
-            },
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "{__name__=\"kafka_controller_KafkaController_OfflinePartitionsCount\", instance=\"kafka-broker-2:9999\", job=\"kafka\"}"
-              },
-              "properties": [
-                {
-                  "id": "displayName",
-                  "value": "OPC : Broker 2:9999"
-                }
-              ]
-            },
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "{__name__=\"kafka_controller_KafkaController_OfflinePartitionsCount\", instance=\"kafka-broker-3:9999\", job=\"kafka\"}"
-              },
-              "properties": [
-                {
-                  "id": "displayName",
-                  "value": "OPC : Broker 3:9999"
-                }
-              ]
-            }
-          ]
+          "overrides": []
         },
         "gridPos": {
           "h": 8,
@@ -556,22 +598,27 @@ module.exports = {
           "x": 0,
           "y": 24
         },
-        "id": 1,
+        "id": 22,
         "options": {
-          "minVizHeight": 75,
-          "minVizWidth": 75,
-          "orientation": "auto",
+          "displayLabels": ["percent"],
+          "legend": {
+            "calcs": [],
+            "displayMode": "hidden",
+            "placement": "right",
+            "showLegend": false,
+            "values": []
+          },
+          "pieType": "pie",
           "reduceOptions": {
-            "calcs": [
-              "lastNotNull"
-            ],
+            "calcs": ["lastNotNull"],
             "fields": "",
             "values": false
           },
-          "showThresholdLabels": false,
-          "showThresholdMarkers": true
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
         },
-        "pluginVersion": "10.2.0",
         "targets": [
           {
             "datasource": {
@@ -580,18 +627,18 @@ module.exports = {
             },
             "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "kafka_controller_kafkacontroller_offlinepartitionscount",
+            "expr": "kafka_network_requestmetrics_requests_total",
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}, request: {{request}}, version: {{version}}",
             "range": true,
             "refId": "A",
             "useBackend": false
           }
         ],
-        "title": "Offline Partition Count",
-        "type": "gauge"
+        "title": "Request Total",
+        "type": "piechart"
       },
       {
         "datasource": {
@@ -620,44 +667,7 @@ module.exports = {
             },
             "unit": "short"
           },
-          "overrides": [
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "{__name__=\"kafka_server_ReplicaFetcherManager_FailedPartitionsCount\", clientId=\"Replica\", instance=\"kafka-broker-1:9999\", job=\"kafka\"}"
-              },
-              "properties": [
-                {
-                  "id": "displayName",
-                  "value": "FPC : Broker 1:9999"
-                }
-              ]
-            },
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "{__name__=\"kafka_server_ReplicaFetcherManager_FailedPartitionsCount\", clientId=\"Replica\", instance=\"kafka-broker-2:9999\", job=\"kafka\"}"
-              },
-              "properties": [
-                {
-                  "id": "displayName",
-                  "value": "FPC : Broker 2:9999"
-                }
-              ]
-            },
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "{__name__=\"kafka_server_ReplicaFetcherManager_FailedPartitionsCount\", clientId=\"Replica\", instance=\"kafka-broker-3:9999\", job=\"kafka\"}"
-              },
-              "properties": [
-                {
-                  "id": "displayName",
-                  "value": "FPC : Broker 3:9999"
-                }
-              ]
-            }
-          ]
+          "overrides": []
         },
         "gridPos": {
           "h": 8,
@@ -672,15 +682,14 @@ module.exports = {
           "justifyMode": "auto",
           "orientation": "auto",
           "reduceOptions": {
-            "calcs": [
-              "lastNotNull"
-            ],
+            "calcs": ["lastNotNull"],
             "fields": "",
             "values": false
           },
-          "textMode": "auto"
+          "textMode": "auto",
+          "wideLayout": true
         },
-        "pluginVersion": "10.2.0",
+        "pluginVersion": "10.2.2",
         "targets": [
           {
             "datasource": {
@@ -693,7 +702,7 @@ module.exports = {
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}, clientId: {{clientId}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -707,11 +716,43 @@ module.exports = {
           "type": "prometheus",
           "uid": "f370827f-878f-4256-a0d4-192418827a14"
         },
-        "description": "Rate at which the pool of in-sync replicas (ISRs) shrinks/expands",
+        "description": "Number of messages consumer is behind producer on this partition",
         "fieldConfig": {
           "defaults": {
             "color": {
-              "mode": "continuous-BlYlRd"
+              "mode": "continuous-YlBl"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
             },
             "mappings": [],
             "thresholds": {
@@ -728,80 +769,7 @@ module.exports = {
               ]
             }
           },
-          "overrides": [
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "{__name__=\"kafka_server_ReplicaManager_IsrShrinks_total\", instance=\"kafka-broker-1:9999\", job=\"kafka\"}"
-              },
-              "properties": [
-                {
-                  "id": "displayName",
-                  "value": "ISR Shrinks Total: Broker 1:9999"
-                }
-              ]
-            },
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "{__name__=\"kafka_server_ReplicaManager_IsrShrinks_total\", instance=\"kafka-broker-2:9999\", job=\"kafka\"}"
-              },
-              "properties": [
-                {
-                  "id": "displayName",
-                  "value": "ISR Shrinks Total: Broker 2:9999"
-                }
-              ]
-            },
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "{__name__=\"kafka_server_ReplicaManager_IsrShrinks_total\", instance=\"kafka-broker-3:9999\", job=\"kafka\"}"
-              },
-              "properties": [
-                {
-                  "id": "displayName",
-                  "value": "ISR Shrinks Total: Broker 3:9999"
-                }
-              ]
-            },
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "{__name__=\"kafka_server_ReplicaManager_IsrExpands_total\", instance=\"kafka-broker-1:9999\", job=\"kafka\"}"
-              },
-              "properties": [
-                {
-                  "id": "displayName",
-                  "value": "ISR Expands Total: Broker 1:9999"
-                }
-              ]
-            },
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "{__name__=\"kafka_server_ReplicaManager_IsrExpands_total\", instance=\"kafka-broker-2:9999\", job=\"kafka\"}"
-              },
-              "properties": [
-                {
-                  "id": "displayName",
-                  "value": "ISR Expands Total: Broker 2:9999"
-                }
-              ]
-            },
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "{__name__=\"kafka_server_ReplicaManager_IsrExpands_total\", instance=\"kafka-broker-3:9999\", job=\"kafka\"}"
-              },
-              "properties": [
-                {
-                  "id": "displayName",
-                  "value": "ISR Expands Total: Broker 1:9999"
-                }
-              ]
-            }
-          ]
+          "overrides": []
         },
         "gridPos": {
           "h": 8,
@@ -809,24 +777,19 @@ module.exports = {
           "x": 0,
           "y": 32
         },
-        "id": 8,
+        "id": 21,
         "options": {
-          "displayMode": "lcd",
-          "minVizHeight": 10,
-          "minVizWidth": 0,
-          "namePlacement": "auto",
-          "orientation": "horizontal",
-          "reduceOptions": {
-            "calcs": [
-              "lastNotNull"
-            ],
-            "fields": "",
-            "values": false
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
           },
-          "showUnfilled": true,
-          "valueMode": "color"
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
         },
-        "pluginVersion": "10.2.0",
         "targets": [
           {
             "datasource": {
@@ -835,36 +798,18 @@ module.exports = {
             },
             "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "kafka_server_replicamanager_isrshrinks_total",
+            "expr": "kafka_server_fetcherlagmetrics_consumerlag{topic!=\"__consumer_offsets\"}",
             "fullMetaSearch": false,
-            "hide": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
-            "range": true,
-            "refId": "B",
-            "useBackend": false
-          },
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "f370827f-878f-4256-a0d4-192418827a14"
-            },
-            "disableTextWrap": false,
-            "editorMode": "builder",
-            "expr": "kafka_server_replicamanager_isrexpands_total",
-            "fullMetaSearch": false,
-            "hide": false,
-            "includeNullMetadata": true,
-            "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}, clientId: {{clientId}}, partition: {{partition}}, topic: {{topic}}",
             "range": true,
             "refId": "A",
             "useBackend": false
           }
         ],
-        "title": "Replica Manager ISR Shrinks/Expands",
-        "type": "bargauge"
+        "title": "Consumer's Lag",
+        "type": "timeseries"
       },
       {
         "datasource": {
@@ -895,10 +840,7 @@ module.exports = {
               "insertNulls": false,
               "lineInterpolation": "linear",
               "lineStyle": {
-                "dash": [
-                  10,
-                  10
-                ],
+                "dash": [10, 10],
                 "fill": "dash"
               },
               "lineWidth": 3,
@@ -964,7 +906,7 @@ module.exports = {
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}, quantile: {{quantile}}, request: {{request}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -978,76 +920,60 @@ module.exports = {
           "type": "prometheus",
           "uid": "f370827f-878f-4256-a0d4-192418827a14"
         },
-        "description": "Number of active controllers in cluster",
+        "description": "Producer failed to send message to broker.",
         "fieldConfig": {
           "defaults": {
             "color": {
-              "mode": "continuous-YlBl"
+              "mode": "continuous-BlYlRd"
             },
             "custom": {
-              "fillOpacity": 70,
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
               "hideFrom": {
                 "legend": false,
                 "tooltip": false,
                 "viz": false
               },
               "insertNulls": false,
-              "lineWidth": 0,
-              "spanNulls": false
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
             },
             "mappings": [],
             "thresholds": {
               "mode": "absolute",
               "steps": [
                 {
-                  "color": "super-light-blue",
+                  "color": "green",
                   "value": null
                 },
                 {
-                  "color": "dark-blue",
+                  "color": "red",
                   "value": 80
                 }
               ]
             }
           },
-          "overrides": [
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "{__name__=\"kafka_controller_KafkaController_ActiveControllerCount\", instance=\"kafka-broker-1:9999\", job=\"kafka\"}"
-              },
-              "properties": [
-                {
-                  "id": "displayName",
-                  "value": "ACC : Broker 1:9999"
-                }
-              ]
-            },
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "{__name__=\"kafka_controller_KafkaController_ActiveControllerCount\", instance=\"kafka-broker-2:9999\", job=\"kafka\"}"
-              },
-              "properties": [
-                {
-                  "id": "displayName",
-                  "value": "ACC : Broker 2:9999"
-                }
-              ]
-            },
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "{__name__=\"kafka_controller_KafkaController_ActiveControllerCount\", instance=\"kafka-broker-3:9999\", job=\"kafka\"}"
-              },
-              "properties": [
-                {
-                  "id": "displayName",
-                  "value": "ACC : Broker 3:9999"
-                }
-              ]
-            }
-          ]
+          "overrides": []
         },
         "gridPos": {
           "h": 8,
@@ -1055,17 +981,14 @@ module.exports = {
           "x": 0,
           "y": 40
         },
-        "id": 3,
+        "id": 20,
         "options": {
-          "alignValue": "left",
           "legend": {
+            "calcs": [],
             "displayMode": "list",
             "placement": "bottom",
             "showLegend": true
           },
-          "mergeValues": true,
-          "rowHeight": 0.9,
-          "showValue": "auto",
           "tooltip": {
             "mode": "single",
             "sort": "none"
@@ -1079,18 +1002,18 @@ module.exports = {
             },
             "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "kafka_controller_kafkacontroller_activecontrollercount",
+            "expr": "kafka_server_brokertopicmetrics_failedproducerequests_total",
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}",
             "range": true,
             "refId": "A",
             "useBackend": false
           }
         ],
-        "title": "Active Controller Count",
-        "type": "state-timeline"
+        "title": "Failed Producer Request",
+        "type": "timeseries"
       },
       {
         "datasource": {
@@ -1179,11 +1102,11 @@ module.exports = {
             },
             "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "kafka_server_brokertopicmetrics_bytesin_total",
+            "expr": "label_replace(label_replace(kafka_server_brokertopicmetrics_bytesIn_total, \"formatted_topic\", \"TOTAL\", \"topic\", \"^$\"), \"formatted_topic\", \"$1\", \"topic\", \"(.+)\")",
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}, topic: {{formatted_topic}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -1197,20 +1120,58 @@ module.exports = {
           "type": "prometheus",
           "uid": "f370827f-878f-4256-a0d4-192418827a14"
         },
-        "description": "Number of active brokers.",
+        "description": "The total sum of young or old garbage collection processes executed by the JVM",
         "fieldConfig": {
           "defaults": {
             "color": {
-              "mode": "palette-classic"
+              "mode": "continuous-BlPu"
             },
             "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "bars",
+              "fillOpacity": 100,
+              "gradientMode": "hue",
               "hideFrom": {
                 "legend": false,
                 "tooltip": false,
                 "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "percent"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
               }
             },
-            "mappings": []
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
           },
           "overrides": []
         },
@@ -1220,32 +1181,19 @@ module.exports = {
           "x": 0,
           "y": 48
         },
-        "id": 12,
+        "id": 19,
         "options": {
-          "displayLabels": [
-            "percent"
-          ],
           "legend": {
             "calcs": [],
             "displayMode": "hidden",
             "placement": "right",
-            "showLegend": false,
-            "values": []
-          },
-          "pieType": "donut",
-          "reduceOptions": {
-            "calcs": [
-              "lastNotNull"
-            ],
-            "fields": "",
-            "values": false
+            "showLegend": false
           },
           "tooltip": {
             "mode": "single",
             "sort": "none"
           }
         },
-        "pluginVersion": "10.2.0",
         "targets": [
           {
             "datasource": {
@@ -1254,18 +1202,18 @@ module.exports = {
             },
             "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "kafka_controller_kafkacontroller_activebrokercount",
+            "expr": "jvm_gc_collection_seconds_sum",
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}, gc: {{gc}}",
             "range": true,
             "refId": "A",
             "useBackend": false
           }
         ],
-        "title": "Active Broker Count",
-        "type": "piechart"
+        "title": "Collection X Seconds Sum",
+        "type": "timeseries"
       },
       {
         "datasource": {
@@ -1330,8 +1278,8 @@ module.exports = {
         "gridPos": {
           "h": 8,
           "w": 12,
-          "x": 0,
-          "y": 56
+          "x": 12,
+          "y": 48
         },
         "id": 11,
         "options": {
@@ -1355,11 +1303,11 @@ module.exports = {
             },
             "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "kafka_server_brokertopicmetrics_totalproducerequests_total",
+            "expr": "label_replace(label_replace(kafka_server_brokertopicmetrics_totalproducerequests_total, \"formatted_topic\", \"TOTAL\", \"topic\", \"^$\"), \"formatted_topic\", \"$1\", \"topic\", \"(.+)\")",
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}, topic: {{formatted_topic}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -1367,6 +1315,736 @@ module.exports = {
         ],
         "title": "Total Producer Request",
         "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "f370827f-878f-4256-a0d4-192418827a14"
+        },
+        "description": "The total amount of time (in milliseconds) the JVM has spent executing young or old garbage collection processes",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-YlBl"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "bars",
+              "fillOpacity": 100,
+              "gradientMode": "hue",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "normal"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 56
+        },
+        "id": 18,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "hidden",
+            "placement": "right",
+            "showLegend": false
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "f370827f-878f-4256-a0d4-192418827a14"
+            },
+            "disableTextWrap": false,
+            "editorMode": "builder",
+            "expr": "jvm_gc_collection_seconds_count",
+            "fullMetaSearch": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{instance}}, gc: {{gc}}",
+            "range": true,
+            "refId": "A",
+            "useBackend": false
+          }
+        ],
+        "title": "Collection X Seconds Count",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "f370827f-878f-4256-a0d4-192418827a14"
+        },
+        "description": "Number of offline partitions",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "percentage",
+              "steps": [
+                {
+                  "color": "super-light-blue",
+                  "value": null
+                },
+                {
+                  "color": "dark-blue",
+                  "value": 70
+                },
+                {
+                  "color": "dark-purple",
+                  "value": 85
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 56
+        },
+        "id": 1,
+        "options": {
+          "minVizHeight": 75,
+          "minVizWidth": 75,
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": ["lastNotNull"],
+            "fields": "",
+            "values": false
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
+        },
+        "pluginVersion": "10.2.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "f370827f-878f-4256-a0d4-192418827a14"
+            },
+            "disableTextWrap": false,
+            "editorMode": "builder",
+            "expr": "kafka_controller_kafkacontroller_offlinepartitionscount",
+            "fullMetaSearch": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{instance}}",
+            "range": true,
+            "refId": "A",
+            "useBackend": false
+          }
+        ],
+        "title": "Offline Partition Count",
+        "type": "gauge"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "f370827f-878f-4256-a0d4-192418827a14"
+        },
+        "description": "Number of requests waiting in producer purgatory/Number of requests waiting in fetch purgatory",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 25,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "normal"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 64
+        },
+        "id": 17,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "hidden",
+            "placement": "right",
+            "showLegend": false
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "f370827f-878f-4256-a0d4-192418827a14"
+            },
+            "disableTextWrap": false,
+            "editorMode": "builder",
+            "expr": "kafka_server_delayedoperationpurgatory_purgatorysize",
+            "fullMetaSearch": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{instance}}, Delayed Operation: {{delayedOperation}}",
+            "range": true,
+            "refId": "A",
+            "useBackend": false
+          }
+        ],
+        "title": "Purgatory Size",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "f370827f-878f-4256-a0d4-192418827a14"
+        },
+        "description": "Rate at which the pool of in-sync replicas (ISRs) shrinks/expands",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 64
+        },
+        "id": 8,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "10.2.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "f370827f-878f-4256-a0d4-192418827a14"
+            },
+            "disableTextWrap": false,
+            "editorMode": "builder",
+            "expr": "kafka_server_replicamanager_isrshrinks_total",
+            "fullMetaSearch": false,
+            "hide": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{__name__}}, {{instance}}",
+            "range": true,
+            "refId": "B",
+            "useBackend": false
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "f370827f-878f-4256-a0d4-192418827a14"
+            },
+            "disableTextWrap": false,
+            "editorMode": "builder",
+            "expr": "kafka_server_replicamanager_isrexpands_total",
+            "fullMetaSearch": false,
+            "hide": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{__name__}}, {{instance}}",
+            "range": true,
+            "refId": "A",
+            "useBackend": false
+          }
+        ],
+        "title": "Replica Manager ISR Shrinks/Expands",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "f370827f-878f-4256-a0d4-192418827a14"
+        },
+        "description": "The time it takes for Kafka brokers to interact with the Zookeeper ensemble to perform various operations.",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-BlYlRd"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 72
+        },
+        "id": 16,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "f370827f-878f-4256-a0d4-192418827a14"
+            },
+            "disableTextWrap": false,
+            "editorMode": "builder",
+            "expr": "kafka_server_zookeeperclientmetrics_zookeeperrequestlatencyms",
+            "fullMetaSearch": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{instance}}, quantile: {{quantile}}",
+            "range": true,
+            "refId": "A",
+            "useBackend": false
+          }
+        ],
+        "title": "Zookeeper Request Latency Ms",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "f370827f-878f-4256-a0d4-192418827a14"
+        },
+        "description": "Number of active controllers in cluster",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-YlBl"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "super-light-blue",
+                  "value": null
+                },
+                {
+                  "color": "dark-blue",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 72
+        },
+        "id": 3,
+        "options": {
+          "minVizHeight": 75,
+          "minVizWidth": 75,
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": ["lastNotNull"],
+            "fields": "",
+            "values": false
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
+        },
+        "pluginVersion": "10.2.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "f370827f-878f-4256-a0d4-192418827a14"
+            },
+            "disableTextWrap": false,
+            "editorMode": "builder",
+            "expr": "kafka_controller_kafkacontroller_activecontrollercount",
+            "fullMetaSearch": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{instance}}",
+            "range": true,
+            "refId": "A",
+            "useBackend": false
+          }
+        ],
+        "title": "Active Controller Count",
+        "type": "gauge"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "f370827f-878f-4256-a0d4-192418827a14"
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 80
+        },
+        "id": 15,
+        "options": {
+          "bgColor": "super-light-yellow",
+          "clockType": "12 hour",
+          "countdownSettings": {
+            "endCountdownTime": "2023-11-14T23:10:31-06:00",
+            "endText": "00:00:00"
+          },
+          "countupSettings": {
+            "beginCountupTime": "2023-11-14T23:10:31-06:00",
+            "beginText": "00:00:00"
+          },
+          "dateSettings": {
+            "dateFormat": "YYYY-MM-DD",
+            "fontSize": "20px",
+            "fontWeight": "normal",
+            "locale": "",
+            "showDate": true
+          },
+          "fontMono": false,
+          "mode": "time",
+          "refresh": "sec",
+          "timeSettings": {
+            "fontSize": "30px",
+            "fontWeight": "bold"
+          },
+          "timezone": "US/Central",
+          "timezoneSettings": {
+            "fontSize": "12px",
+            "fontWeight": "normal",
+            "showTimezone": false,
+            "zoneFormat": "offsetAbbv"
+          }
+        },
+        "pluginVersion": "2.1.3",
+        "title": "Houston",
+        "type": "grafana-clock-panel"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "f370827f-878f-4256-a0d4-192418827a14"
+        },
+        "description": "Number of active brokers.",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              }
+            },
+            "mappings": []
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 80
+        },
+        "id": 12,
+        "options": {
+          "displayLabels": ["percent"],
+          "legend": {
+            "calcs": [],
+            "displayMode": "hidden",
+            "placement": "right",
+            "showLegend": false,
+            "values": []
+          },
+          "pieType": "donut",
+          "reduceOptions": {
+            "calcs": ["lastNotNull"],
+            "fields": "",
+            "values": false
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "10.2.0",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "f370827f-878f-4256-a0d4-192418827a14"
+            },
+            "disableTextWrap": false,
+            "editorMode": "builder",
+            "expr": "kafka_controller_kafkacontroller_activebrokercount",
+            "fullMetaSearch": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{instance}}",
+            "range": true,
+            "refId": "A",
+            "useBackend": false
+          }
+        ],
+        "title": "Active Broker Count",
+        "type": "piechart"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "f370827f-878f-4256-a0d4-192418827a14"
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 88
+        },
+        "id": 14,
+        "options": {
+          "bgColor": "dark-purple",
+          "clockType": "12 hour",
+          "countdownSettings": {
+            "endCountdownTime": "2023-11-14T23:09:08-06:00",
+            "endText": "00:00:00"
+          },
+          "countupSettings": {
+            "beginCountupTime": "2023-11-14T23:09:08-06:00",
+            "beginText": "00:00:00"
+          },
+          "dateSettings": {
+            "dateFormat": "YYYY-MM-DD",
+            "fontSize": "20px",
+            "fontWeight": "normal",
+            "locale": "",
+            "showDate": true
+          },
+          "fontMono": false,
+          "mode": "time",
+          "refresh": "sec",
+          "timeSettings": {
+            "fontSize": "30px",
+            "fontWeight": "bold"
+          },
+          "timezone": "America/Los_Angeles",
+          "timezoneSettings": {
+            "fontSize": "12px",
+            "fontWeight": "normal",
+            "showTimezone": false,
+            "zoneFormat": "offsetAbbv"
+          }
+        },
+        "pluginVersion": "2.1.3",
+        "title": "Los Angeles",
+        "type": "grafana-clock-panel"
       },
       {
         "datasource": {
@@ -1397,11 +2075,7 @@ module.exports = {
               "insertNulls": false,
               "lineInterpolation": "linear",
               "lineStyle": {
-                "dash": [
-                  0,
-                  3,
-                  3
-                ],
+                "dash": [0, 3, 3],
                 "fill": "dot"
               },
               "lineWidth": 2,
@@ -1439,8 +2113,8 @@ module.exports = {
         "gridPos": {
           "h": 8,
           "w": 12,
-          "x": 0,
-          "y": 64
+          "x": 12,
+          "y": 88
         },
         "id": 7,
         "options": {
@@ -1468,7 +2142,7 @@ module.exports = {
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -1476,9 +2150,58 @@ module.exports = {
         ],
         "title": "Broker Bytes Out Total",
         "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "f370827f-878f-4256-a0d4-192418827a14"
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 96
+        },
+        "id": 13,
+        "options": {
+          "bgColor": "dark-blue",
+          "clockType": "12 hour",
+          "countdownSettings": {
+            "endCountdownTime": "2023-11-14T23:07:27-06:00",
+            "endText": "00:00:00"
+          },
+          "countupSettings": {
+            "beginCountupTime": "2023-11-14T23:07:27-06:00",
+            "beginText": "00:00:00"
+          },
+          "dateSettings": {
+            "dateFormat": "YYYY-MM-DD",
+            "fontSize": "20px",
+            "fontWeight": "normal",
+            "locale": "",
+            "showDate": true
+          },
+          "fontMono": false,
+          "mode": "time",
+          "refresh": "sec",
+          "timeSettings": {
+            "fontSize": "30px",
+            "fontWeight": "bold"
+          },
+          "timezone": "America/New_York",
+          "timezoneSettings": {
+            "fontSize": "12px",
+            "fontWeight": "normal",
+            "showTimezone": false,
+            "zoneFormat": "offsetAbbv"
+          }
+        },
+        "pluginVersion": "2.1.3",
+        "title": "New York",
+        "type": "grafana-clock-panel"
       }
     ],
-    "refresh": "",
+    "refresh": false,
     "schemaVersion": 38,
     "tags": [],
     "templating": {
@@ -1490,9 +2213,10 @@ module.exports = {
     },
     "timepicker": {},
     "timezone": "",
-    "title": "Test Dash",
+    "title": "KafOpticon Dashboard",
     "uid": "d9098b29-ef80-4e40-86bc-b28bd6e85756",
-    "version": 2,
+    "version": 1,
     "weekStart": ""
   }
-}
+
+};

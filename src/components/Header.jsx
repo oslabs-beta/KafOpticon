@@ -4,6 +4,7 @@ function Header() {
   const [clusterURL, setClusterURL] = useState('');
   const [sendToMonitoring, setSendToMonitoring] = useState(false);
   const [sendToAddress, setSendToAddress] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleCheckboxChange = e => {
     if (e.target.name === 'sendToMonitoring') {
@@ -16,6 +17,7 @@ function Header() {
   };
   const handleSubmit = async e => {
     e.preventDefault();
+    setIsLoading(true);
 
     const portsArray = clusterURL.split(',').map(port => port.trim());
 
@@ -37,18 +39,24 @@ function Header() {
       }
 
       if (response && response.ok) {
-        alert('Request sent successfully!');
+        setIsLoading(false);
       } else {
         throw new Error('Request failed');
       }
     } catch (error) {
       console.error('Error sending request:', error);
       alert('Error sending request');
+      setIsLoading(false);
     }
   };
 
   return (
     <section id='headerLog'>
+      {isLoading && (
+        <div className='loading-alert'>
+          Setting up Docker containers, please wait...
+        </div>
+      )}
       <img
         id='kafopticonbg'
         src='../assets/kafopticon.png'
@@ -57,11 +65,11 @@ function Header() {
         <form id='mainform' onSubmit={handleSubmit}>
           <input
             id='input'
-            placeholder='Cluster URL'
+            placeholder='JMX Ports'
             name='address'
             value={clusterURL}
-            onChange={e => setClusterURL(e.target.value)}>
-          </input>
+            onChange={e => setClusterURL(e.target.value)}></input>
+
           <div className='checkboxes'>
             <label className='checkbox-label'>
               <input
@@ -82,7 +90,9 @@ function Header() {
               Send to Local Monitoring
             </label>
           </div>
-          <button id='submitbutton' type='submit'>Submit</button>
+          <button id='submitbutton' type='submit'>
+            Submit
+          </button>
         </form>
       </div>
     </section>

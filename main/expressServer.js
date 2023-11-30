@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 // serve static files
 // may be unnecessary for electron but is useful in development if you want to work on 
 // localhost:3010 in the browser
-app.use(express.static('dist'));
+// app.use(express.static('dist'));
 
 // handle form data to address route with address router
 app.use('/address', addressRouter);
