@@ -22,6 +22,7 @@ const createWindow = () => {
   const win = new BrowserWindow({
     height: 600, // look into auto full-screen?
     width: 800,
+    icon: path.join(__dirname, '../assets/App-Icons/Icon2/appIcon.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
@@ -30,7 +31,6 @@ const createWindow = () => {
   // load the index.html into it
   win.loadFile(path.join(__dirname, '..', 'dist', 'index.html'));
 };
-
 
 // when electron is finished initializing and the 'ready' event is
 // emitted, boot up express server and run createWindow
