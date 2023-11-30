@@ -30,6 +30,7 @@ services:
     hostname: kafka-broker-1
     ports:
       - '19092:19092'
+      - '9991:9999'
     volumes:
       - ./jmx_prometheus_javaagent-0.20.0.jar:/usr/app/jmx_prometheus_javaagent.jar
       - ./kafka-jmx-exporter-config.yml:/usr/app/kafka-jmx-exporter-config.yml
@@ -48,6 +49,7 @@ services:
     hostname: kafka-broker-2
     ports:
       - '29092:29092'
+      - '9992:9999'
     volumes:
       - ./jmx_prometheus_javaagent-0.20.0.jar:/usr/app/jmx_prometheus_javaagent.jar
       - ./kafka-jmx-exporter-config.yml:/usr/app/kafka-jmx-exporter-config.yml
@@ -66,6 +68,7 @@ services:
     hostname: kafka-broker-3
     ports:
       - '39092:39092'
+      - '9993:9999'
     volumes:
       - ./jmx_prometheus_javaagent-0.20.0.jar:/usr/app/jmx_prometheus_javaagent.jar
       - ./kafka-jmx-exporter-config.yml:/usr/app/kafka-jmx-exporter-config.yml
@@ -79,34 +82,3 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
       KAFKA_JMX_HOSTNAME: kafka-broker-3
       KAFKA_JVM_PERFORMANCE_OPTS: '-javaagent:/usr/app/jmx_prometheus_javaagent.jar=9999:/usr/app/kafka-jmx-exporter-config.yml'
-
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - '3000:3000'
-    depends_on:
-      prometheus:
-        condition: service_started 
-      
-       
-    volumes:
-      - grafana-storage:/var/lib/grafana
-      - ../grafana/Dockerfile/provisioning/dashboards:/etc/grafana/provisioning/dashboards
-      - ../grafana/Dockerfile/provisioning/datasources/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
-      - ../grafana/grafana.ini:/etc/grafana/grafana.ini
-    environment:
-      GF_SECURITY_ADMIN_USER: 'admin'
-      GF_SECURITY_ADMIN_PASSWORD: 'admin'
-      GF_USERS_ALLOW_SIGN_UP: 'false'
-      GF_SECURITY_ALLOW_EMBEDDING: 'true'
-      GF_AUTH_ANONYMOUS_ENABLED: 'true'
-
-  prometheus:
-    image: prom/prometheus:latest
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-    ports:
-      - '9090:9090'
-
-volumes:
-  grafana-storage:

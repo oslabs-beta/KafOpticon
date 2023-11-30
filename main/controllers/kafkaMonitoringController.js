@@ -1,123 +1,164 @@
 const Docker = require('dockerode');
 const fs = require('fs');
 const path = require('path');
+const { promisify } = require('util');
 const docker = new Docker();
+const pullImage = promisify(docker.pull.bind(docker));
 
 const kafkaMonitoringController = {};
 
-async function createNetwork() {
-  try {
-    const networkName = 'monitoring_network_test8';
-    const network = await docker.createNetwork({
-      Name: networkName,
-      Driver: 'bridge',
-    });
-    return networkName;
-  } catch (err) {
-    console.error('Error in creating network:', err);
-    throw err;
+class KMError {
+  constructor(location, status, message) {
+    this.log = 'An error occurred in addressController.' + location;
+    this.status = status;
+    this.message = { err: message };
   }
 }
 
-async function generatePrometheusConfig(jmxPorts) {
-  const jmxTargets = [];
-  if (jmxPorts.every(port => port.includes(':'))) {
-    jmxTargets = jmxPorts;
-  } else {
-    jmxTargets = kafkaEndpoints.map(port => `host.docker.internal:${port}`);
+function followPullProgress(stream) {
+  return new Promise((resolve, reject) => {
+    docker.modem.followProgress(stream, (err, res) =>
+      err ? reject(err) : resolve(res),
+    );
+  });
+}
+
+kafkaMonitoringController.pullDockerImages = async (req, res, next) => {
+  try {
+    const promStream = await pullImage('prom/prometheus:latest');
+    await followPullProgress(promStream);
+    const grafanaStream = await pullImage('grafana/grafana:latest');
+    await followPullProgress(grafanaStream);
+    next();
+  } catch (err) {
+    next(new KMError('pullDockerImages', 424, err));
   }
-  const prometheusConfigTemplate = `
+};
+
+kafkaMonitoringController.createNetwork = async (req, res, next) => {
+  try {
+    const networkName = `monitoring_network_${Date.now()}`;
+    await docker.createNetwork({ Name: networkName, Driver: 'bridge' });
+    req.networkName = networkName;
+    next();
+  } catch (err) {
+    next(new KMError('createNetwork', 424, err));
+  }
+};
+
+kafkaMonitoringController.generatePrometheusConfig = (req, res, next) => {
+  try {
+    const jmxTargets = req.body.address.map(
+      port => `host.docker.internal:${port}`,
+    );
+    const prometheusConfigTemplate = `
 global:
   scrape_interval: 15s
 
 scrape_configs:
   - job_name: 'kafka'
     static_configs:
-     - targets: ${JSON.stringify(jmxTargets)}
+      - targets: ${JSON.stringify(jmxTargets)}
 `;
+    fs.writeFileSync(
+      path.join(__dirname, 'prometheus.yml'),
+      prometheusConfigTemplate.trim(),
+    );
+    next();
+  } catch (err) {
+    next(new KMError('generatePrometheusConfig', 424, err));
+  }
+};
 
-  fs.writeFileSync(
-    path.join(__dirname, 'prometheus.yml'),
-    prometheusConfigTemplate.trim(),
-  );
-}
+kafkaMonitoringController.stopAndRemoveContainer = async (
+  containerName,
+  req,
+  res,
+  next,
+) => {
+  try {
+    const container = docker.getContainer(containerName);
+    const data = await container.inspect();
+    if (data.State.Running) {
+      await container.stop();
+    }
+    await container.remove();
+    next();
+  } catch (err) {
+    if (err.statusCode !== 404) {
+      next(new KMError('getContainer', 424, err));
+    } else {
+      next();
+    }
+  }
+};
 
-async function createPrometheusContainer(networkName) {
+kafkaMonitoringController.createPrometheusContainer = async (
+  req,
+  res,
+  next,
+) => {
   try {
     const promConfigPath = path.join(__dirname, 'prometheus.yml');
     const container = await docker.createContainer({
+      name: 'prometheus',
       Image: 'prom/prometheus:latest',
-      Volumes: {
-        '/etc/prometheus/prometheus.yml': {},
-      },
+      Volumes: { '/etc/prometheus/prometheus.yml': {} },
       HostConfig: {
         Binds: [`${promConfigPath}:/etc/prometheus/prometheus.yml`],
-        PortBindings: {
-          '9090/tcp': [{ HostPort: '9090' }],
-        },
+        PortBindings: { '9090/tcp': [{ HostPort: '9090' }] },
       },
-      ExposedPorts: {
-        '9090/tcp': {},
-      },
-
-      NetworkingConfig: {
-        EndpointsConfig: {
-          [networkName]: {},
-        },
-      },
+      ExposedPorts: { '9090/tcp': {} },
+      NetworkingConfig: { EndpointsConfig: { [req.networkName]: {} } },
     });
     await container.start();
+    next();
   } catch (err) {
-    console.error('Error in creating Prometheus container:', err);
-    throw err;
+    next(new KMError('createPrometheusContainer', 424, err));
   }
-}
+};
 
-async function createGrafanaContainer(networkName) {
+kafkaMonitoringController.createGrafanaContainer = async (req, res, next) => {
   try {
+    const grafanaEnv = [
+      'GF_SECURITY_ADMIN_USER=admin',
+      'GF_SECURITY_ADMIN_PASSWORD=admin',
+      'GF_USERS_ALLOW_SIGN_UP=false',
+      'GF_SECURITY_ALLOW_EMBEDDING=true',
+      'GF_AUTH_ANONYMOUS_ENABLED=true',
+      'GF_INSTALL_PLUGINS=grafana-clock-panel',
+    ];
+    const grafanaBinds = [
+      `${path.join(
+        __dirname,
+        '../../grafana/Dockerfile/provisioning/dashboards',
+      )}:/etc/grafana/provisioning/dashboards`,
+      `${path.join(
+        __dirname,
+        '../../grafana/Dockerfile/provisioning/datasources/datasource.yml',
+      )}:/etc/grafana/provisioning/datasources/datasource.yml`,
+      `${path.join(
+        __dirname,
+        '../../grafana/grafana.ini',
+      )}:/etc/grafana/grafana.ini`,
+      'grafana-storage:/var/lib/grafana',
+    ];
     const container = await docker.createContainer({
+      name: 'grafana',
       Image: 'grafana/grafana:latest',
-      ExposedPorts: {
-        '3000/tcp': {},
+      Volumes: { '/var/lib/grafana': {} },
+      ExposedPorts: { '3000/tcp': {} },
+      HostConfig: {
+        Binds: grafanaBinds,
+        PortBindings: { '3000/tcp': [{ HostPort: '3000' }] },
       },
-      PortBindings: {
-        '3000/tcp': [
-          {
-            HostPort: '3000',
-          },
-        ],
-      },
-      Env: [
-        'GF_SECURITY_ADMIN_USER=admin',
-        'GF_SECURITY_ADMIN_PASSWORD=admin',
-        'GF_USERS_ALLOW_SIGN_UP=false',
-        'GF_SECURITY_ALLOW_EMBEDDING=true',
-        'GF_AUTH_ANONYMOUS_ENABLED=true',
-      ],
-      NetworkingConfig: {
-        EndpointsConfig: {
-          [networkName]: {},
-        },
-      },
+      Env: grafanaEnv,
+      NetworkingConfig: { EndpointsConfig: { [req.networkName]: {} } },
     });
     await container.start();
+    next();
   } catch (err) {
-    console.log('Error in creating Grafana container:', err);
-  }
-}
-
-kafkaMonitoringController.setUpDocker = async (req, res, next) => {
-  try {
-    const { jmxPorts } = req.body;
-    const networkName = await createNetwork();
-    await generatePrometheusConfig(jmxPorts);
-    await createPrometheusContainer(networkName);
-    await createGrafanaContainer(networkName);
-
-    res.send('Monitoring setup initiated successfully.');
-  } catch (err) {
-    console.log('Setup failed:', err);
-    res.status(500).send('Failed to setup monitoring.');
+    next(new KMError('createGrafanaError', 424, err));
   }
 };
 
