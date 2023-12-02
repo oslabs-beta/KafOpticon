@@ -170,7 +170,7 @@ npm run bootKaf1
 npm start
 ```
 
-5. In the electron app, type 'localhost:2020' into the form, check 'send to
+5. In the electron app, type '2020' into the form, check 'send to
    local monitoring' and submit it. Wait. Refresh if necessary. Click into
    performance or health metrics. Data on the kafka cluster should be displayed.
 
@@ -222,19 +222,22 @@ about your Kafka clusters.
 
 # Road Map
 
-Check out [issues](https://github.com/oslabs-beta/KafOpticon/issues) for further
-information about possible new features
+| Feature                                 | Status |
+| --------------------------------------- | ------ |
+| Visualize Kafka Cluster                 |   ✅   |
+| User Customized Dashboard               |   ⏳   |
+| Testing                                 |   ⏳   |
+| Windows Distribution                    |   ⏳   | 
+| Enhance Security                        |   🙏🏻   |
+| Enable Connecting to Remote Cluster     |   🙏🏻   | 
 
-1. Solve bugs associated with sending form data to the docker route on linux.
-2. Work on local route.
+- ✅ = Ready to use
+- ⏳ = In progress
+- 🙏🏻 = Looking for contributors
 
-- Dynamically boot up Prometheus jmxExporter http server in production; in
-  development, tear them down properly,
-- Enable connecting to more than one kafka broker.
+# Bugs
 
-3. Expand the user's ability to configure the dashboard and have it persist.
-4. Increase testing coverage.
-5. Create Windows distribution.
+Please report bugs to the [issues](https://github.com/oslabs-beta/KafOpticon/issues) tab.
 
 # Contributing
 
