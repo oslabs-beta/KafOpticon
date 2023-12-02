@@ -1102,7 +1102,7 @@ module.exports = {
             },
             "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "label_replace(label_replace(kafka_server_brokertopicmetrics_bytesIn_total, \"formatted_topic\", \"TOTAL\", \"topic\", \"^$\"), \"formatted_topic\", \"$1\", \"topic\", \"(.+)\")",
+            "expr": "label_replace(label_replace(kafka_server_brokertopicmetrics_bytesin_total, \"formatted_topic\", \"TOTAL\", \"topic\", \"^$\"), \"formatted_topic\", \"$1\", \"topic\", \"(.+)\")",
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
