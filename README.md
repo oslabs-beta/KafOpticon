@@ -4,6 +4,26 @@
 
 Kafka Cluster Monitor and Visualizer
 
+## Built With
+
+<p align="left">
+  <a href="#"><img alt="React" src="https://img.shields.io/badge/-React-61DAFB?style=flat-square&logo=react&logoColor=white"></a>
+  <a href="#"><img alt="HTML" src="https://img.shields.io/badge/-HTML-E34F26?style=flat-square&logo=html5&logoColor=white"></a>
+  <a href="#"><img alt="CSS" src="https://img.shields.io/badge/-CSS-1572B6?style=flat-square&logo=css3&logoColor=white"></a>
+  <a href="#"><img alt="Node.js" src="https://img.shields.io/badge/-Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white"></a>
+  <a href="#"><img alt="Express" src="https://img.shields.io/badge/-Express-000000?style=flat-square&logo=express&logoColor=white"></a>
+  <a href="#"><img alt="Jest" src="https://img.shields.io/badge/-Jest-C21325?style=flat-square&logo=jest&logoColor=white"></a>
+  <a href="#"><img alt="Webpack" src="https://img.shields.io/badge/-Webpack-8DD6F9?style=flat-square&logo=webpack&logoColor=black"></a>
+</p>
+<p align="left">
+  <a href="#"><img alt="Docker" src="https://img.shields.io/badge/-Docker-2496ED?style=flat-square&logo=docker&logoColor=white"></a>
+  <a href="#"><img alt="Kafka" src="https://img.shields.io/badge/-Apache%20Kafka-231F20?style=flat-square&logo=apachekafka&logoColor=white"></a>
+  <a href="#"><img alt="Prometheus" src="https://img.shields.io/badge/-Prometheus-E6522C?style=flat-square&logo=prometheus&logoColor=white"></a>
+  <a href="#"><img alt="Grafana" src="https://img.shields.io/badge/-Grafana-F46800?style=flat-square&logo=grafana&logoColor=white"></a>
+  <a href="#"><img alt="Electron" src="https://img.shields.io/badge/-Electron-47848F?style=flat-square&logo=electron&logoColor=white"></a>
+</p>
+
+
 # About the Project
 
 **What:** KafOpticon is an open-source electron app used for monitoring,
@@ -150,7 +170,7 @@ npm run bootKaf1
 npm start
 ```
 
-5. In the electron app, type 'localhost:2020' into the form, check 'send to
+5. In the electron app, type '2020' into the form, check 'send to
    local monitoring' and submit it. Wait. Refresh if necessary. Click into
    performance or health metrics. Data on the kafka cluster should be displayed.
 
@@ -202,18 +222,22 @@ about your Kafka clusters.
 
 # Road Map
 
-Check out [issues](https://github.com/oslabs-beta/KafOpticon/issues) for further
-information about possible new features
+| Feature                                 | Status |
+| --------------------------------------- | ------ |
+| Visualize Kafka Cluster                 |   ✅   |
+| User Customized Dashboard               |   ⏳   |
+| Testing                                 |   ⏳   |
+| Windows Distribution                    |   ⏳   | 
+| Enhance Security                        |   🙏🏻   |
+| Enable Connecting to Remote Cluster     |   🙏🏻   | 
 
-1. Work on local route.
+- ✅ = Ready to use
+- ⏳ = In progress
+- 🙏🏻 = Looking for contributors
 
-- Dynamically boot up Prometheus jmxExporter http server in production; in
-  development, tear them down properly,
-- Enable connecting to more than one kafka broker.
+# Bugs
 
-2. Expand the user's ability to configure the dashboard and have it persist.
-3. Increase testing coverage.
-4. Create Windows distribution.
+Please report bugs to the [issues](https://github.com/oslabs-beta/KafOpticon/issues) tab.
 
 # Contributing
 
@@ -245,3 +269,4 @@ git push origin newFeature
 
 <br>https://github.com/anewatech <br>https://github.com/GOsorioCanales
 <br>https://github.com/kelaompachai <br>https://github.com/zackweiss
+

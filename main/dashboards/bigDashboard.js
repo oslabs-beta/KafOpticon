@@ -112,11 +112,11 @@ module.exports = {
             },
             "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "kafka_cluster_partition_insyncreplicascount",
+            "expr": "kafka_cluster_partition_insyncreplicascount{topic!=\"__consumer_offsets\"}",
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}, partition: {{partition}}, topic: {{topic}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -215,7 +215,8 @@ module.exports = {
             },
             "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "kafka_server_replicamanager_underreplicatedpartitions",
+            "expr": "kafka_server_replicamanager_underreplicatedpartitions{topic!=\"__consumer_offsets\"}",
+            // "expr": "kafka_cluster_partition_underreplicated{topic!=\"__consumer_offsets\"}",
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
@@ -315,11 +316,11 @@ module.exports = {
             },
             "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "kafka_cluster_partition_replicascount",
+            "expr": "kafka_cluster_partition_replicascount{topic!=\"__consumer_offsets\"}",
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}, partition: {{partition}}, topic: {{topic}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -370,9 +371,7 @@ module.exports = {
           "justifyMode": "auto",
           "orientation": "auto",
           "reduceOptions": {
-            "calcs": [
-              "lastNotNull"
-            ],
+            "calcs": ["lastNotNull"],
             "fields": "",
             "values": false
           },
@@ -392,7 +391,7 @@ module.exports = {
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -431,9 +430,7 @@ module.exports = {
         },
         "id": 23,
         "options": {
-          "displayLabels": [
-            "percent"
-          ],
+          "displayLabels": ["percent"],
           "legend": {
             "calcs": [],
             "displayMode": "hidden",
@@ -443,9 +440,7 @@ module.exports = {
           },
           "pieType": "donut",
           "reduceOptions": {
-            "calcs": [
-              "lastNotNull"
-            ],
+            "calcs": ["lastNotNull"],
             "fields": "",
             "values": false
           },
@@ -466,7 +461,7 @@ module.exports = {
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}, Error: {{error}}, Request: {{request}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -566,7 +561,7 @@ module.exports = {
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}, quantile: {{quantile}}, request: {{request}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -605,9 +600,7 @@ module.exports = {
         },
         "id": 22,
         "options": {
-          "displayLabels": [
-            "percent"
-          ],
+          "displayLabels": ["percent"],
           "legend": {
             "calcs": [],
             "displayMode": "hidden",
@@ -617,9 +610,7 @@ module.exports = {
           },
           "pieType": "pie",
           "reduceOptions": {
-            "calcs": [
-              "lastNotNull"
-            ],
+            "calcs": ["lastNotNull"],
             "fields": "",
             "values": false
           },
@@ -640,7 +631,7 @@ module.exports = {
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}, request: {{request}}, version: {{version}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -691,9 +682,7 @@ module.exports = {
           "justifyMode": "auto",
           "orientation": "auto",
           "reduceOptions": {
-            "calcs": [
-              "lastNotNull"
-            ],
+            "calcs": ["lastNotNull"],
             "fields": "",
             "values": false
           },
@@ -713,7 +702,7 @@ module.exports = {
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}, clientId: {{clientId}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -809,11 +798,11 @@ module.exports = {
             },
             "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "kafka_server_fetcherlagmetrics_consumerlag",
+            "expr": "kafka_server_fetcherlagmetrics_consumerlag{topic!=\"__consumer_offsets\"}",
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}, clientId: {{clientId}}, partition: {{partition}}, topic: {{topic}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -851,10 +840,7 @@ module.exports = {
               "insertNulls": false,
               "lineInterpolation": "linear",
               "lineStyle": {
-                "dash": [
-                  10,
-                  10
-                ],
+                "dash": [10, 10],
                 "fill": "dash"
               },
               "lineWidth": 3,
@@ -920,7 +906,7 @@ module.exports = {
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}, quantile: {{quantile}}, request: {{request}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -1020,7 +1006,7 @@ module.exports = {
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -1116,11 +1102,11 @@ module.exports = {
             },
             "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "kafka_server_brokertopicmetrics_bytesin_total",
+            "expr": "label_replace(label_replace(kafka_server_brokertopicmetrics_bytesin_total, \"formatted_topic\", \"TOTAL\", \"topic\", \"^$\"), \"formatted_topic\", \"$1\", \"topic\", \"(.+)\")",
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}, topic: {{formatted_topic}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -1220,7 +1206,7 @@ module.exports = {
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}, gc: {{gc}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -1317,11 +1303,11 @@ module.exports = {
             },
             "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "kafka_server_brokertopicmetrics_totalproducerequests_total",
+            "expr": "label_replace(label_replace(kafka_server_brokertopicmetrics_totalproducerequests_total, \"formatted_topic\", \"TOTAL\", \"topic\", \"^$\"), \"formatted_topic\", \"$1\", \"topic\", \"(.+)\")",
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}, topic: {{formatted_topic}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -1421,7 +1407,7 @@ module.exports = {
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}, gc: {{gc}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -1438,6 +1424,9 @@ module.exports = {
         "description": "Number of offline partitions",
         "fieldConfig": {
           "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
             "mappings": [],
             "thresholds": {
               "mode": "percentage",
@@ -1471,9 +1460,7 @@ module.exports = {
           "minVizWidth": 75,
           "orientation": "auto",
           "reduceOptions": {
-            "calcs": [
-              "lastNotNull"
-            ],
+            "calcs": ["lastNotNull"],
             "fields": "",
             "values": false
           },
@@ -1493,7 +1480,7 @@ module.exports = {
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -1593,7 +1580,7 @@ module.exports = {
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}, Delayed Operation: {{delayedOperation}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -1611,7 +1598,39 @@ module.exports = {
         "fieldConfig": {
           "defaults": {
             "color": {
-              "mode": "continuous-BlYlRd"
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
             },
             "mappings": [],
             "thresholds": {
@@ -1638,20 +1657,16 @@ module.exports = {
         },
         "id": 8,
         "options": {
-          "displayMode": "lcd",
-          "minVizHeight": 10,
-          "minVizWidth": 0,
-          "namePlacement": "auto",
-          "orientation": "horizontal",
-          "reduceOptions": {
-            "calcs": [
-              "lastNotNull"
-            ],
-            "fields": "",
-            "values": false
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
           },
-          "showUnfilled": true,
-          "valueMode": "color"
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
         },
         "pluginVersion": "10.2.2",
         "targets": [
@@ -1667,7 +1682,7 @@ module.exports = {
             "hide": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{__name__}}, {{instance}}",
             "range": true,
             "refId": "B",
             "useBackend": false
@@ -1684,14 +1699,14 @@ module.exports = {
             "hide": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{__name__}}, {{instance}}",
             "range": true,
             "refId": "A",
             "useBackend": false
           }
         ],
         "title": "Replica Manager ISR Shrinks/Expands",
-        "type": "bargauge"
+        "type": "timeseries"
       },
       {
         "datasource": {
@@ -1784,7 +1799,7 @@ module.exports = {
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}, quantile: {{quantile}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -1803,17 +1818,6 @@ module.exports = {
           "defaults": {
             "color": {
               "mode": "continuous-YlBl"
-            },
-            "custom": {
-              "fillOpacity": 70,
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "insertNulls": false,
-              "lineWidth": 0,
-              "spanNulls": false
             },
             "mappings": [],
             "thresholds": {
@@ -1840,20 +1844,18 @@ module.exports = {
         },
         "id": 3,
         "options": {
-          "alignValue": "left",
-          "legend": {
-            "displayMode": "list",
-            "placement": "bottom",
-            "showLegend": true
+          "minVizHeight": 75,
+          "minVizWidth": 75,
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": ["lastNotNull"],
+            "fields": "",
+            "values": false
           },
-          "mergeValues": true,
-          "rowHeight": 0.9,
-          "showValue": "auto",
-          "tooltip": {
-            "mode": "single",
-            "sort": "none"
-          }
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
         },
+        "pluginVersion": "10.2.2",
         "targets": [
           {
             "datasource": {
@@ -1866,14 +1868,14 @@ module.exports = {
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}",
             "range": true,
             "refId": "A",
             "useBackend": false
           }
         ],
         "title": "Active Controller Count",
-        "type": "state-timeline"
+        "type": "gauge"
       },
       {
         "datasource": {
@@ -1954,9 +1956,7 @@ module.exports = {
         },
         "id": 12,
         "options": {
-          "displayLabels": [
-            "percent"
-          ],
+          "displayLabels": ["percent"],
           "legend": {
             "calcs": [],
             "displayMode": "hidden",
@@ -1966,9 +1966,7 @@ module.exports = {
           },
           "pieType": "donut",
           "reduceOptions": {
-            "calcs": [
-              "lastNotNull"
-            ],
+            "calcs": ["lastNotNull"],
             "fields": "",
             "values": false
           },
@@ -1990,7 +1988,7 @@ module.exports = {
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -2077,11 +2075,7 @@ module.exports = {
               "insertNulls": false,
               "lineInterpolation": "linear",
               "lineStyle": {
-                "dash": [
-                  0,
-                  3,
-                  3
-                ],
+                "dash": [0, 3, 3],
                 "fill": "dot"
               },
               "lineWidth": 2,
@@ -2148,7 +2142,7 @@ module.exports = {
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
-            "legendFormat": "__auto",
+            "legendFormat": "{{instance}}",
             "range": true,
             "refId": "A",
             "useBackend": false
@@ -2207,7 +2201,7 @@ module.exports = {
         "type": "grafana-clock-panel"
       }
     ],
-    "refresh": "",
+    "refresh": false,
     "schemaVersion": 38,
     "tags": [],
     "templating": {
@@ -2219,9 +2213,10 @@ module.exports = {
     },
     "timepicker": {},
     "timezone": "",
-    "title": "Test Dash",
+    "title": "KafOpticon Dashboard",
     "uid": "d9098b29-ef80-4e40-86bc-b28bd6e85756",
-    "version": 19,
+    "version": 1,
     "weekStart": ""
   }
+
 };

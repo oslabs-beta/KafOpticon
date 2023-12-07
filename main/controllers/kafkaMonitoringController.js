@@ -9,7 +9,7 @@ const kafkaMonitoringController = {};
 
 class KMError {
   constructor(location, status, message) {
-    this.log = 'An error occurred in addressController.' + location;
+    this.log = 'An error occurred in kafkaMonitoringController.' + location;
     this.status = status;
     this.message = { err: message };
   }
