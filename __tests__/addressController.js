@@ -14,6 +14,11 @@ jest.mock('fs', () => {
   }}
 });
 
+const delay = (milliseconds) => {
+  return new Promise(resolve => {
+    setTimeout(resolve, milliseconds);
+  });
+};
 
 describe ('writeJmxConfig1', () => {
 
@@ -120,13 +125,8 @@ describe('connectToKafka', () => {
       // run connectToKafka
       connectToKafka(req, res, next);
 
-      // wait a little
-      const delay = (milliseconds) => {
-        return new Promise(resolve => {
-          setTimeout(resolve, milliseconds);
-        });
-      };
 
+      // wait a little
       await delay(350);
 
       // send a get request to localhost:3030
@@ -140,3 +140,34 @@ describe('connectToKafka', () => {
     });
   });
 });
+
+describe('startPrometheus', () => {
+  const req = {};
+  const res = {locals: {}};
+  const next = jest.fn();
+
+  afterEach(() => {
+    controller.prometheusChild.kill();
+  });
+
+  describe('', () => {
+    test('confirm that prometheus server has started', async () => {
+      startPrometheus(req, res, next);
+
+      // wait a little
+      await delay(200);
+
+      // send a get request to localhost:9090
+      try {
+        const response = await fetch('http://localhost:9090');
+        // pass the test if the response's status is 200ok, otherwise fail the test
+        expect(response.status).toBe(200);
+      } catch (err) {
+        console.log(err);
+        expect(3).toBe(4);
+      }
+
+      expect(3).toBe(3);
+    });
+  })
+})

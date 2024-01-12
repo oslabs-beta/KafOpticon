@@ -78,11 +78,13 @@ addressController.startPrometheus = (req, res, next) => {
   // create child process that runs prometheus and connect it to jmx exporter
   if (process.env.NODE_ENV !== 'test') console.log('entered startPrometheus');
 
-  const child = spawn('npm run prometheus', {
+  const child = spawn('prometheus --config.file=scraping-config/prometheus.yml', {
     shell: true,
     // stdio: 'inherit',
     cwd: path.join(__dirname, '..', '..', 'local-test')
   });
+
+  addressController.prometheusChild = child;
 
   return next();
 };
