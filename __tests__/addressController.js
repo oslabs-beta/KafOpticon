@@ -19,7 +19,7 @@ describe ('writeJmxConfig1', () => {
 
   const req = {
     body: {
-      address: 'localhost:2020'
+      address: '2020'
     }
   };
   const res = {locals: {}};
@@ -107,30 +107,36 @@ describe('writeJmxConfig2', () => {
   });
 });
 
-// describe('connectToKafka', () => {
-//   const req = {};
-//   const res = {locals: {}};
-//   const next = jest.fn();
-//   describe('', () => {
-//     test.only('confirm that jmx exporter http server has started', async () => {
-//       // run connectToKafka
-//       connectToKafka(req, res, next);
+describe('connectToKafka', () => {
+  const req = {};
+  const res = {locals: {}};
+  const next = jest.fn();
+  afterEach(() => {
+    controller.jmxExporterChild.kill();
+  });
 
-//       // wait for a second or two
-//       const delay = (milliseconds) => {
-//         return new Promise(resolve => {
-//           setTimeout(resolve, milliseconds);
-//         });
-//       };
+  describe('', () => {
+    test('confirm that jmx exporter http server has started', async () => {
+      // run connectToKafka
+      connectToKafka(req, res, next);
 
-//       await delay(1000);
+      // wait a little
+      const delay = (milliseconds) => {
+        return new Promise(resolve => {
+          setTimeout(resolve, milliseconds);
+        });
+      };
 
-//       // send a get request to localhost:3030
-//       const response = await fetch('http://localhost:3030');
-//       // pass the test if the response's status is 200ok, otherwise fail the test
-//       expect(response.status).toBe(200);
+      await delay(350);
 
-//       console.log(res.locals.PID);
-//     });
-//   });
-// });
+      // send a get request to localhost:3030
+      try {
+        const response = await fetch('http://localhost:3030');
+        // pass the test if the response's status is 200ok, otherwise fail the test
+        expect(response.status).toBe(200);
+      } catch (err) {
+        expect(3).toBe(4);
+      }
+    });
+  });
+});
