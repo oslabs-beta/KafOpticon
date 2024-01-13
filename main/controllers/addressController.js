@@ -5,6 +5,8 @@ const path = require('path');
 const { spawn } = require('child_process');
 
 const addressController = {};
+addressController.jmxExporterChild = null;
+addressController.prometheusChild = null;
 
 // error constructor for this controller
 class ACError {
@@ -18,7 +20,7 @@ class ACError {
 
 addressController.writeJmxConfig1 = (req, res, next) => {
   // gets information off the request body and puts a transformation of it onto res.locals
-  console.log('entered writeJmxConfig2')
+  if (process.env.NODE_ENV !== 'test') console.log('entered writeJmxConfig1')
 
   const { address } = req.body;
   const fullAddress = 'localhost:' + address;  
@@ -30,7 +32,7 @@ addressController.writeJmxConfig1 = (req, res, next) => {
 
 addressController.writeJmxConfig2 = async (req, res, next) => {
   // write the jmx config file using the user inputted kafka address
-  console.log('entered writeJmxConfig2');
+  if (process.env.NODE_ENV !== 'test') console.log('entered writeJmxConfig2');
 
   // get paths to configuration files
   const templateFileAddress = path.join(__dirname, '..', '..', 'local-test', 'scraping-config', 'jmxConfigTemplate.yml');
@@ -56,26 +58,33 @@ addressController.writeJmxConfig2 = async (req, res, next) => {
 
 addressController.connectToKafka = (req, res, next) => {
   // create child process that runs jmx exporter and connect it to the kafka cluster
-  console.log('entered connectToKafka');
+  if (process.env.NODE_ENV !== 'test') console.log('entered connectToKafka');
 
-  const child = spawn('npm run exportJmx', {
+  const child = spawn('java',  ['-jar', 'jmx_prometheus_httpserver-0.19.0.jar', '3030', 'scraping-config/jmxconfig.yml'], {
+  // const child = spawn('npm', ['run', 'exportJmx'], {
     shell: true,
-    // stdio: 'inherit',
+    // detached: true,
+    stdio: 'inherit',
     cwd: path.join(__dirname, '..', '..', 'local-test')
   });
+
+  addressController.jmxExporterChild = child;
+  // addressController.jmxExporterChild.kill();
 
   return next();
 };
 
 addressController.startPrometheus = (req, res, next) => {
   // create child process that runs prometheus and connect it to jmx exporter
-  console.log('entered startPrometheus');
+  if (process.env.NODE_ENV !== 'test') console.log('entered startPrometheus');
 
-  const child = spawn('npm run prometheus', {
+  const child = spawn('prometheus --config.file=scraping-config/prometheus.yml', {
     shell: true,
     // stdio: 'inherit',
     cwd: path.join(__dirname, '..', '..', 'local-test')
   });
+
+  addressController.prometheusChild = child;
 
   return next();
 };

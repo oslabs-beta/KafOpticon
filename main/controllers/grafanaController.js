@@ -16,7 +16,7 @@ class GrafanaError {
 }
 
 grafanaController.getPrometheus = async (req, res, next) => {
-  console.log('entered getPrometheus');
+  if (process.env.NODE_ENV !== 'test') console.log('entered getPrometheus');
   // check whether the user already has a prometheus datasource for their grafana
   // and if they do save its uid
 
@@ -40,7 +40,32 @@ grafanaController.getPrometheus = async (req, res, next) => {
 
 grafanaController.createPromSource = async (req, res, next) => {
   // if the user does not have prometheus set up as a data source, create it
-  console.log('entered createPromSource');
+  if (process.env.NODE_ENV !== 'test') console.log('entered createPromSource');
+  // check whether the user already has a prometheus datasource for their grafana
+  // and if they do save its uid
+
+  // since this is called twice, if information has already been gathered, skip it
+  if (res.locals.prom) return next();
+  try {
+    const response = await fetch('http://localhost:3000/api/datasources/name/Prometheus');
+    const data = await response.json();
+    
+    if (data.uid) {
+      res.locals.promUid = data.uid;
+      res.locals.prom = true;
+    }
+
+  } catch (err) {
+    return next(new GrafanaError('getPrometheus', 500, err));
+  }
+  
+  return next();
+};
+
+grafanaController.createPromSource = async (req, res, next) => {
+  // if the user does not have prometheus set up as a data source, create it
+  if (process.env.NODE_ENV !== 'test') console.log('entered createPromSource');
+
 
   // skip if user has prometheus and we already have its uid
   if (res.locals.prom) return next();
@@ -70,7 +95,7 @@ grafanaController.createPromSource = async (req, res, next) => {
 
 grafanaController.generateDashJson = (req, res, next) => {
   // generate the dashboard json based on gathered prometheus uid
-  console.log('entered generateDashJson');
+  if (process.env.NODE_ENV !== 'test') console.log('entered generateDashJson');
 
   try { 
     const array = (process.env.NODE_ENV === 'test') ? question.dashboard.panels : dashboardJSON.dashboard.panels; 
@@ -93,7 +118,7 @@ grafanaController.generateDashJson = (req, res, next) => {
 grafanaController.createDashboard = async (req, res, next) => {
   // create a dashboard in grafana
 
-  console.log('entered createDashboard');
+  if (process.env.NODE_ENV !== 'test') console.log('entered createDashboard');
   // make post request to grafana dashboard api 
   try {
     const data = await fetch('http://localhost:3000/api/dashboards/db', {
@@ -104,7 +129,7 @@ grafanaController.createDashboard = async (req, res, next) => {
       }});
     
     const text = await data.json();
-    console.log('grafanaController.createDashboard= ~ text:', text);
+    // console.log('grafanaController.createDashboard= ~ text:', text);
 
     // save response to res.locals for testing purposes
     res.locals.grafanaResponse = text;    
