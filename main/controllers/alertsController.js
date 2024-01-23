@@ -14,7 +14,7 @@ alertsController.writeAlertsInfo = (req, res, next) => {
     //read grafana.ini file
         const config = ini.parse(fs.readFileSync(destination, 'utf-8'))
 
-    //update grafana.ini file
+    //update grafana.ini file whether smtp exists or not
         config['smtp'] = config['smtp'] || {};
         config['smtp']['user'] = emailAddress;
         config['smtp']['password'] = appPassword;
